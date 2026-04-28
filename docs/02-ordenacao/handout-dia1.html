@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Algoritimos (simples) de Ordenação - Técnicas de
+Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Algoritimos (simples) de Ordenação - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#bubble-sort" id="toc-bubble-sort">Bubble
+          Sort</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <p>Em um primeiro momento, estudaremos dois algoritmos simples
+          de ordenação: <em>Bubble Sort</em> e <em>Selection Sort</em>.
+          Um dos nossos objetivos aqui é contar o número de
+          <strong>comparações</strong> feitas por esses algoritmos,
+          sempre considerando o <strong>pior caso</strong>.</p>
+          <h1 id="bubble-sort">Bubble Sort</h1>
+          <p>Considere o algoritmo abaixo para as próximas
+          perguntas.</p>
+          <p>Nosso objetivo será entender esse algoritmo somente
+          <strong>simulando seu funcionamento</strong>. Sabemos que ele
+          ordena o array <span class="math inline"><em>A</em></span>,
+          mas o ponto aqui é entende <strong>como</strong> ele faz
+          isso.</p>
+          <p><strong>Exercício</strong>: Para o array <span
+          class="math inline"><em>A</em> = [3, 4, 2, 5, 77, 8, 12]</span>,
+          simule a primeira iteração do loop <em>while</em>. Escreva
+          abaixo o valor final de <span
+          class="math inline"><em>A</em>, <em>C</em></span> e <span
+          class="math inline">trocou</span>.</p>
+          <p>[spacer]</p>
+          <p><strong>Exercício</strong>: Faça o mesmo para o array <span
+          class="math inline"><em>A</em> = [8, 7, 6, 5, 4, 3, 2, 1]</span>.</p>
+          <p>[break]</p>
+          <p><strong>Exercício</strong>: Faça o mesmo para o array <span
+          class="math inline"><em>A</em> = [10, 20, 30, 40, 50, 60, 70, 80]</span>.
+          O que você notou de diferente em relação aos anteriores?</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <hr />
+          <p><strong>Exercício</strong>: Começando agora com o array
+          <span
+          class="math inline"><em>A</em> = [3, 4, 2, 5, 77, 8, 12]</span>,
+          preencha a tabela abaixo. Cada linha corresponde a uma vez que
+          foi feita uma troca de duas posições vizinhas. As primeiras
+          duas linhas já estão preenchidas.</p>
+          <table>
+          <colgroup>
+          <col style="width: 21%" />
+          <col style="width: 21%" />
+          <col style="width: 57%" />
+          </colgroup>
+          <thead>
+          <tr>
+          <th><span class="math inline"><em>C</em></span></th>
+          <th><span class="math inline"><em>i</em></span></th>
+          <th><span class="math inline"><em>A</em></span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td>0</td>
+          <td>1</td>
+          <td><span
+          class="math inline">[3, 2, 4, 5, 77, 8, 12]</span></td>
+          </tr>
+          <tr>
+          <td>0</td>
+          <td>4</td>
+          <td><span
+          class="math inline">[3, 2, 4, 5, 8, 77, 12]</span></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          </tbody>
+          </table>
+          <p><strong>Exercício</strong>: Começando agora com o array
+          <span
+          class="math inline"><em>A</em> = [5, 4, 7, 2, 9, 7, 11, 32, 4]</span>,
+          preencha a tabela abaixo. Cada linha corresponde a uma vez que
+          foi feita uma troca de duas posições vizinhas. As primeiras
+          duas linhas já estão preenchidas.</p>
+          <table>
+          <colgroup>
+          <col style="width: 18%" />
+          <col style="width: 18%" />
+          <col style="width: 62%" />
+          </colgroup>
+          <thead>
+          <tr>
+          <th><span class="math inline"><em>C</em></span></th>
+          <th><span class="math inline"><em>i</em></span></th>
+          <th><span class="math inline"><em>A</em></span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td> </td>
+          <td> </td>
+          <td>           </td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          </tbody>
+          </table>
+          <p>[break]</p>
+          <p>Vamos agora tentar entender o número máximo de operações
+          feitas por este algoritmo. Para isso, vamos usar o array
+          ordenado em ordem <strong>decrescente</strong> como exemplo.
+          Dado que ele está totalmente ao contrário, é um bom exemplo
+          para testar algoritmos de ordenação.</p>
+          <p><strong>Exercício</strong>: Começando agora com o array
+          <span class="math inline"><em>A</em> = [5, 4, 3, 2, 1]</span>,
+          preencha a tabela abaixo. Cada linha corresponde a uma vez que
+          foi feita uma troca de duas posições vizinhas.</p>
+          <table>
+          <colgroup>
+          <col style="width: 18%" />
+          <col style="width: 18%" />
+          <col style="width: 62%" />
+          </colgroup>
+          <thead>
+          <tr>
+          <th><span class="math inline"><em>C</em></span></th>
+          <th><span class="math inline"><em>i</em></span></th>
+          <th><span class="math inline"><em>A</em></span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td> </td>
+          <td> </td>
+          <td>           </td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          </tr>
+          </tbody>
+          </table>
+          <p><strong>Exercício</strong>: O algoritmo fez quantas trocas
+          no exemplo acima? Se a entrada tivesse tamanho <span
+          class="math inline"><em>N</em> = 6</span>, quantas você acha
+          que ele faria? Use esse raciocínio para estimar o número de
+          trocas feitas para entradas de tamanho <span
+          class="math inline"><em>N</em> &gt; 0</span> quaisquer.</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <p>Agora que entendemos melhor o algoritmo, vamos
+          implementá-lo no PrairieLearn. Como bônus, assistam o vídeo
+          abaixo e tentem relacioná-lo com a execução do algoritmo no
+          início desta atividade.</p>
+          <figure>
+          <img src="qr-bubble-sort.png" height="130"
+          alt="qr bubble sort" />
+          <figcaption aria-hidden="true">qr bubble sort</figcaption>
+          </figure>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

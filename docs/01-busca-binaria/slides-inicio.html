@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> - </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+         - 
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#técnicas-de-programação"
+          id="toc-técnicas-de-programação">Técnicas de
+          Programação</a></li>
+          <li><a
+          href="#algoritmo-sequência-de-passos-finita-para-resolver-um-problema"
+          id="toc-algoritmo-sequência-de-passos-finita-para-resolver-um-problema">Algoritmo:
+          sequência de passos (finita) para resolver um
+          problema</a></li>
+          <li><a href="#perguntas-importantes"
+          id="toc-perguntas-importantes">Perguntas importantes</a></li>
+          <li><a href="#um-pouco-de-história"
+          id="toc-um-pouco-de-história">Um pouco de história</a></li>
+          <li><a href="#uma-primeira-solução"
+          id="toc-uma-primeira-solução">Uma primeira solução</a></li>
+          <li><a href="#uma-ideia-mais-sofisticada"
+          id="toc-uma-ideia-mais-sofisticada">Uma ideia mais
+          sofisticada</a></li>
+          <li><a href="#uma-ideia-mais-sofisticada-1"
+          id="toc-uma-ideia-mais-sofisticada-1">Uma ideia mais
+          sofisticada</a></li>
+          <li><a href="#uma-ideia-mais-sofisticada-2"
+          id="toc-uma-ideia-mais-sofisticada-2">Uma ideia mais
+          sofisticada</a></li>
+          <li><a href="#uma-ideia-mais-sofisticada-3"
+          id="toc-uma-ideia-mais-sofisticada-3">Uma ideia mais
+          sofisticada</a></li>
+          <li><a href="#busca-binária-intuição"
+          id="toc-busca-binária-intuição">Busca Binária
+          (intuição)</a></li>
+          <li><a href="#busca-binária-alto-nível"
+          id="toc-busca-binária-alto-nível">Busca Binária (alto
+          nível)</a></li>
+          <li><a href="#uma-ideia-mais-sofisticada-4"
+          id="toc-uma-ideia-mais-sofisticada-4">Uma ideia mais
+          sofisticada</a></li>
+          <li><a href="#próximos-passos"
+          id="toc-próximos-passos">Próximos passos</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <!-- _class=front -->
+          <h1 id="técnicas-de-programação">Técnicas de Programação</h1>
+          <h2 id="busca-em-vetores">Busca em vetores</h2>
+          <hr />
+          <h1
+          id="algoritmo-sequência-de-passos-finita-para-resolver-um-problema">Algoritmo:
+          sequência de passos (finita) para resolver um problema</h1>
+          <ol type="1">
+          <li>escritos em pseudo-código</li>
+          <li>focam na resolução do problema e não em detalhes de
+          implementação</li>
+          </ol>
+          <hr />
+          <h1 id="perguntas-importantes">Perguntas importantes</h1>
+          <ol type="1">
+          <li>Como representar um algoritmo sem código?</li>
+          <li>Quantas operações esse algoritmo realiza?</li>
+          <li>Dado um algoritmo incorreto, como mostrar que ele está
+          errado?</li>
+          </ol>
+          <hr />
+          <h1 id="um-pouco-de-história">Um pouco de história</h1>
+          <!--15 min-->
+          <hr />
+          <p>Um dos seus clientes surge desesperado que a nova versão do
+          software tem um bug que paralisou sua empresa. Após algumas
+          investigações sua equipe consegue fazer um teste que reproduz
+          o bug, mas ainda é necessário descobrir qual foi a mudança que
+          o causou.</p>
+          <p>Queremos descobrir qual foi o commit que introduziu esse
+          bug, que sabemos não estar presente na última versão
+          liberada.</p>
+          <hr />
+          <p>No commit mais novo tem bug</p>
+          <pre><code>67957b0f23425 (HEAD -&gt; modulo2, origin/main, origin/HEAD, main) pequenas modificações
+6fd3c935d611e Atualização javaporco
+b3892f2f3bd23 PDF dos slides - aula 01
+694b44015206e Módulo 0 - Algoritmos está pronto.
+0c1797563ebfa APS01 - fim
+cabbeafe683c1 Ajustes da APS01
+
+....
+
+465d185d60fd1 Organização do repositório
+127d20a195e9f First
+ddf34a8aa4919 Update README.md
+d18b19257fccc Initial commit</code></pre>
+          <p>No commit mais velho não tem bug</p>
+          <hr />
+          <h2 id="bug-presente">Bug presente?</h2>
+          <figure>
+          <img src="array-bug-1.png" alt="width:600px center" />
+          <figcaption aria-hidden="true">width:600px center</figcaption>
+          </figure>
+          <ul>
+          <li><code>A[0]</code> representa o commit mais antigo</li>
+          <li><code>A[N-1]</code> representa o commit mais novo</li>
+          <li><code>A[I]</code> é
+          <ul>
+          <li><code>1</code> se o bug está presente</li>
+          <li><code>0</code> caso contrário</li>
+          </ul></li>
+          </ul>
+          <hr />
+          <h1 id="uma-primeira-solução">Uma primeira solução</h1>
+          <p><strong>Em grupos</strong>:</p>
+          <ul>
+          <li>handout “Buscas básicas” (10 minutos)</li>
+          </ul>
+          <!--5 minutos + 10 de discussão-->
+          <hr />
+          <h1 id="uma-ideia-mais-sofisticada">Uma ideia mais
+          sofisticada</h1>
+          <figure>
+          <img src="array-bug-1.png" alt="width:600px center" />
+          <figcaption aria-hidden="true">width:600px center</figcaption>
+          </figure>
+          <p>Esse vetor tem algo que chama a atenção?</p>
+          <!--30 min + 15 de discussão-->
+          <hr />
+          <h1 id="uma-ideia-mais-sofisticada-1">Uma ideia mais
+          sofisticada</h1>
+          <p>Estar ordenado significa:</p>
+          <figure>
+          <img src="array-bug-2.png" alt="width:600px center" />
+          <figcaption aria-hidden="true">width:600px center</figcaption>
+          </figure>
+          <p><span
+          class="math display"><em>i</em> ≥ <em>j</em> ↔︎ <em>A</em>[<em>i</em>] ≥ <em>A</em>[<em>j</em>]</span></p>
+          <hr />
+          <h1 id="uma-ideia-mais-sofisticada-2">Uma ideia mais
+          sofisticada</h1>
+          <figure>
+          <img src="array-bug-2.png" alt="width:600px center" />
+          <figcaption aria-hidden="true">width:600px center</figcaption>
+          </figure>
+          <p>Para o índice <code>i</code> acima, o que posso dizer dos
+          que estão à sua</p>
+          <ul>
+          <li>direita?</li>
+          <li>esquerda?</li>
+          </ul>
+          <hr />
+          <h1 id="uma-ideia-mais-sofisticada-3">Uma ideia mais
+          sofisticada</h1>
+          <figure>
+          <img src="array-bug-2.png" alt="width:600px center" />
+          <figcaption aria-hidden="true">width:600px center</figcaption>
+          </figure>
+          <p>Para o índice <code>j</code> acima, o que posso dizer dos
+          que estão à sua</p>
+          <ul>
+          <li>direita?</li>
+          <li>esquerda?</li>
+          </ul>
+          <hr />
+          <h1 id="busca-binária-intuição">Busca Binária (intuição)</h1>
+          <figure>
+          <img src="array-bug-3.png" alt="width:700px center" />
+          <figcaption aria-hidden="true">width:700px center</figcaption>
+          </figure>
+          <h2 id="e-escolhermos-um-índice-qualquer">E escolhermos um
+          índice qualquer?</h2>
+          <ul>
+          <li>O que fazer se ele for <code>0</code>?</li>
+          <li>E se for <code>1</code>?</li>
+          </ul>
+          <hr />
+          <h1 id="busca-binária-alto-nível">Busca Binária (alto
+          nível)</h1>
+          <p>Vamos considerar a seguinte ideia:</p>
+          <p><code>BUSCA_BINARIA_BUG(A)</code></p>
+          <ol type="1">
+          <li>seleciona o elemento na posição exatamente no meio do
+          vetor</li>
+          <li>se esse elemento for <code>0</code>, continua procurando
+          na metade da da direita do vetor</li>
+          <li>se esse elemento for <code>1</code>, continua procurando
+          na metade da esquerda do vetor</li>
+          <li>repete esse procedimento até encontrar um elemento que é
+          <code>1</code> e tem um vizinho que é <code>0</code>.</li>
+          </ol>
+          <hr />
+          <h1 id="uma-ideia-mais-sofisticada-4">Uma ideia mais
+          sofisticada</h1>
+          <p><strong>Em grupos</strong>:</p>
+          <ul>
+          <li>handout “Busca binária” (20 minutos)</li>
+          </ul>
+          <hr />
+          <h1 id="próximos-passos">Próximos passos</h1>
+          <!--Fechamento 5 min-->
+          <ul>
+          <li>expandir essa ideia para buscas com valores quaisquer no
+          vetor</li>
+          <li>resolver exercícios que usem a ideia da busca binária</li>
+          </ul>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

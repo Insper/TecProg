@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Algoritmos recursivos - Técnicas de Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Algoritmos recursivos - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#slides" id="toc-slides">Slides</a></li>
+          <li><a href="#simulação" id="toc-simulação">Simulação</a></li>
+          <li><a href="#uma-ideia-melhor" id="toc-uma-ideia-melhor">Uma
+          ideia melhor</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <div class="info">
+          <p>Agradecimentos</p>
+          <p>Essa aula foi bastante inspirada nas do prof. Marcelo
+          Hashimoto, que dá aulas de algoritmos na EngComp. Se tem
+          alguma coisa ruim, deve ter sido alguma adição que fiz.</p>
+          </div>
+          <h1 id="slides">Slides</h1>
+          <p>Use esta página para anotar os exemplos 1 e 2 dos
+          slides.</p>
+          <p>[break]</p>
+          <h1 id="simulação">Simulação</h1>
+          <p>Agora vamos simular nós mesmos alguns exemplos. Queremos
+          fazer isso para entender o <strong>mecanismo da
+          recursão</strong>.</p>
+          <div class="warn">
+          <p>Como assim?</p>
+          <p>Simular não é necessariamente útil para encontrar problemas
+          em algoritmos recursivos. Porém, neste momento queremos
+          entender <strong>como</strong> a recursão acontece. Para
+          facilitar um pouco, vamos usar código <em>C</em> nesta
+          aula.</p>
+          </div>
+          <div class="sourceCode" id="cb1"><pre
+          class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> f<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> r <span class="op">=</span> f<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+          <p>[spacer]</p>
+          <div class="sourceCode" id="cb2"><pre
+          class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> bin<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> r <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> bin<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>    </span></code></pre></div>
+          <p>[break]</p>
+          <h1 id="uma-ideia-melhor">Uma ideia melhor</h1>
+          <p>Como vimos acima, simular algoritmos recursivos é um
+          processo lento, confuso e trabalhoso. Seria melhor se
+          tivéssemos uma maneira de entender algoritmos recursivos sem
+          precisar de tudo isso.</p>
+          <ol type="1">
+          <li>Para quais entradas não precisamos fazer chamada
+          recursiva?</li>
+          <li>O programa termina?</li>
+          <li>O programa funciona, supondo que as chamadas recursivas
+          retornam o valor correto?</li>
+          </ol>
+          <p>Vamos praticar fazer essas duas perguntas para alguns
+          algoritmos e com isso encontrar problemas e suas soluções.</p>
+          <div class="sourceCode" id="cb3"><pre
+          class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> acumula<span class="op">(</span><span class="dt">int</span> v<span class="op">[],</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    acumula<span class="op">(</span>v<span class="op">,</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    v<span class="op">[</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+=</span> v<span class="op">[</span>n <span class="op">-</span> <span class="dv">2</span><span class="op">];</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>   </span></code></pre></div>
+          <p><strong>Exercício</strong>: Para quais entradas não
+          precisamos fazer chamada recursiva?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: O programa termina?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: O programa funciona, supondo
+          que as chamadas recursivas retornam o valor correto?</p>
+          <p>[line-spacer]</p>
+          <p>[break]</p>
+          <p>O programa abaixo recebe um array <code>v</code> e dois
+          números <code>l</code> e <code>r</code>. Ele checa se o array
+          é simétrico no intervalo de elementos <code>[l, r]</code>. Ou
+          seja, todos os elementos entre <code>l</code> e
+          <code>r</code>, <strong>incluindo</strong> o
+          <code>r</code>.</p>
+          <div class="sourceCode" id="cb4"><pre
+          class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> simetrico<span class="op">(</span><span class="dt">int</span> v<span class="op">[],</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>l <span class="op">&gt;=</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v<span class="op">[</span>l<span class="op">]</span> <span class="op">==</span> v<span class="op">[</span>r<span class="op">]</span> <span class="op">&amp;&amp;</span> simetrico<span class="op">(</span>v<span class="op">,</span> l <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+          <p><strong>Exercício</strong>: Para quais entradas não
+          precisamos fazer chamada recursiva?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: O programa termina?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: O programa funciona, supondo
+          que as chamadas recursivas retornam o valor correto?</p>
+          <p>[line-spacer]</p>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

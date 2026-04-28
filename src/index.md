@@ -1,23 +1,24 @@
 ---
 title: Técnicas de Programação
-subtitle: 2026.1
+subtitle: 2026.2
 ...
 
 # Avisos
 
-- **09/02**: **Nesta disciplina, é proibida a utilização de ferramentas e plugins de IA generativa (IAg) em todas as atividades, pois a avaliação dos objetivos de aprendizagem é baseada no raciocínio lógico do próprio aluno.**
+- **Nesta disciplina, é proibida a utilização de ferramentas e plugins de IA generativa (IAg) em todas as atividades, pois a avaliação dos objetivos de aprendizagem é baseada no raciocínio lógico do próprio aluno.**
 
 **Links importantes**:
 
-- [Avisos (blackboard)](https://insper.blackboard.com/ultra/courses/_52842_1/announcements)
+<!-- - [Avisos (blackboard)](https://insper.blackboard.com/ultra/courses/_52842_1/announcements) -->
 - [Exercícios (prairie learn)](https://us.prairielearn.com/pl/course_instance/210064)
 - [Plano de aulas](./plano-de-aulas.xlsx)
-- [Grupos do quiz1](./grupos-quiz1.csv)
+<!-- - [Grupos do quiz1](./grupos-quiz1.csv) -->
 
 # Equipe
 
 ::: equipe :::
-- ![Igor](css/igor.png) **Igor Montagner**
+- ![Marcio](css/marcio.jpeg) **Marcio F. Stabile Jr.**
+- ![Igor](css/igor.png) **Igor Montagner**  (~2026/1)
 - ![Cynthia](css/cynthia.jpeg) **Cynthia Naoko Yasutake** (2025/2)
 - ![Artur](css/artur.jpeg) **Artur Alvares Cruz Lopes** (2025/2)
 - ![Pertusi](css/pertusi.png) **Pedro Vaz Pertusi** (2025/1)
@@ -98,7 +99,7 @@ Atividades de aula estão organizadas em grandes tópicos que serão abordados e
 [pseudo-handout2]: 00-java/handout-dia2.pdf
 [pseudo-handout3]: 00-java/handout-dia3.pdf
 
-# 01 - Buscas em Arrays
+## 01 - Buscas em Arrays
 
 [Exercícios de simulação](https://us.prairielearn.com/pl/course_instance/210064/assessment/2644448){ .button }
 
@@ -207,11 +208,11 @@ Atividades de aula estão organizadas em grandes tópicos que serão abordados e
 
 **Labirinto e caminhos**:
 
-- https://leetcode.com/problems/number-of-islands/
-- https://leetcode.com/problems/surrounded-regions/
-- https://leetcode.com/problems/max-area-of-island/
+- [Number of Islands](https://leetcode.com/problems/number-of-islands/)
+- [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/)
+- [Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
 
 # Materiais antigos
 
 1. [2025-2](./2025-2.zip)
-2. Materiais anteriores estão disponíveis [neste link](https://github.com/insper/tecnicas-de-programacao). 
+2. Materiais anteriores estão disponíveis [neste link](https://insper.github.io/tecnicas-de-programacao/).

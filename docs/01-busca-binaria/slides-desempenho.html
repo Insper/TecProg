@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> - </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+         - 
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#técnicas-de-programação"
+          id="toc-técnicas-de-programação">Técnicas de
+          Programação</a></li>
+          <li><a href="#perguntas-importantes"
+          id="toc-perguntas-importantes">Perguntas importantes</a></li>
+          <li><a href="#algoritmos-de-busca"
+          id="toc-algoritmos-de-busca">Algoritmos de busca</a></li>
+          <li><a
+          href="#em-termos-de-número-de-operações-esses-algoritmos-são-equivalentes"
+          id="toc-em-termos-de-número-de-operações-esses-algoritmos-são-equivalentes">Em
+          termos de número de operações, esses algoritmos são
+          equivalentes?</a></li>
+          <li><a href="#definições"
+          id="toc-definições">Definições</a></li>
+          <li><a href="#definições-ii" id="toc-definições-ii">Definições
+          II</a></li>
+          <li><a href="#definições-iii"
+          id="toc-definições-iii">Definições III</a></li>
+          <li><a href="#exercício" id="toc-exercício">Exercício</a></li>
+          <li><a href="#notação-mathcalo"
+          id="toc-notação-mathcalo">Notação <span
+          class="math inline">𝒪</span></a></li>
+          <li><a href="#classes-de-algoritmos"
+          id="toc-classes-de-algoritmos">Classes de algoritmos</a></li>
+          <li><a href="#exercício-1"
+          id="toc-exercício-1">Exercício</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <!-- _class: front -->
+          <h1 id="técnicas-de-programação">Técnicas de Programação</h1>
+          <h2 id="busca-em-vetores">Busca em vetores</h2>
+          <hr />
+          <h1 id="perguntas-importantes">Perguntas importantes</h1>
+          <ol type="1">
+          <li>Como representar um algoritmo sem código?</li>
+          <li>Quantas operações esse algoritmo realiza?</li>
+          <li>Dado um algoritmo incorreto, como mostrar que ele está
+          errado?</li>
+          </ol>
+          <hr />
+          <h1 id="algoritmos-de-busca">Algoritmos de busca</h1>
+          <ul>
+          <li>busca sequencial</li>
+          <li>busca binária</li>
+          </ul>
+          <hr />
+          <h1
+          id="em-termos-de-número-de-operações-esses-algoritmos-são-equivalentes">Em
+          termos de número de operações, esses algoritmos são
+          equivalentes?</h1>
+          <h2
+          id="vamos-sempre-contar-o-número-de-operações-no-pior-caso">Vamos
+          sempre contar o número de operações <strong>no pior
+          caso</strong></h2>
+          <hr />
+          <h1 id="definições">Definições</h1>
+          <p>Dado um array de tamanho <span
+          class="math inline"><em>n</em></span>, seja</p>
+          <ul>
+          <li><span class="math inline"><em>f</em>(<em>n</em>)</span> o
+          número de operações feitas pela busca sequencial no pior
+          caso</li>
+          <li><span class="math inline"><em>g</em>(<em>n</em>)</span> o
+          número de operações feitas pela busca binária no pior
+          caso</li>
+          </ul>
+          <p><span
+          class="math display"><em>f</em>(<em>n</em>) &gt; 0, <em>g</em>(<em>n</em>) &gt; 0  ∀<em>n</em> &gt; 0</span></p>
+          <hr />
+          <h2 id="definições-1">Definições</h2>
+          <p><strong>Pergunta</strong>: Conforme <span
+          class="math inline"><em>n</em></span> aumenta, <span
+          class="math inline"><em>f</em>(<em>n</em>)</span></p>
+          <ol type="1">
+          <li>cresce mais rápido</li>
+          <li>de maneira equivalente</li>
+          <li>mais lentamente</li>
+          </ol>
+          <p>que <span
+          class="math inline"><em>g</em>(<em>n</em>)</span>?</p>
+          <hr />
+          <h1 id="definições-ii">Definições II</h1>
+          <p>Vamos usar limites pra isso!</p>
+          <p><span class="math display">$$
+          \lim_{n\rightarrow+\infty} \frac{f(n)}{g(n)}
+          $$</span></p>
+          <p>Qual o valor desse limite se <span
+          class="math inline"><em>f</em>(<em>n</em>)</span> for ____ que
+          <span class="math inline"><em>g</em>(<em>n</em>)</span>?</p>
+          <ol type="1">
+          <li>mais rápido?</li>
+          <li>equivalente?</li>
+          <li>mais lento?</li>
+          </ol>
+          <hr />
+          <h1 id="definições-iii">Definições III</h1>
+          <ol type="1">
+          <li><strong>mais rápido</strong>:</li>
+          </ol>
+          <p><span class="math display">$$
+          \lim_{n\rightarrow+\infty} \frac{f(n)}{g(n)} = +\infty
+          $$</span> 2. <strong>equivalente</strong></p>
+          <p><span class="math display">$$
+          0 &lt; \lim_{n\rightarrow+\infty} \frac{f(n)}{g(n)} &lt;
+          +\infty
+          $$</span></p>
+          <ol start="3" type="1">
+          <li><strong>mais lento</strong>:</li>
+          </ol>
+          <p><span class="math display">$$
+          \lim_{n\rightarrow+\infty} \frac{f(n)}{g(n)} = 0
+          $$</span></p>
+          <hr />
+          <h1 id="exercício">Exercício</h1>
+          <ol type="1">
+          <li>escrever juntos os algoritmos “oficiais” das buscas
+          sequenciais e binária</li>
+          <li><strong>Parte 1</strong> do handout de hoje. (10-15
+          minutos)</li>
+          <li>Discussão na lousa</li>
+          </ol>
+          <hr />
+          <h1 id="notação-mathcalo">Notação <span
+          class="math inline">𝒪</span></h1>
+          <p>Dada uma função <span
+          class="math inline"><em>g</em>(<em>n</em>)</span>, dizemos que
+          uma função <span
+          class="math inline"><em>f</em>(<em>n</em>)</span> é <span
+          class="math inline">𝒪(<em>g</em>(<em>n</em>))</span> se e se
+          somente se</p>
+          <ol type="1">
+          <li><p>$ _{n+} &lt; + $</p></li>
+          <li><p><span class="math inline"><em>f</em></span> e <span
+          class="math inline"><em>g</em></span> satisfazem <span
+          class="math inline"><em>f</em>(<em>n</em>) &gt; 0, <em>g</em>(<em>n</em>) &gt; 0,  ∀<em>n</em> &gt; 0</span></p></li>
+          </ol>
+          <hr />
+          <h1 id="classes-de-algoritmos">Classes de algoritmos</h1>
+          <ul>
+          <li><span
+          class="math inline">𝒪(log<sub>2</sub><em>n</em>)</span> -
+          dividem a entrada em duas partes e ignoram metade dela a cada
+          iteração</li>
+          <li><span class="math inline">𝒪(<em>n</em>)</span> - olham
+          <span class="math inline"><em>c</em></span> vezes para cada
+          elemento da entrada, com <span
+          class="math inline"><em>c</em></span> constante</li>
+          <li><span class="math inline">𝒪(<em>n</em><sup>2</sup>)</span>
+          - loop duplo. Exemplo mais comum é olhar novamente para todo
+          array a cada elemento.</li>
+          </ul>
+          <p>Existem diferenças de tempo de execução entre algoritmos da
+          mesma classe, mas essa diferença não depende do tamanho <span
+          class="math inline"><em>n</em></span> da entrada. Para
+          algoritmos de classes diferentes a diferença de tempo
+          <strong>aumenta</strong> de maneira dependente de <span
+          class="math inline"><em>n</em></span>.</p>
+          <hr />
+          <h1 id="exercício-1">Exercício</h1>
+          <ol type="1">
+          <li><strong>Parte 2</strong> do handout</li>
+          <li>implementações dos algoritmos no PrarieLearn</li>
+          </ol>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

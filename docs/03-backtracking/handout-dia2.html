@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mochila Binária - primeiras soluções - Técnicas de
+Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Mochila Binária - primeiras soluções - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <p>Vimos na parte expositiva que a mochila binária é um
+          problema complexo e vamos tentar algumas soluções simples para
+          sua resolução. Duas soluções razoáveis e úteis são</p>
+          <ol type="1">
+          <li>selecionar os objetos mais caros primeiro. Se houver
+          empate, selecione o de menor índice primeiro.</li>
+          <li>selecionar os objetos mais leves primeiro. Se houver
+          empate, selecione o de menor índice primeiro.</li>
+          </ol>
+          <p>Em todos os algoritmos (e implementações deste módulo
+          receberemos como argumentos:</p>
+          <ol type="1">
+          <li><code>N</code> - número de objetos</li>
+          <li><code>C</code> - capacidade máxima da nossa mochila</li>
+          <li><code>V</code> - array com o valor de cada objeto</li>
+          <li><code>P</code> - array com o peso de cada objeto</li>
+          </ol>
+          <p>A saída de cada algoritmo será</p>
+          <ol type="1">
+          <li><code>O</code> - array de <code>VERDADEIRO/FALSO</code>
+          indicando se o objeto <code>I</code> foi selecionado</li>
+          <li><code>VALOR_TOTAL</code></li>
+          <li><code>PESO_TOTAL</code>, que deverá ser menor que
+          <code>C</code></li>
+          </ol>
+          <h2 id="mais-caro-primeiro">Mais caro primeiro</h2>
+          <p>A ideia desta heurística é não deixar nenhum objeto valioso
+          para trás! Por isso vamos ser ganaciosos e pegar
+          <strong>primeiro os objetos mais caros</strong>! Se um objeto
+          valioso não couber passamos para os mais baratos e
+          prosseguimos até examinar todos objetos.</p>
+          <div class="tip">
+          <p>Relembrando…</p>
+          <p>Repare que aqui usaremos a mesma ideia do
+          <em>SLEXSORT</em>: ordenamos um array de índices com base no
+          valor de outro array (peso ou valor).</p>
+          </div>
+          <p>Diferente do <em>SLEXSORT</em>, não podemos mexer nos
+          arrays <code>V</code> e <code>P</code>. Por isso, vamos criar
+          um novo array <code>IDS</code> contendo os índices tal que
+          <span
+          class="math inline"><em>V</em>[<em>I</em><em>D</em><em>S</em>[<em>i</em>]] ≥ <em>V</em>[<em>I</em><em>D</em><em>S</em>[<em>j</em>]]  ∀<em>i</em> &lt; <em>j</em></span>.
+          Ou seja, o <span
+          class="math inline"><em>I</em><em>D</em><em>S</em>[0]</span>
+          contém o índice do maior elemento de <span
+          class="math inline"><em>V</em></span>, <span
+          class="math inline"><em>I</em><em>D</em><em>S</em>[1]</span>
+          contém o índice do segundo maior e assim por diante. No
+          algoritmo, vamos nos referir a esse passo como
+          <code>ORDENAR IDS USANDO COMO CHAVE O ARRAY V</code>.</p>
+          <p>Essa ideia se chama <strong>ordenação indireta</strong>. Ao
+          invés de ordenar <code>IDS</code> por seu valor, o faremos
+          usando o valor de um segundo array. Quando formos comparar os
+          índices <code>I</code> e <code>J</code> de <code>IDS</code>
+          faremos a comparação entre <code>V[IDS[I]</code> e
+          <code>V[IDS[J]]</code>. Ou seja, no fim <code>IDS</code>
+          contém os índices de elementos de <code>V</code> tal que a
+          ordem desses elementos é (de)cresente.</p>
+          <div class="tip">
+          <p>Usos de ordenação indireta</p>
+          <p>Esse truque é muito útil quando precisamos ordenar uma
+          lista de elementos mas não podemos mexer no array/lista que
+          guarda esses elementos.</p>
+          </div>
+          <p>[break]</p>
+          <p><strong>Exercício</strong>: Complete o pseudo código abaixo
+          para implementar essa ideia.</p>
+          <pre><code>MAIS_CARO(N, C, V, P)
+
+IDS &lt;- ARRAY ordenado como descrito acima 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+          <p><strong>Exercício</strong>: Qual a complexidade
+          computacional do algoritmo <code>MAIS-CARO</code>? Qual é a
+          operação mais cara feita?</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <h2 id="mais-leve-primeiro">Mais leve primeiro</h2>
+          <p>Vamos testar uma abordagem oposta: <strong>quantidade agora
+          é o foco</strong>. Por isso vamos ser práticos e pegar
+          <strong>o maior número de objetos possível</strong>!
+          Começaremos agora pelos objetos mais leves e vamos torcer para
+          que a quantidade grande de objetos selecionados resulte em uma
+          mochila com alto valor.</p>
+          <p><strong>Exercício</strong>: Escreva abaixo um algoritmo em
+          pseudo-código para implementar a heurística descrita
+          acima.</p>
+          <pre><code>MAIS_LEVE(N, C, V, P)
+
+IDS &lt;- ARRAY criado com ordenação indireta usando P
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+          <p>Você deve ter percebido que as mudanças foram mínimas! Isso
+          ocorre pois só mudamos o critério de preenchimento da mochila.
+          O algoritmo em sí é o mesmo.</p>
+          <p>[break]</p>
+          <h2 id="analisando-nossas-soluções">Analisando nossas
+          soluções</h2>
+          <p><strong>Exercício</strong>: Crie uma entrada em que a
+          heurística do mais valioso seja muito melhor que a do mais
+          leve. Escreva abaixo as saídas de cada programa.</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Crie uma entrada em que a
+          heurística do mais leve seja muito melhor que a do mais
+          valioso. Escreva abaixo as saídas de cada programa.</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Com base nas suas respostas
+          acima, em quais situações a heurística do mais valioso é
+          melhor?</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Com base nas suas respostas
+          acima, em quais situações a heurística do mais leve é
+          melhor?</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

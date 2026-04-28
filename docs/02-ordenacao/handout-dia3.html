@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Algoritmos Rápidos de Ordenação - Técnicas de
+Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Algoritmos Rápidos de Ordenação - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <p>Neste atividade vamos estudar os passos 1 e 2 do algoritmo
+          <em>Quick sort</em>, que é definido pela seguinte ideia em
+          alto nível:</p>
+          <ol type="1">
+          <li>escolha um elemento do vetor (pode ser o primeiro). Vamos
+          chamar ele de <strong>pivô</strong></li>
+          <li>coloque o <strong>pivô</strong> no lugar certo em termos
+          de ordenação.
+          <ul>
+          <li>índice <code>i</code> tal que todo <span
+          class="math inline"><em>A</em>[<em>j</em>] ≤ <em>A</em>[<em>i</em>], <em>j</em> &lt; <em>i</em></span></li>
+          <li>índice <code>i</code> tal que todo <span
+          class="math inline"><em>A</em>[<em>j</em>] &gt; <em>A</em>[<em>i</em>], <em>j</em> &gt; <em>i</em></span></li>
+          </ul></li>
+          <li>ordene a parte à esquerda de <code>i</code></li>
+          <li>ordene a parte à direita de <code>i</code></li>
+          </ol>
+          <p>Vamos <strong>particionar</strong> o array em torno de um
+          elemento <strong>pivô</strong>. Supondo que
+          <strong>pivô</strong> tenha sido movido para a posição <span
+          class="math inline"><em>i</em></span>, teremos duas
+          partes:</p>
+          <ol type="1">
+          <li>uma parte esquerda no intervalo início até <span
+          class="math inline"><em>i</em></span></li>
+          <li>uma parte direita no intervalo <span
+          class="math inline"><em>i</em> + 1</span> até o fim</li>
+          </ol>
+          <p>Note que, como o pivô já está na posição correta, ele não
+          entra em nenhum das duas partes. Resta então pensar em como
+          fazer essa partição de modo que, se o lugar certo do pivô é a
+          posição <span class="math inline"><em>i</em></span>,</p>
+          <ul>
+          <li><span
+          class="math inline"><em>A</em>[<em>i</em>] &gt; <em>A</em>[<em>j</em>]</span>
+          se <span
+          class="math inline"><em>i</em> &gt; <em>j</em></span></li>
+          <li><span
+          class="math inline"><em>A</em>[<em>i</em>] &lt; <em>A</em>[<em>j</em>]</span>
+          se <span
+          class="math inline"><em>i</em> &lt; <em>j</em></span></li>
+          </ul>
+          <p>Chamaremos os passos <em>1</em> e <em>2</em> de
+          <code>PARTICIONA(A, ini, fim)</code>. Vamos então tentar
+          simular a seguinte ideia para estes passos:</p>
+          <ol type="1">
+          <li>vamos usar a variável <span
+          class="math inline"><em>l</em><em>p</em> = <em>i</em><em>n</em><em>i</em></span>
+          para marcar lugar atual do pivô no subarray <span
+          class="math inline">[<em>i</em><em>n</em><em>i</em>, <em>f</em><em>i</em><em>m</em>)</span></li>
+          <li>começamos então a percorrer o subarray, usando <span
+          class="math inline"><em>j</em> ← <em>i</em><em>n</em><em>i</em> + 1</span>
+          <strong>to</strong> <span
+          class="math inline"><em>f</em><em>i</em><em>m</em></span>,
+          sendo que <span class="math inline"><em>j</em></span> marca o
+          elemento atual.
+          <ol type="1">
+          <li>se o valor do elemento atual for <strong>maior</strong>
+          que o valor do pivô, não faça nada</li>
+          <li>se o valor do elemento atual for <strong>menor</strong>
+          que o valor do pivô,
+          <ol type="1">
+          <li>aumente um em <span
+          class="math inline"><em>l</em><em>p</em></span></li>
+          <li>troque <span
+          class="math inline"><em>A</em>[<em>j</em>]</span> com <span
+          class="math inline"><em>A</em>[<em>l</em><em>p</em>]</span></li>
+          </ol></li>
+          </ol></li>
+          <li>troque <span
+          class="math inline"><em>A</em>[<em>i</em><em>n</em><em>i</em>]</span>
+          com <span
+          class="math inline"><em>A</em>[<em>l</em><em>p</em>]</span></li>
+          </ol>
+          <p>Como anteriormente, vamos simular esse algoritmo para
+          entender melhor seu funcionamento. Desta vez ele não está em
+          pseudo código completamente, mas já está bem mais estruturado
+          e fácil de seguir do que se fosse descrito em texto
+          corrido.</p>
+          <p>[break]</p>
+          <p><strong>Exercício</strong>: Simule a ideia acima para o
+          array <span
+          class="math inline"><em>A</em> = [6, 3, 1, 2, 7, 5, 4, 8]</span>.
+          A primeira linha da simulação já foi preenchida (<span
+          class="math inline"><em>j</em> = 1</span>). Preencha o
+          restante da tabela escrevendo uma linha para cada valor de
+          <span class="math inline"><em>j</em></span> e o estado final
+          de <span class="math inline"><em>l</em><em>p</em></span> e
+          <span class="math inline"><em>A</em></span>.</p>
+          <table>
+          <colgroup>
+          <col style="width: 3%" />
+          <col style="width: 3%" />
+          <col style="width: 92%" />
+          </colgroup>
+          <thead>
+          <tr>
+          <th style="text-align: left;"><span
+          class="math inline"><em>j</em></span></th>
+          <th style="text-align: left;"><span
+          class="math inline"><em>l</em><em>p</em></span></th>
+          <th style="text-align: left;"><span
+          class="math inline"><em>A</em></span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: left;">1</td>
+          <td style="text-align: left;">1</td>
+          <td style="text-align: left;"><span
+          class="math inline"><em>A</em> = [6, 3, 1, 2, 7, 5, 4, 8]</span></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;">                        </td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <p><strong>Exercício</strong>: Agora simule para o array <span
+          class="math inline"><em>A</em> = [−2, 1, 2, 3, 466, 2]</span>.</p>
+          <table>
+          <colgroup>
+          <col style="width: 3%" />
+          <col style="width: 3%" />
+          <col style="width: 92%" />
+          </colgroup>
+          <thead>
+          <tr>
+          <th style="text-align: left;"><span
+          class="math inline"><em>j</em></span></th>
+          <th style="text-align: left;"><span
+          class="math inline"><em>l</em><em>p</em></span></th>
+          <th style="text-align: left;"><span
+          class="math inline"><em>A</em></span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;">                        </td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <p>[break]</p>
+          <p><strong>Exercício</strong>: Mais uma vez, mas agora simule
+          para o array <span
+          class="math inline"><em>A</em> = [500, 1, 2, 3, 466, 2]</span>.</p>
+          <table>
+          <colgroup>
+          <col style="width: 11%" />
+          <col style="width: 14%" />
+          <col style="width: 73%" />
+          </colgroup>
+          <thead>
+          <tr>
+          <th style="text-align: left;"><span
+          class="math inline"><em>j</em></span></th>
+          <th style="text-align: left;"><span
+          class="math inline"><em>l</em><em>p</em></span></th>
+          <th style="text-align: left;"><span
+          class="math inline"><em>A</em></span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;">                        </td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <p><strong>Exercício</strong>: e agora vamos formalizar esses
+          passos em um algoritmo escrito em pseudo código.</p>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

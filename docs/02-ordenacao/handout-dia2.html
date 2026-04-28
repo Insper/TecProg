@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Algoritimos (simples) de Ordenação II - Técnicas de
+Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Algoritimos (simples) de Ordenação II - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#selection-sort"
+          id="toc-selection-sort">Selection Sort</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <p>Em um primeiro momento, estudaremos dois algoritmos simples
+          de ordenação: <em>Bubble Sort</em> e <em>Selection Sort</em>.
+          Um dos nossos objetivos aqui é contar o número de
+          <strong>comparações</strong> feitas por esses algoritmos,
+          sempre considerando o <strong>pior caso</strong>.</p>
+          <h1 id="selection-sort">Selection Sort</h1>
+          <p>Vamos agora desenvolver um algoritmo a partir de uma ideia
+          de alto nível:</p>
+          <ol type="1">
+          <li>Comece encontrando o menor elemento do array. Troque ele
+          de posição com o elemento na posição <code>0</code>.</li>
+          <li>Faça o mesmo para a posição <code>1</code>, mas procurando
+          o mínimo agora a partir do elemento <code>1</code>. Troque
+          esse elemento com o da posição <code>1</code></li>
+          <li>Repita isso para todas as posições do array, sempre
+          tomando cuidado para pegar o mínimo da porção à direita da
+          posição atual.</li>
+          </ol>
+          <p>Vamos agora simular essa ideia para entendê-la melhor.</p>
+          <p><strong>Exercício</strong>: Simule a ideia acima para o
+          array <code>A = [3, 5, 4, 2]</code>. Você deve colocar uma
+          linha para cada iteração do algoritmo, ou seja, cada vez que é
+          feita uma troca entre o elemento atual e o menor da porção que
+          resta do array. Em cada linha escreva os índices que são
+          feitas a troca e o estado de <code>A</code> após a troca ser
+          feita. A primeira linha já está preenchida.</p>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: left;">Iteração</th>
+          <th style="text-align: left;">Índice Menor</th>
+          <th style="text-align: left;"><span
+          class="math inline"><em>A</em></span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: left;"><span
+          class="math inline">0</span></td>
+          <td style="text-align: left;"><span
+          class="math inline">3</span></td>
+          <td style="text-align: left;"><span
+          class="math inline"><em>A</em> = [2, 5, 4, 3]</span></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <p><strong>Exercício</strong>: Faça agora o mesmo para o array
+          <span
+          class="math inline"><em>A</em> = [5, 6, 8, 11, 13, 15]</span>.</p>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: left;">Iteração</th>
+          <th style="text-align: left;">Índice Menor</th>
+          <th style="text-align: left;"><span
+          class="math inline"><em>A</em></span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <p>[break]</p>
+          <p><strong>Exercício</strong>: Faça uma última simulação para
+          <span
+          class="math inline"><em>A</em> = [3, 7, 12, 0, −1, 4, 8]</span>.
+          Agora você já deve estar pegando o jeito!</p>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: left;">Iteração</th>
+          <th style="text-align: left;">Índice Menor</th>
+          <th style="text-align: left;"><span
+          class="math inline"><em>A</em></span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          <td style="text-align: left;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <p>O vídeo abaixo mostra uma simulação (dançada) para o array
+          <span
+          class="math inline">[3, 0, 1, 8, 7, 2, 5, 4, 9, 6]</span></p>
+          <figure>
+          <img src="qr-selection-sort.png" height="150"
+          alt="Simulação do algoritmo Selection Sort" />
+          <figcaption aria-hidden="true">Simulação do algoritmo
+          <em>Selection Sort</em></figcaption>
+          </figure>
+          <p>Revendo nossa simulação, podemos separa o algoritmo em
+          <strong>duas partes</strong>:</p>
+          <ol type="1">
+          <li>Calcular o mínimo para cada iteração <span
+          class="math inline"><em>i</em></span>. Só consideramos os
+          elementos a partir do índice <span
+          class="math inline"><em>i</em></span></li>
+          <li>Trocar <span class="math inline"><em>i</em></span> com o
+          mínimo e fazer até <span
+          class="math inline"><em>N</em> − 1</span> iterações do
+          algoritmo.</li>
+          </ol>
+          <p>[break]</p>
+          <p>Comece pelo passo 1, escrevendo no espaço abaixo.</p>
+          <p>Agora faça a repetição para todas as posições do algoritmo
+          acima para todas as posições. Não se esqueça de realizar a
+          troca do elemento na posição atual com o menor daquele
+          subarray.</p>
+          <p>[break]</p>
+          <p>Temos aqui um algoritmo que chama outro. Vamos construir
+          nosso argumento pouco a pouco.</p>
+          <p><strong>Exercício</strong>: Dado um array de tamanho <span
+          class="math inline"><em>N</em></span>, quantas vezes o loop do
+          algoritmo <em>SelectionSort</em> roda? Logo, quantas vezes
+          <em>MenorDoSubArray</em> é chamada?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Agora vamos olhar para o
+          algoritmo <em>MenorDoSubArray</em>. Para um array de tamanho
+          <span class="math inline"><em>N</em></span> e passando <span
+          class="math inline"><em>i</em> = 4</span>, quantas iterações
+          são feitas dentro do loop? E para <span
+          class="math inline"><em>i</em> = 6</span>? Escreve o número de
+          iterações em termos de <span
+          class="math inline"><em>N</em></span> e <span
+          class="math inline"><em>i</em></span> genéricos.</p>
+          <p>[line-spacer]</p>
+          <p><strong>Desafio</strong>: Agora calcule quantas operações
+          são feitas no total para um array de tamanho <span
+          class="math inline"><em>N</em></span>. Junte ambos os
+          exercícios acima em uma expressão só e calcule seu valor em
+          termos de <span class="math inline"><em>N</em></span>.</p>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

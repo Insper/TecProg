@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Condicionais e Loops - Técnicas de Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Condicionais e Loops - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <div class="tip">
+          <p>Para cada algoritmo abaixo:</p>
+          <ol type="1">
+          <li>leia o pseudo código</li>
+          <li>simule seu funcionamento usando as entradas de
+          exemplo</li>
+          <li>confira o resultado usando os testes no exercício do
+          PrairieLearn</li>
+          <li>use o <em>CheatSheet</em> para converter o pseudo código
+          para Java</li>
+          </ol>
+          </div>
+          <h2 id="área-do-triângulo">Área do triângulo</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>b</em> = 3, <em>h</em> = 5</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>b</em> = 9.5, <em>h</em> = 4</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 3</strong>: <span
+          class="math inline"><em>b</em> = 3, <em>h</em> = 5.8</span></p>
+          <p>[break]</p>
+          <h2 id="lançamento-de-projétil">Lançamento de projétil</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline">$V=\sqrt{9.8}, \theta=\pi/6,
+          Y_0=1$</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>V</em> = 20, <em>θ</em> = <em>π</em>/4, <em>Y</em><sub>0</sub> = 1</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 3</strong>: <span
+          class="math inline"><em>V</em> = 30, <em>θ</em> = <em>π</em>/3, <em>Y</em><sub>0</sub> = 1</span></p>
+          <p>[break]</p>
+          <h2 id="fizzbuzz">FizzBuzz</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>N</em> = 7</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>N</em> = 22</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 3</strong>: <span
+          class="math inline"><em>N</em> = 150</span></p>
+          <p>[break]</p>
+          <h2 id="jaca-wars">Jaca Wars</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>V</em> = 40, <em>θ</em> = 15<sup><em>o</em></sup></span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>V</em> = 40, <em>θ</em> = 40<sup><em>o</em></sup></span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 3</strong>: <span
+          class="math inline"><em>V</em> = 31.5, <em>θ</em> = 45<sup><em>o</em></sup></span></p>
+          <p>[break]</p>
+          <h2 id="quantos-uns">Quantos Uns</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>N</em> = 5</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>N</em> = 11</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 3</strong>: <span
+          class="math inline"><em>N</em> = 6531</span></p>
+          <p>[break]</p>
+          <h2 id="estimando-valor-de-pi">Estimando valor de <span
+          class="math inline"><em>π</em></span></h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>N</em> = 3</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>N</em> = 4</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 3</strong>: <span
+          class="math inline"><em>N</em> = 10</span></p>
+          <p>[break]</p>
+          <h2 id="fatorial">Fatorial</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>N</em> = 4</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>N</em> = 5</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 3</strong>: <span
+          class="math inline"><em>N</em> = 8</span></p>
+          <p>[break]</p>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> - </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+         - 
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#enumeração-exaustiva"
+          id="toc-enumeração-exaustiva">Enumeração Exaustiva</a></li>
+          <li><a href="#problema" id="toc-problema">Problema</a></li>
+          <li><a href="#problema-exemplos-de-saída"
+          id="toc-problema-exemplos-de-saída">Problema (exemplos de
+          saída)</a></li>
+          <li><a href="#problema-tamanho-da-saída"
+          id="toc-problema-tamanho-da-saída">Problema (tamanho da
+          saída)</a></li>
+          <li><a
+          href="#e-se-implementar-com-n2-fixo-como-seria-o-algoritmo"
+          id="toc-e-se-implementar-com-n2-fixo-como-seria-o-algoritmo">E
+          se implementar com <span
+          class="math inline"><em>N</em> = 2</span> fixo? Como seria o
+          algoritmo?</a></li>
+          <li><a
+          href="#e-se-implementar-com-n3-fixo-como-seria-o-algoritmo"
+          id="toc-e-se-implementar-com-n3-fixo-como-seria-o-algoritmo">E
+          se implementar com <span
+          class="math inline"><em>N</em> = 3</span> fixo? Como seria o
+          algoritmo?</a></li>
+          <li><a href="#o-número-de-for-aninhados-é-o-parâmetro"
+          id="toc-o-número-de-for-aninhados-é-o-parâmetro">O número de
+          <code>for</code> aninhados é o parâmetro!</a></li>
+          <li><a href="#recursão" id="toc-recursão">Recursão</a></li>
+          <li><a
+          href="#atividade-1-revisão-de-simulação-de-algoritmo-recursivos"
+          id="toc-atividade-1-revisão-de-simulação-de-algoritmo-recursivos">Atividade
+          1: revisão de simulação de algoritmo recursivos</a></li>
+          <li><a href="#exemplo-recursivo-para-n3"
+          id="toc-exemplo-recursivo-para-n3">Exemplo (recursivo) para
+          <span class="math inline"><em>N</em> = 3</span></a></li>
+          <li><a href="#pensando-em-recursão"
+          id="toc-pensando-em-recursão">Pensando em recursão</a></li>
+          <li><a href="#pensando-em-recursão-1"
+          id="toc-pensando-em-recursão-1">Pensando em recursão</a></li>
+          <li><a href="#pensando-em-recursão-2"
+          id="toc-pensando-em-recursão-2">Pensando em recursão</a></li>
+          <li><a href="#juntando-tudo-isso"
+          id="toc-juntando-tudo-isso">Juntando tudo isso</a></li>
+          <li><a
+          href="#atividade-2---implementação-conferência-da-saída"
+          id="toc-atividade-2---implementação-conferência-da-saída">Atividade
+          2 - implementação + conferência da saída</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <!-- _class: front -->
+          <h1 id="enumeração-exaustiva">Enumeração Exaustiva</h1>
+          <h2 id="técnicas-de-programação">Técnicas de Programação</h2>
+          <hr />
+          <h1 id="problema">Problema</h1>
+          <p>Enumerar todas as sequências de DNA com tamanho até <span
+          class="math inline"><em>N</em></span></p>
+          <ul>
+          <li>cada caractere pode ser <code>A, T, C, G</code></li>
+          <li>exemplos:
+          <ul>
+          <li>“AATC”</li>
+          <li>“TG”</li>
+          <li>“AA”</li>
+          </ul></li>
+          </ul>
+          <hr />
+          <h1 id="problema-exemplos-de-saída">Problema (exemplos de
+          saída)</h1>
+          <h2 id="n1"><span
+          class="math inline"><em>N</em> = 1</span></h2>
+          <p><span class="height: 4em; display: block;"> </span></p>
+          <h2 id="n2"><span
+          class="math inline"><em>N</em> = 2</span></h2>
+          <hr />
+          <h1 id="problema-tamanho-da-saída">Problema (tamanho da
+          saída)</h1>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: center;"><span
+          class="math inline"><em>N</em> = 1</span></th>
+          <th style="text-align: center;"><span
+          class="math inline"><em>N</em> = 2</span></th>
+          <th style="text-align: center;"><span
+          class="math inline"><em>N</em> = 3</span></th>
+          <th style="text-align: center;">………..</th>
+          <th style="text-align: center;"><span
+          class="math inline"><em>N</em> = ??</span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: center;"> </td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <hr />
+          <h1 id="e-se-implementar-com-n2-fixo-como-seria-o-algoritmo">E
+          se implementar com <span
+          class="math inline"><em>N</em> = 2</span> fixo? Como seria o
+          algoritmo?</h1>
+          <hr />
+          <h1 id="e-se-implementar-com-n3-fixo-como-seria-o-algoritmo">E
+          se implementar com <span
+          class="math inline"><em>N</em> = 3</span> fixo? Como seria o
+          algoritmo?</h1>
+          <hr />
+          <!-- _class: front -->
+          <h1 id="o-número-de-for-aninhados-é-o-parâmetro">O número de
+          <code>for</code> aninhados é o parâmetro!</h1>
+          <hr />
+          <h1 id="recursão">Recursão</h1>
+          <h2
+          id="algoritmo-que-chama-a-si-mesmo-uma-ou-mais-vezes">algoritmo
+          que <strong>chama a si mesmo</strong> uma ou mais vezes</h2>
+          <h2 id="passando-uma-instância-menor-do-problema">passando uma
+          instância <strong>menor</strong> do problema</h2>
+          <hr />
+          <!-- _class: front -->
+          <h1
+          id="atividade-1-revisão-de-simulação-de-algoritmo-recursivos">Atividade
+          1: revisão de simulação de algoritmo recursivos</h1>
+          <h2
+          id="exercícios-no-prairielearn---recursão-com-uma-chamada-só">Exercícios
+          no PrairieLearn - recursão com uma chamada só</h2>
+          <hr />
+          <h1 id="exemplo-recursivo-para-n3">Exemplo (recursivo) para
+          <span class="math inline"><em>N</em> = 3</span></h1>
+          <hr />
+          <h1 id="pensando-em-recursão">Pensando em recursão</h1>
+          <ol type="1">
+          <li>Para <span class="math inline"><em>N</em> = 1</span>,
+          precisamos de chamada recursiva?</li>
+          </ol>
+          <hr />
+          <h1 id="pensando-em-recursão-1">Pensando em recursão</h1>
+          <ol start="2" type="1">
+          <li>Quais seriam os parâmetros do nosso algoritmo?</li>
+          </ol>
+          <hr />
+          <h1 id="pensando-em-recursão-2">Pensando em recursão</h1>
+          <ol start="3" type="1">
+          <li>Para <span class="math inline"><em>N</em></span> qualquer,
+          quantas chamadas recursivas precisamos?</li>
+          </ol>
+          <hr />
+          <h1 id="juntando-tudo-isso">Juntando tudo isso</h1>
+          <hr />
+          <!-- _class: front -->
+          <h1
+          id="atividade-2---implementação-conferência-da-saída">Atividade
+          2 - implementação + conferência da saída</h1>
+          <h2
+          id="podem-usar-o-que-quiserem.-o-foco-é-pensar-nas-questões-da-atividade-de-hoje">Podem
+          usar o que quiserem. O foco é pensar nas questões da atividade
+          de hoje</h2>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

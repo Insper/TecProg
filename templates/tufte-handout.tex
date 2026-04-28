@@ -81,6 +81,12 @@ $hypersetup.latex()$
 \usepackage{algorithm2e}
 \RestyleAlgo{ruled}
 
+% Pandoc may emit \includegraphics[alt=...] for accessibility metadata.
+% Define this key so older/default LaTex graphic handlers do not fail.
+\makeatletter
+\define@key{Gin}{alt}[]{}
+\makeatother
+
 \title{$title$}
 \author{$for(author)$$author$$sep$ \and $endfor$}
 

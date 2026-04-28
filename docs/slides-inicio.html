@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> - </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+         - 
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#apresentação-da-disciplina"
+          id="toc-apresentação-da-disciplina">Apresentação da
+          disciplina</a></li>
+          <li><a href="#burocracias"
+          id="toc-burocracias">Burocracias</a></li>
+          <li><a href="#presença-e-atividades-em-sala"
+          id="toc-presença-e-atividades-em-sala">Presença e atividades
+          em sala</a></li>
+          <li><a href="#ia" id="toc-ia">IA</a></li>
+          <li><a href="#o-que-é-um-algoritmo"
+          id="toc-o-que-é-um-algoritmo">O que é um algoritmo?</a></li>
+          <li><a
+          href="#algoritmo-sequência-de-passos-finita-para-resolver-um-problema"
+          id="toc-algoritmo-sequência-de-passos-finita-para-resolver-um-problema">Algoritmo:
+          sequência de passos (finita) para resolver um
+          problema</a></li>
+          <li><a href="#algoritmos"
+          id="toc-algoritmos">Algoritmos</a></li>
+          <li><a href="#algoritmos-não-são"
+          id="toc-algoritmos-não-são">Algoritmos não são</a></li>
+          <li><a href="#desenvolver-algoritmos-é-resolver-problemas"
+          id="toc-desenvolver-algoritmos-é-resolver-problemas">Desenvolver
+          algoritmos é resolver problemas</a></li>
+          <li><a href="#que-tipo-de-problemas"
+          id="toc-que-tipo-de-problemas">Que tipo de problemas?</a></li>
+          <li><a href="#como-descrever-a-solução-de-um-problema"
+          id="toc-como-descrever-a-solução-de-um-problema">Como
+          descrever a solução de um problema?</a></li>
+          <li><a href="#como-descrever-a-solução-de-um-problema-1"
+          id="toc-como-descrever-a-solução-de-um-problema-1">Como
+          descrever a solução de um problema?</a></li>
+          <li><a href="#como-descrever-a-solução-de-um-problema-2"
+          id="toc-como-descrever-a-solução-de-um-problema-2">Como
+          descrever a solução de um problema?</a></li>
+          <li><a
+          href="#estratégias-de-solução-de-problemas-computacionais"
+          id="toc-estratégias-de-solução-de-problemas-computacionais">Estratégias
+          de solução de problemas computacionais</a></li>
+          <li><a href="#organização-do-curso"
+          id="toc-organização-do-curso">Organização do curso</a></li>
+          <li><a href="#horários" id="toc-horários">Horários</a></li>
+          <li><a href="#objetivos-de-aprendizagem-formal"
+          id="toc-objetivos-de-aprendizagem-formal">Objetivos de
+          Aprendizagem (formal)</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <!-- _class: front -->
+          <h1 id="apresentação-da-disciplina">Apresentação da
+          disciplina</h1>
+          <h2 id="técnicas-de-programação">Técnicas de Programação</h2>
+          <hr />
+          <h1 id="burocracias">Burocracias</h1>
+          <p>Todas informações estão no site</p>
+          <ul>
+          <li>provas</li>
+          <li>quizzes</li>
+          <li>plano de aulas</li>
+          <li>todos materiais</li>
+          </ul>
+          <hr />
+          <h1 id="presença-e-atividades-em-sala">Presença e atividades
+          em sala</h1>
+          <ul>
+          <li>Até 5 minutos do início, toda aula</li>
+          <li>Não funcionou? Avise no início da atividade prática</li>
+          <li>Pegou presença?
+          <ul>
+          <li><strong>Pode ir embora se quiser</strong></li>
+          <li>mas dá um <em>check</em> na lista perto da porta</li>
+          </ul></li>
+          <li>Se estiver atrapalhando vou pedir pra sair</li>
+          </ul>
+          <h2 id="na-sala-só-quem-está-estudando-a-matéria">Na sala, só
+          quem está estudando a matéria</h2>
+          <hr />
+          <h1 id="ia">IA</h1>
+          <p>Nosso objetivo aqui é <strong>aprender</strong>.
+          <em>genAI</em> não ajuda (necessariamente) a aprender.</p>
+          <ul>
+          <li>mas pode ajudar a terminar mais rápido</li>
+          <li>ou com menos esforço</li>
+          <li>ou até a não fazer algumas tarefas</li>
+          </ul>
+          <hr />
+          <!-- _class: quote -->
+          <blockquote>
+          <p>Suporte ou Colaboração sem <strong>autonomia</strong> é
+          dependência</p>
+          </blockquote>
+          <p>Igor Montagner</p>
+          <hr />
+          <!-- _class: front -->
+          <h1 id="o-que-é-um-algoritmo">O que é um algoritmo?</h1>
+          <hr />
+          <!-- _class: front -->
+          <h1
+          id="algoritmo-sequência-de-passos-finita-para-resolver-um-problema">Algoritmo:
+          sequência de passos (finita) para resolver um problema</h1>
+          <hr />
+          <h1 id="algoritmos">Algoritmos</h1>
+          <ul>
+          <li>é garantido que acaba</li>
+          <li>dá a resposta correta 100% das vezes</li>
+          <li>cada passo é bem definido</li>
+          <li>dada uma entrada, devolve sempre a mesma resposta</li>
+          <li>independe da linguagem de programação usada</li>
+          </ul>
+          <hr />
+          <h1 id="algoritmos-não-são">Algoritmos não são</h1>
+          <ol type="1">
+          <li>misteriosos</li>
+          <li>imprevisíveis</li>
+          <li>inexplicáveis</li>
+          <li>maliciosos</li>
+          </ol>
+          <hr />
+          <!-- _class: front -->
+          <h1
+          id="desenvolver-algoritmos-é-resolver-problemas">Desenvolver
+          algoritmos é resolver problemas</h1>
+          <hr />
+          <h1 id="que-tipo-de-problemas">Que tipo de problemas?</h1>
+          <ol type="1">
+          <li>Problemas de busca/decisão
+          <ul>
+          <li>Essa coleção de dados contém X?</li>
+          <li>Dadas essas restrições, a situação Y é possível?</li>
+          </ul></li>
+          <li>Problemas de Ordenação
+          <ul>
+          <li>Ranqueamento</li>
+          <li>Comparações, Igualdades</li>
+          </ul></li>
+          <li>Problemas de otimização
+          <ul>
+          <li>menor X, dado um conjunto de restrições</li>
+          <li>maior Y, dado um conjunto de restrições</li>
+          </ul></li>
+          </ol>
+          <hr />
+          <h1 id="como-descrever-a-solução-de-um-problema">Como
+          descrever a solução de um problema?</h1>
+          <hr />
+          <h1 id="como-descrever-a-solução-de-um-problema-1">Como
+          descrever a solução de um problema?</h1>
+          <ol type="1">
+          <li>Mudaremos a linguagem usada (Java)</li>
+          <li>Escreveremos algoritmos em <em>Pseudo Código</em></li>
+          </ol>
+          <blockquote>
+          <p>descrição de um algoritmo usando estruturas de controle
+          simplificadas com o objetivo de ser legível para pessoas. Pode
+          incluir trechos em linguagem natural e fórmulas matemáticas se
+          isso ajudar a compreensão.</p>
+          </blockquote>
+          <hr />
+          <h1 id="como-descrever-a-solução-de-um-problema-2">Como
+          descrever a solução de um problema?</h1>
+          <p><strong>Escrever solução de maneira que uma pessoa sem
+          conhecimento específico do algoritmo em questão consiga
+          simular sua execução</strong></p>
+          <hr />
+          <h1
+          id="estratégias-de-solução-de-problemas-computacionais">Estratégias
+          de solução de problemas computacionais</h1>
+          <ul>
+          <li>estruturas de dados</li>
+          <li>divisão e conquista</li>
+          <li>buscas por largura e profundidade</li>
+          <li>backtracking</li>
+          </ul>
+          <h2
+          id="adaptar-algoritmos-clássicos-que-usem-essas-estratégias-para-resolver-novos-problemas">Adaptar
+          algoritmos clássicos que usem essas estratégias para resolver
+          novos problemas</h2>
+          <hr />
+          <h1 id="organização-do-curso">Organização do curso</h1>
+          <ul>
+          <li>Módulos
+          <ul>
+          <li>inspirados em um problema “real”</li>
+          <li>exercícios de sala (pseudo código)</li>
+          <li>APS para entregar (código Java)</li>
+          </ul></li>
+          <li>2 provas (PI e PF) e 2 Quizzes</li>
+          </ul>
+          <hr />
+          <h1 id="horários">Horários</h1>
+          <ul>
+          <li><strong>SEGUNDA</strong>: 12:00</li>
+          <li><strong>QUARTA</strong>: 13:30</li>
+          <li>Atendimento <strong>QUARTA</strong>: 09:45</li>
+          </ul>
+          <hr />
+          <h1 id="objetivos-de-aprendizagem-formal">Objetivos de
+          Aprendizagem (formal)</h1>
+          <ol type="1">
+          <li>Implementar em Java um algoritmo descrito em alto
+          nível</li>
+          <li>Empregar Backtracking para resolver problemas
+          computacionais</li>
+          <li>Empregar a técnica Divisão e Conquista para resolver
+          problemas computacionais</li>
+          <li>Empregar estruturas de dados lineares (listas, matrizes,
+          pilhas, filas, mapeamentos, conjuntos) para resolver problemas
+          computacionais de maneira eficiente</li>
+          <li>Identificar como estratégias computacionais clássicas
+          (busca, ordenação, otimização) podem ser adaptadas para
+          resolver novos problemas computacionais</li>
+          <li>Estimar a complexidade computacional de um algoritmo
+          usando uma argumentação informal baseada na contagem de vezes
+          que uma linha executa</li>
+          </ol>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

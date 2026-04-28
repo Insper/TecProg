@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cheat Sheet Java - Parte 1 - Técnicas de Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Cheat Sheet Java - Parte 1 - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <!-- Escreveremos tudo em pseudo código nesta disciplina. Esta folha vai mostrar comandos em Java equivalentes para que possamos implementá-los corretamente. A coluna da esquerda sempre representa pseudo-código, enquanto a da direita sempre é código java. -->
+          <!-- Todas estruturas de controle (condicionais, loops, `print`) funcionam igual em Python, o que iremos fazer é **retirar as coisas específicas de Python** para que as ideias possam ser implementadas em qualquer linguagem. -->
+          <h2 id="algoritmos-variáveis-e-atribuições">Algoritmos,
+          Variáveis e Atribuições</h2>
+          <p>Toda variável e valor de retorno deverá ter seu tipo
+          declarado de maneira explícita. Veja abaixo uma tabela com as
+          equivalências de tipos.</p>
+          <table>
+          <thead>
+          <tr>
+          <th>Pseudo código</th>
+          <th>Java</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td>int</td>
+          <td>long</td>
+          </tr>
+          <tr>
+          <td>float</td>
+          <td>double</td>
+          </tr>
+          <tr>
+          <td>character</td>
+          <td>char</td>
+          </tr>
+          <tr>
+          <td>string</td>
+          <td>String</td>
+          </tr>
+          </tbody>
+          </table>
+          <div class="warn">
+          <p><strong>Atenção</strong></p>
+          <ol type="1">
+          <li>Divisão de <strong>int</strong> resultará sempre em um
+          <strong>int</strong> (como a operação <strong>//</strong> em
+          <em>Python</em>).</li>
+          <li>Operações que misturam <strong>int</strong> e
+          <strong>float</strong> fazem conversão para
+          <strong>float</strong>.</li>
+          </ol>
+          </div>
+          <p>A parte inicial de todo algoritmo descreve seu nome,
+          propósito, entradas e saídas. Veja abaixo um algoritmo que
+          recebe dois inteiros e devolve sua soma. Note que declaramos
+          os tipos das variáveis em <strong>Input</strong> e o tipo da
+          saída em <strong>Output</strong> e que descrevemos em
+          <strong>Result</strong> o que o algoritmo faz.</p>
+          <div class="side-by-side">
+          <div class="sourceCode" id="cb1"><pre
+          class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">long</span> <span class="fu">Exemplo1</span><span class="op">(</span><span class="dt">long</span> a<span class="op">,</span> <span class="dt">long</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> c <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> c<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+          </div>
+          <h2 id="condicionais-e-loops">Condicionais e Loops</h2>
+          <p>Indentação representa o conteúdo de um loop ou condicional.
+          Para facilitar, estamos usando a linha vertical para indicar
+          onde cada bloco acaba. Veja abaixo.</p>
+          <div class="side-by-side">
+          <div class="sourceCode" id="cb2"><pre
+          class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">long</span> <span class="fu">Exemplo2</span><span class="op">(</span><span class="dt">long</span> i<span class="op">,</span> <span class="dt">long</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> total <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> temp <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;=</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>i <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      total <span class="op">+=</span> temp<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      total <span class="op">-=</span> temp<span class="op">;</span>      </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    i<span class="op">++;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    temp <span class="op">*=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> total<span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+          </div>
+          <p>[break]</p>
+          <p>Loops <code>for</code> serão sempre
+          <strong>exclusivos</strong> em nossos algoritmos. Veja o
+          trecho abaixo.</p>
+          <div class="side-by-side">
+          <div class="sourceCode" id="cb3"><pre
+          class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// exemplo de for</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">5</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">...</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+          </div>
+          <h2 id="arrays">Arrays</h2>
+          <p>Um <em>Array</em> <code>A</code> é um tipo composto de um
+          número <strong>fixo</strong> de elementos, todos do mesmo
+          tipo. Usamos <code>A.length</code> para representar seu
+          tamanho. O primeiro elemento tem índice <code>0</code> e o
+          elemento <code>i</code> é acessado com <code>A[i]</code>. Veja
+          um exemplo de uso abaixo.</p>
+          <div class="side-by-side">
+          <div class="sourceCode" id="cb4"><pre
+          class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">double</span> <span class="fu">Exemplo2</span><span class="op">(</span><span class="dt">double</span><span class="op">[]</span> A<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> total <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> A<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    total <span class="op">+=</span> A<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> total <span class="op">/</span> A<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+          </div>
+          <h2 id="strings">Strings</h2>
+          <p>Java tem muitas funções de conveniência com Strings. Neste
+          disciplina iremos tratá-las como um array do tipo especial
+          <code>char</code>, que representa um único caractere. Veja
+          abaixo como passar por todos os caracteres de uma
+          <code>String</code> (em Java).</p>
+          <div class="side-by-side">
+          <div class="sourceCode" id="cb5"><pre
+          class="sourceCode java"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">String</span> S <span class="op">=</span> <span class="kw">...</span><span class="op">.;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> S<span class="op">.</span><span class="fu">length</span><span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// faz algo com</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  S<span class="op">.</span><span class="fu">charAt</span><span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+          </div>
+          <div class="warn">
+          <p><strong>Cuidado com <code>char</code> em Java</strong></p>
+          <ul>
+          <li><code>'a'</code> representa um único caractere (tipo
+          <code>char</code>)</li>
+          <li><code>"a"</code> representa uma string de tamanho 1 (tipo
+          <code>String</code>)</li>
+          </ul>
+          <p>Essas duas coisas são diferentes em Java e costumam dar
+          erros de compilação complicados.</p>
+          </div>
+          <h2 id="referências">Referências</h2>
+          <p>Todo array é recebido <em>por referência</em> em um
+          algoritmo. Ou seja, o comportamento padrão é que modificar
+          elementos de um array recebido como parâmetro em um algoritmo
+          modifica também o array “original” passado.</p>
+          <p>Strings são sempre imutáveis. Ou seja, não é possível fazer
+          uma atribuição e modificar o caractere no índice
+          <em>i</em>.</p>
+          <div class="warn">
+          <p><strong>Um valor para “vazio”</strong></p>
+          <p>O valor especial <code>NIL</code> representa a ideia de
+          <em>vazio</em> ou <em>inválido</em>. Ele pode ser usado tanto
+          para <em>string</em> quanto para <em>array</em>s. Em Java, ele
+          é representado pela constante <code>null</code>.</p>
+          </div>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

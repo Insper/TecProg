@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> - </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+         - 
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#caminhos-em-labirinto"
+          id="toc-caminhos-em-labirinto">Caminhos em Labirinto</a></li>
+          <li><a href="#revisão" id="toc-revisão">Revisão</a></li>
+          <li><a href="#busca-em-profundidade"
+          id="toc-busca-em-profundidade">Busca em Profundidade</a></li>
+          <li><a href="#o-que-é-um-caminho"
+          id="toc-o-que-é-um-caminho">O que é um caminho?</a></li>
+          <li><a href="#o-que-é-uma-vizinhança"
+          id="toc-o-que-é-uma-vizinhança">O que é uma
+          vizinhança?</a></li>
+          <li><a href="#definição-recursiva"
+          id="toc-definição-recursiva">Definição recursiva</a></li>
+          <li><a href="#definição-recursiva-ii"
+          id="toc-definição-recursiva-ii">Definição recursiva
+          II</a></li>
+          <li><a href="#definição-recursiva-iii"
+          id="toc-definição-recursiva-iii">Definição recursiva
+          III</a></li>
+          <li><a href="#essa-definição-é-circular"
+          id="toc-essa-definição-é-circular">Essa definição é
+          circular?</a></li>
+          <li><a href="#atividade-prática-desenvolvendo-uma-simulação"
+          id="toc-atividade-prática-desenvolvendo-uma-simulação">Atividade
+          prática: desenvolvendo uma simulação</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <!-- _class: front -->
+          <h1 id="caminhos-em-labirinto">Caminhos em Labirinto</h1>
+          <h2 id="técnicas-de-programação">Técnicas de Programação</h2>
+          <hr />
+          <pre><code>##########
+...#......
+.....o#...
+##########</code></pre>
+          <p>Tem um caminho até a saída?</p>
+          <hr />
+          <p>Tem um caminho até a saída?</p>
+          <pre><code>...........
+.....o.....
+...#####...
+...#####...
+...........
+...........</code></pre>
+          <hr />
+          <h1 id="revisão">Revisão</h1>
+          <h2
+          id="se-eu-encostar-a-mão-direita-na-parede-e-seguir-sempre-em-frente-eventualmente-chego-na-saída">Se
+          eu encostar a mão direita na parede e seguir sempre em frente,
+          eventualmente chego na saída</h2>
+          <ol type="1">
+          <li>algoritmo da mão direita é complicado….</li>
+          <li>e nem sempre acha a saída!</li>
+          </ol>
+          <hr />
+          <!-- _class: front -->
+          <h1 id="busca-em-profundidade">Busca em Profundidade</h1>
+          <hr />
+          <h1 id="o-que-é-um-caminho">O que é um caminho?</h1>
+          <p><strong>Definição</strong>:</p>
+          <hr />
+          <h1 id="o-que-é-uma-vizinhança">O que é uma vizinhança?</h1>
+          <p><strong>Definição</strong>: Dado uma casa <span
+          class="math inline"><em>c</em></span>,</p>
+          <ol type="1">
+          <li><span
+          class="math inline"><em>c</em><sub><em>E</em></sub></span> é a
+          casa à <strong>e</strong>squerda</li>
+          <li><span
+          class="math inline"><em>c</em><sub><em>D</em></sub></span> é a
+          casa à <strong>d</strong>ireita</li>
+          <li><span
+          class="math inline"><em>c</em><sub><em>C</em></sub></span> é a
+          casa a<strong>c</strong>ima</li>
+          <li><span
+          class="math inline"><em>c</em><sub><em>B</em></sub></span> é a
+          casa a<strong>b</strong>aixo</li>
+          </ol>
+          <hr />
+          <h1 id="definição-recursiva">Definição recursiva</h1>
+          <p>Dadas duas casas <span
+          class="math inline"><em>f</em></span> e <span
+          class="math inline"><em>d</em></span> e suponhamos que exista
+          caminho entre elas</p>
+          <h3
+          id="o-que-podemos-dizer-sobre-os-vizinhos-de-f-em-relação-a-d">O
+          que podemos dizer sobre os vizinhos de <span
+          class="math inline"><em>f</em></span> em relação a <span
+          class="math inline"><em>d</em></span>?</h3>
+          <hr />
+          <h1 id="definição-recursiva-ii">Definição recursiva II</h1>
+          <p>Dadas duas casas <span
+          class="math inline"><em>f</em></span> e <span
+          class="math inline"><em>d</em></span> e suponhamos que
+          <strong>não</strong> exista caminho entre elas</p>
+          <h3
+          id="o-que-podemos-dizer-sobre-os-vizinhos-de-f-em-relação-a-d-1">O
+          que podemos dizer sobre os vizinhos de <span
+          class="math inline"><em>f</em></span> em relação a <span
+          class="math inline"><em>d</em></span>?</h3>
+          <hr />
+          <h1 id="definição-recursiva-iii">Definição recursiva III</h1>
+          <p>Seja uma função <strong>recursiva</strong> <span
+          class="math inline"><em>C</em></span> tem dois argumentos e
+          devolve verdade se existe caminho entre elas.</p>
+          <p><span class="math display">$$
+          C(f, d) =
+          \begin{align}
+          \begin{cases} true &amp; se \\
+          true &amp; se \\[20pt]
+          false &amp; c.c
+          \end{cases}
+          \end{align}
+          $$</span></p>
+          <hr />
+          <h1 id="essa-definição-é-circular">Essa definição é
+          circular?</h1>
+          <p><span
+          class="math display">∃<em>C</em>(<em>f</em>, <em>d</em>) ⇔ ∃<em>C</em>(<em>f</em><sub><em>E</em></sub>, <em>d</em>) ⇔ ∃<em>C</em>(<em>f</em><sub><em>E</em><sub><em>D</em></sub></sub>, <em>d</em>) ⇔ .....</span></p>
+          <p>Afinal, <span
+          class="math inline"><em>f</em><sub><em>E</em><sub><em>D</em></sub></sub> = <em>f</em></span>!</p>
+          <hr />
+          <h1
+          id="atividade-prática-desenvolvendo-uma-simulação">Atividade
+          prática: desenvolvendo uma simulação</h1>
+          <p><strong>Partiremos das conclusões dos slides
+          acima</strong></p>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

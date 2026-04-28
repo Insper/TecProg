@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mochila Binária - solução ótima - Técnicas de
+Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Mochila Binária - solução ótima - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <p>Neste roteiro iremos responder à pergunta:</p>
+          <div class="info">
+          <p>Dada uma configuração da mochila com as variáveis abaixo,
+          conseguimos uma solução com valor maior que <em>X</em>?</p>
+          </div>
+          <p>Temos as seguintes informações:</p>
+          <ol type="1">
+          <li><code>N</code> - número de objetos</li>
+          <li><code>C</code> - capacidade máxima da nossa mochila</li>
+          <li><code>V</code> - array com o valor de cada objeto</li>
+          <li><code>P</code> - array com o peso de cada objeto</li>
+          </ol>
+          <p>e a saída do nosso algoritmo é</p>
+          <ol type="1">
+          <li><code>O</code> - array de <code>VERDADEIRO/FALSO</code>
+          indicando se o objeto <code>I</code> foi selecionado</li>
+          <li><code>VALOR_TOTAL</code></li>
+          <li><code>PESO_TOTAL</code>, que deverá ser menor que
+          <code>C</code></li>
+          </ol>
+          <h2 id="revisão-da-parte-expositiva">Revisão da parte
+          expositiva</h2>
+          <p>Vamos rever algumas características do nosso problema.</p>
+          <p><strong>Exercício</strong>: Em uma mochila com 13 objetos,
+          quantas são soluções possíveis?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Quais são os valores de
+          <code>N</code> que conseguimos resolver sem envolver
+          recursão?</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <p>A cada passo do algoritmo decidimos se selecionamos ou não
+          o objeto atual. Se selecionamos, resolvemos um novo problema
+          da mochila com capacidade menor (em função do objeto que
+          acabamos de selecionar) e com somente os objetos restantes. Se
+          não mantemos a capacidade e eliminamos o objeto atual da lista
+          de objetos. Suponha, para os próximos exercícios, que já
+          escolhemos <span class="math inline"><em>i</em> − 1</span>
+          objetos e estamos decidindo se selecionamos o objeto <span
+          class="math inline"><em>i</em></span>, de peso <span
+          class="math inline">10</span> e valor <span
+          class="math inline">5</span>. Nossa mochila ainda tem <span
+          class="math inline">50</span> de capacidade e o valor atual é
+          <span class="math inline">43</span>. Os objetos selecionados
+          estão colocados em um array <code>O</code>.</p>
+          <p><strong>Exercício</strong>: Se desejarmos
+          <strong>selecionar</strong> o objeto <span
+          class="math inline"><em>i</em></span>, como nossa solução
+          parcial será modificada? Qual será a capacidade restante e o
+          novo valor da mochila?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Se desejarmos <strong>não
+          selecionar</strong> o objeto <span
+          class="math inline"><em>i</em></span>, como nossa solução
+          parcial será modificada? Qual será a capacidade restante e o
+          novo valor da mochila?</p>
+          <p>[break]</p>
+          <p>Montamos juntos, em aulas anteriores, o algoritmo para
+          criar sequências de DNA de tamanho <code>N</code>. Reveja ele
+          abaixo.</p>
+          <pre><code>DNA(I, atual, N)
+
+if I = N then
+  print(atual)
+end
+
+DNA(I+1, atual + &quot;A&quot;, N)
+DNA(I+1, atual + &quot;T&quot;, N)
+DNA(I+1, atual + &quot;C&quot;, N)
+DNA(I+1, atual + &quot;G&quot;, N)</code></pre>
+          <p><strong>Exercício</strong>: Como você poderia adaptá-lo
+          para este novo problema? Considere que receberá os seguintes
+          parâmetros:</p>
+          <ol type="1">
+          <li><code>N</code> - número de objetos</li>
+          <li><code>C</code> - capacidade máxima da nossa mochila</li>
+          <li><code>V</code> - array com o valor de cada objeto</li>
+          <li><code>P</code> - array com o peso de cada objeto</li>
+          <li><code>O</code> - array de <code>VERDADEIRO/FALSO</code>
+          indicando se o objeto <code>I</code> foi selecionado.
+          Representa a solução atualmente encontrada</li>
+          <li><code>VO</code> - valor atual dos objetos selecionados em
+          <code>O</code></li>
+          <li><code>I</code> - objeto atual</li>
+          </ol>
+          <p>Considere que a primeira chamada é feita com
+          <code>O = [false, false, ....], VO=0, I=0</code>.</p>
+          <p>Por enquanto, seu programa deve dar <code>print</code> de
+          todas as mochilas possívels, junto com seu valor e peso. O
+          algoritmo não devolve valor nenhum.</p>
+          <pre><code>MOCHILA(N, V, P, O, C, VO, I)
+
+# Caso em que não precisa fazer chamada recursiva vai aqui
+
+
+
+
+
+
+# Caso em que adicionamos o elemento I
+
+
+
+
+
+
+
+
+
+# Caso em que não adicionamos o elemento I
+
+
+
+
+
+  </code></pre>
+          <p>[break]</p>
+          <h2 id="e-para-guardar-a-solução">E para guardar a
+          solução?</h2>
+          <p>Guardar a solução ótima é “fácil”. Vamos começar com uma
+          ideia simples: adicione um novo parâmetro <code>MelhorO</code>
+          ao seu algoritmo e, toda vez que completar uma solução,
+          compare-a com <code>MelhorO</code>. Se a solução atual tiver
+          valor maior, copie-a em <code>MelhorO</code>.</p>
+          <p><strong>Exercício</strong>: com base na descrição acima,
+          qual o tipo da variável <code>MelhorO</code>?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: qual seria o valor inicial da
+          variável <code>MelhorO</code>?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: agora reescreva o caso em que
+          não precisa fazer chamada recursiva para atualizar
+          <code>MelhorO</code>.</p>
+          <pre><code>
+MOCHILA(N, V, P, MelhorO, O, C, VO, I)
+
+# Caso em que não precisa fazer chamada recursiva vai aqui
+
+
+
+
+
+
+
+
+# O resto continua igual, mas passando o parâmetro MelhorO  </code></pre>
+          <div class="tip">
+          <p>Dá pra fazer melhor?</p>
+          <p>É possível melhorar um pouco esse programa, mas
+          infelizmente não conseguimos diminuir sua complexidade
+          computacional para menos que <span
+          class="math inline">𝒪(2<sup><em>N</em></sup>)</span>.</p>
+          </div>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

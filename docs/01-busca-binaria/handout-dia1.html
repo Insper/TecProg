@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Buscas em Array - Técnicas de Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Buscas em Array - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#parte-1---buscas-simples"
+          id="toc-parte-1---buscas-simples">Parte 1 - buscas
+          simples</a></li>
+          <li><a href="#parte-2---busca-binária"
+          id="toc-parte-2---busca-binária">Parte 2 - busca
+          binária</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <h1 id="parte-1---buscas-simples">Parte 1 - buscas
+          simples</h1>
+          <p>Vamos começar com algumas buscas bem simples. Esse é mais
+          um exercício de escrever pseudo-código do que de pensar de
+          fato.</p>
+          <div class="tip">
+          <p>Problema</p>
+          <p>Devolver o índice valor <code>1</code> mais à esquerda em
+          vetores com o abaixo.</p>
+          <p><img src="array-bug-1.png" /></p>
+          </div>
+          <p>Em geral, tendemos a iterar em arrays começando pelo índice
+          <code>0</code>. Faça a busca começando pelo início.</p>
+          <p>Uma outra possibilidade é começar pelo fim do array.
+          Escreva este busca no espaço abaixo.</p>
+          <h1 id="parte-2---busca-binária">Parte 2 - busca binária</h1>
+          <p>Nesta parte iremos formalizar o algoritmo da busca binária.
+          A ideia básica foi:</p>
+          <div class="tip">
+          <p>Busca binária</p>
+          <ol type="1">
+          <li>seleciona o elemento na posição exatamente no meio do
+          vetor</li>
+          <li>se esse elemento for <code>0</code>, continua procurando
+          na metade da da direita do vetor</li>
+          <li>se esse elemento for <code>1</code>, continua procurando
+          na metade da esquerda do vetor</li>
+          <li>repete esse procedimento até encontrar um elemento que é
+          <code>1</code> e tem um vizinho que é <code>0</code>.</li>
+          </ol>
+          </div>
+          <p>Nosso processo de concretização desses passo será por meio
+          de simulações. Iremos fazer um passo a passo e preencher o que
+          o algoritmo <strong>deveria</strong> fazer. Então iremos usar
+          essas simulações para escrever um algoritmo que realize esse
+          passo a passo.</p>
+          <div class="done">
+          <p>Revisão</p>
+          <p>Marque abaixo os arrays em que poderíamos usar a busca
+          binária.</p>
+          <ul>
+          <li><code>[0, 0, 0, 1, 0, 1]</code></li>
+          <li><code>[1, 0, 0, 1, 1, 1]</code></li>
+          <li><code>[0, 0, 0, 0, 0, 0]</code></li>
+          <li><code>[0, 0, 1, 1, 1, 1]</code></li>
+          <li><code>[0, 0, 0, 4, 6, 7, 10]</code></li>
+          <li><code>[2, 1, 4, 7, 4, 8, 10]</code></li>
+          </ul>
+          </div>
+          <p>Agora partiremos para simulação no array
+          <code>A = [0, 0, 0, 0, 0, 1, 1]</code>. Vamos iniciar com uma
+          ideia simples: Desenhe o array abaixo e execute os passos 1, 2
+          e 3 da ideia da Busca binária. Coloque então um <code>X</code>
+          em todas as posições <strong>eliminadas</strong> do array e
+          escreva o índice do elemento do meio usado no passo 1.</p>
+          <p>[spacer]</p>
+          <p>Com isso, temos a ideia de procurar em um
+          <strong>intervalo</strong> de <code>A</code>. No caso acima,
+          concluímos que a busca será no intervalo
+          <code>[4, 7)</code>.</p>
+          <div class="tip">
+          <p>Intervalos</p>
+          <p>Todo intervalo é aberto no fim. Ou seja, o intervalo
+          <code>[1, 5)</code> contém os elementos
+          <code>1, 2, 3, 4</code> mas não contém o <code>5</code>.</p>
+          </div>
+          <p>Agora volte no seu desenho acima e faça o processo
+          novamente, mas considerando o início do array como o índice
+          <code>4</code> e o fim como o índice <code>7</code>. Qual
+          seria o novo meio? E quais elementos seriam descartados?</p>
+          <p>[line-spacer]</p>
+          <h2 id="calculando-o-meio-e-os-novos-intervalos">Calculando o
+          meio e os novos intervalos</h2>
+          <p>Conseguir “adivinhar” a expressão para calcular o meio não
+          é tão simples assim. Vamos então construir uma tabela com
+          valores de início e fim e calcular o meio manualmente. Isso,
+          em geral, ajuda a encontrar padrões e deve nos guiar a
+          descobrir a expressão correta. As duas primeiras linhas já
+          estão preenchidas. Complete o restante da tabela.</p>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: center;">início</th>
+          <th style="text-align: center;">fim</th>
+          <th>N elementos</th>
+          <th style="text-align: center;">meio</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: center;">0</td>
+          <td style="text-align: center;">5</td>
+          <td>5</td>
+          <td style="text-align: center;">2</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">0</td>
+          <td style="text-align: center;">6</td>
+          <td>6</td>
+          <td style="text-align: center;">2</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">1</td>
+          <td style="text-align: center;">4</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">1</td>
+          <td style="text-align: center;">5</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">7</td>
+          <td style="text-align: center;">12</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">5</td>
+          <td style="text-align: center;">6</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">0</td>
+          <td style="text-align: center;">1</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <p>Com base nos valores acima, escreva abaixo a expressão
+          usada para calcular o número de elementos e o meio. Quando
+          terminar, valide com o professor, alguns dos ninjas ou um
+          colega que já tenha validado a solução.</p>
+          <p>[line-spacer]</p>
+          <p>Determinar quais é a parte do array que vamos manter na
+          busca é o próximo passo. Complete a tabela abaixo. Como antes,
+          já temos algumas linhas preenchidas.</p>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: center;">início</th>
+          <th style="text-align: center;">fim</th>
+          <th>A[meio]</th>
+          <th>novo início</th>
+          <th style="text-align: center;">novo fim</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: center;">0</td>
+          <td style="text-align: center;">5</td>
+          <td>0</td>
+          <td>3</td>
+          <td style="text-align: center;">5</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">0</td>
+          <td style="text-align: center;">6</td>
+          <td>1</td>
+          <td>0</td>
+          <td style="text-align: center;">3</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">1</td>
+          <td style="text-align: center;">4</td>
+          <td>1</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">1</td>
+          <td style="text-align: center;">5</td>
+          <td>0</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">7</td>
+          <td style="text-align: center;">12</td>
+          <td>1</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">5</td>
+          <td style="text-align: center;">6</td>
+          <td>0</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">0</td>
+          <td style="text-align: center;">1</td>
+          <td>1</td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <p>[break]</p>
+          <p>Quando <code>A[meio] = 0</code>, quais as expressões para
+          calcular o novo intervalo? Escreva em termos de
+          <code>inicio, fim</code> e <code>meio</code>.</p>
+          <p>[line-spacer]</p>
+          <p>E quando <code>A[meio = 1]</code>?</p>
+          <p>[line-spacer]</p>
+          <h2 id="algoritmo-completo">Algoritmo completo</h2>
+          <p>Com todas essas ideias juntas, simule o algoritmo completo
+          para o array</p>
+          <p><code>A=[0 0 0 0 1 1 1 1 1]</code>.</p>
+          <p>O algoritmo sempre começa com o array todo
+          (<code>inicio=0</code> e <code>fim=A.length</code>).</p>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: center;">inicio</th>
+          <th style="text-align: center;">fim</th>
+          <th>N</th>
+          <th style="text-align: center;">meio</th>
+          <th style="text-align: center;">A[meio]</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: center;">0</td>
+          <td style="text-align: center;">9</td>
+          <td>9</td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          <tr>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          </tr>
+          </tbody>
+          </table>
+          <div class="warn">
+          <p>Quando o algoritmo para?</p>
+          <p>Na tabela acima, quando paramos de dividir o array? Escreva
+          a expressão dentro do box.</p>
+          <p>[line-spacer]</p>
+          </div>
+          <p>Agora vamos, finalmente, tentar escrever o pseudo código.
+          No fim da aula ele será escrito na lousa. O importante aqui é
+          tentar, o máximo possível, transformar os passos da simulação
+          em passos válidos como pseudo código.</p>
+          <div class="done">
+          <p>Reflexão</p>
+          <p>Nosso algoritmo funciona para arrays com somente
+          <code>0</code> e <code>1</code>. Como poderia generalizar para
+          buscar pelo valor <code>4</code> no array
+          <code>A=[1 4 7 10 44 100]</code>?</p>
+          <p>[line-spacer]</p>
+          </div>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

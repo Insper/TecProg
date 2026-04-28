@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Strings e Arrays - Técnicas de Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Strings e Arrays - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <div class="tip">
+          <p>Para cada algoritmo abaixo:</p>
+          <ol type="1">
+          <li>leia o pseudo código</li>
+          <li>simule seu funcionamento usando as entradas de
+          exemplo</li>
+          <li>confira o resultado usando os testes no exercício do
+          PrairieLearn</li>
+          <li>use o <em>CheatSheet</em> para converter o pseudo código
+          para Java</li>
+          </ol>
+          </div>
+          <h2 id="entregador-mais-próximo">Entregador mais próximo</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>o</em> = (0, 0), <em>x</em> = [123, 42, 10], <em>y</em> = [432, 312, 20]</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>o</em> = (3, 4), <em>x</em> = [10, 4, 4, 23], <em>y</em> = [20, 2, 4, 63]</span></p>
+          <h2 id="diferença-de-listas">Diferença de listas</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>A</em><sub>2</sub> = [1, 2, 3, 4], <em>A</em><sub>1</sub> = [4, 5, 6]</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>A</em><sub>1</sub> = [1, 2, 3, 4], <em>A</em><sub>2</sub> = [4, 5, 6]</span></p>
+          <h2 id="valor-da-nota">Valor da nota</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>P</em> = [1.40, 1.45, 11.4], <em>Q</em> = [1.40, 1.45, 11.4]</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>P</em> = [1.5], <em>Q</em> = [3]</span></p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 3</strong>: <span
+          class="math inline"><em>P</em> = [1.21, 1.1, 4.5, 6.1, 100.15, 0.4, 8.67], <em>Q</em> = [13, 41, 63, 6, 52, 14, 47]</span></p>
+          <p>[break]</p>
+          <h2 id="conta-celulares">Conta Celulares</h2>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>L</em> = [</span>“+5511912345678”,
+          “1155556666”, “77778888”, “+551133334444”, “918273645”,
+          “11987654321”<span class="math inline">]</span></p>
+          <p>[break]</p>
+          <h2 id="palavras-iguais">Palavras iguais</h2>
+          <p>Agora vamos tentar escrever um pseudo código nosso. Não se
+          esqueça que nossas strings são acessadas igual a um array.
+          Preencha abaixo e verifique se seu algoritmo funciona usando
+          as entradas abaixo.</p>
+          <p><strong>Entrada 1</strong>: <span
+          class="math inline"><em>S</em>=</span>``abc-abc’’</p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 2</strong>: <span
+          class="math inline"><em>S</em>=</span>``abc-abca’’</p>
+          <p>[spacer]</p>
+          <p><strong>Entrada 3</strong>: <span
+          class="math inline"><em>S</em>=</span>``zig-zag’’</p>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

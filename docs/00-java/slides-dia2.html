@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> - </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+         - 
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#pseudo-código---arrays"
+          id="toc-pseudo-código---arrays">Pseudo código -
+          Arrays</a></li>
+          <li><a href="#dinâmicas-da-introdução-da-disciplina"
+          id="toc-dinâmicas-da-introdução-da-disciplina">Dinâmicas da
+          introdução da Disciplina</a></li>
+          <li><a href="#java" id="toc-java">“Java”</a></li>
+          <li><a href="#última-aula---aspectos-positivos"
+          id="toc-última-aula---aspectos-positivos">Última aula -
+          aspectos positivos</a></li>
+          <li><a href="#última-aula---aspectos-negativos"
+          id="toc-última-aula---aspectos-negativos">Última aula -
+          aspectos negativos</a></li>
+          <li><a href="#exemplo-da-dinâmica-esperada"
+          id="toc-exemplo-da-dinâmica-esperada">Exemplo da dinâmica
+          esperada</a></li>
+          <li><a href="#arrays---pseudo-código"
+          id="toc-arrays---pseudo-código">Arrays - pseudo
+          código</a></li>
+          <li><a href="#strings---pseudo-código"
+          id="toc-strings---pseudo-código">Strings - pseudo
+          código</a></li>
+          <li><a href="#atividades-do-dia-2"
+          id="toc-atividades-do-dia-2">Atividades do dia 2</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <!-- _class: front -->
+          <h1 id="pseudo-código---arrays">Pseudo código - Arrays</h1>
+          <h2 id="técnicas-de-programação">Técnicas de Programação</h2>
+          <hr />
+          <h1 id="dinâmicas-da-introdução-da-disciplina">Dinâmicas da
+          introdução da Disciplina</h1>
+          <ol type="1">
+          <li>Simular pseudo código</li>
+          <li>Ler código Java e para conferir a simulação</li>
+          <li>Converter pseudo código para Java</li>
+          </ol>
+          <h3 id="cheat-sheet-java">Cheat Sheet Java!</h3>
+          <hr />
+          <h1 id="java">“Java”</h1>
+          <p>Não vamos usar Java “de verdade” nesta disciplina.</p>
+          <ul>
+          <li>subconjunto com funcionalidades “simples”</li>
+          <li>só usamos o que sabemos implementar</li>
+          <li>“definir e estimar complexidade computacional”</li>
+          </ul>
+          <hr />
+          <figure>
+          <img src="javaporco.png" alt="width:800px" />
+          <figcaption aria-hidden="true">width:800px</figcaption>
+          </figure>
+          <p>Créditos: <a
+          href="https://flickr.com/photos/luizmrocha/4777371771">javaporco</a>,
+          <a
+          href="https://commons.wikimedia.org/wiki/File:Mud_closeup.jpg">lama</a></p>
+          <hr />
+          <h1 id="última-aula---aspectos-positivos">Última aula -
+          aspectos positivos</h1>
+          <ul>
+          <li>bastante gente trabalhando</li>
+          <li>alguns usaram as entradas de simulação para encontrar
+          problemas no código</li>
+          <li>discussões entre vocês</li>
+          </ul>
+          <hr />
+          <h1 id="última-aula---aspectos-negativos">Última aula -
+          aspectos negativos</h1>
+          <ul>
+          <li>alguns ignoraram o pseudo código</li>
+          <li>folhas vazias -&gt; não fizeram simulação</li>
+          <li>mexer nos testes de unidades</li>
+          </ul>
+          <h2
+          id="resolver-os-problemas-das-aulas-1-e-2-não-é-uma-conquista">Resolver
+          os problemas das aulas 1 e 2 não é uma conquista</h2>
+          <hr />
+          <!-- _class: front -->
+          <h1 id="exemplo-da-dinâmica-esperada">Exemplo da dinâmica
+          esperada</h1>
+          <hr />
+          <h1 id="arrays---pseudo-código">Arrays - pseudo código</h1>
+          <p>Coleção de dados com <strong>tamanho fixo</strong> e acesso
+          via índice iniciando em <span
+          class="math inline">0</span>.</p>
+          <ul>
+          <li>array int <span class="math inline"><em>L</em></span></li>
+          <li><span
+          class="math inline"><em>L</em>.<em>l</em><em>e</em><em>n</em><em>g</em><em>t</em><em>h</em></span>
+          - tamanho</li>
+          <li><span class="math inline"><em>L</em>[<em>i</em>]</span> -
+          acesso ao elemento <span
+          class="math inline"><em>i</em></span></li>
+          <li>novo array int<span class="math inline">[10]</span> -
+          criação</li>
+          </ul>
+          <hr />
+          <h1 id="strings---pseudo-código">Strings - pseudo código</h1>
+          <p>Arrays do tipo <code>char</code>, que representa um único
+          caractere. Tem as seguintes diferenças em relação ao array
+          normal.</p>
+          <ul>
+          <li><span class="math inline"><em>L</em>[<em>i</em>]</span> -
+          acesso de <strong>leitura</strong> ao caracter na posição
+          <span class="math inline"><em>i</em></span></li>
+          <li><span
+          class="math inline"><em>s</em><sub>1</sub> + <em>s</em><sub>2</sub></span>
+          concatena duas strings</li>
+          </ul>
+          <hr />
+          <!-- _class: front -->
+          <h1 id="atividades-do-dia-2">Atividades do dia 2</h1>
+          <h2 id="consultem-o-cheat-sheet">Consultem o cheat sheet!</h2>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

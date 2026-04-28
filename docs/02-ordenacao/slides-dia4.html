@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> - </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+         - 
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          <ul>
+          <li><a href="#recursão" id="toc-recursão">Recursão</a></li>
+          <li><a href="#recursão-1"
+          id="toc-recursão-1">Recursão</a></li>
+          <li><a href="#recursão-2"
+          id="toc-recursão-2">Recursão</a></li>
+          <li><a href="#o-que-aconteceria-ao-executar-esse-algoritmo"
+          id="toc-o-que-aconteceria-ao-executar-esse-algoritmo">O que
+          aconteceria ao executar esse algoritmo?</a></li>
+          <li><a
+          href="#o-que-aconteceria-ao-executar-esse-programa-em-c"
+          id="toc-o-que-aconteceria-ao-executar-esse-programa-em-c">O
+          que aconteceria ao executar esse programa em
+          <em>C</em>?</a></li>
+          <li><a
+          href="#o-que-aconteceria-ao-executar-esse-programa-em-c-1"
+          id="toc-o-que-aconteceria-ao-executar-esse-programa-em-c-1">O
+          que aconteceria ao executar esse programa em
+          <em>C</em>?</a></li>
+          <li><a href="#simulação-de-chamadas-de-função"
+          id="toc-simulação-de-chamadas-de-função">Simulação de chamadas
+          de função</a></li>
+          <li><a href="#exemplo-1" id="toc-exemplo-1">Exemplo 1</a></li>
+          <li><a href="#exemplo-2" id="toc-exemplo-2">Exemplo 2</a></li>
+          <li><a href="#atividade-1-simulação-recursiva"
+          id="toc-atividade-1-simulação-recursiva">Atividade 1:
+          Simulação recursiva</a></li>
+          <li><a href="#e-esse-programa-ele-está-correto"
+          id="toc-e-esse-programa-ele-está-correto">E esse programa? Ele
+          está correto?</a></li>
+          <li><a href="#uma-maneira-melhor-de-pensar"
+          id="toc-uma-maneira-melhor-de-pensar">Uma maneira melhor de
+          pensar</a></li>
+          <li><a href="#atividade-2---pensando-em-algoritmos-recursivos"
+          id="toc-atividade-2---pensando-em-algoritmos-recursivos">Atividade
+          2 - pensando em algoritmos recursivos</a></li>
+          </ul>
+        </aside>
+        <div class="content">      
+          <!-- _class: front -->
+          <h1 id="recursão">Recursão</h1>
+          <h2 id="técnicas-de-programação">Técnicas de Programação</h2>
+          <hr />
+          <h1 id="recursão-1">Recursão</h1>
+          <h2
+          id="algoritmo-que-chama-a-si-mesmo-uma-ou-mais-vezes">algoritmo
+          que <strong>chama a si mesmo</strong> uma ou mais vezes</h2>
+          <h2 id="passando-uma-instância-menor-do-problema">passando uma
+          instância <strong>menor</strong> do problema</h2>
+          <hr />
+          <h1 id="recursão-2">Recursão</h1>
+          <ul>
+          <li>facilita muito a criação de alguns tipos de
+          algoritmos</li>
+          <li>técnica avançada difícil de entender
+          <ul>
+          <li>simular um algoritmo recursivo não é fácil</li>
+          <li>outras maneiras de pensar sobre corretude</li>
+          </ul></li>
+          </ul>
+          <hr />
+          <h1 id="o-que-aconteceria-ao-executar-esse-algoritmo">O que
+          aconteceria ao executar esse algoritmo?</h1>
+          <pre><code>WTF()
+  PRINT(&quot;comecou&quot;)
+  WTF()
+  PRINT(&quot;fim&quot;)
+}</code></pre>
+          <ol type="1">
+          <li>termina pois dá erro</li>
+          <li>termina com sucesso</li>
+          <li>não termina</li>
+          </ol>
+          <hr />
+          <h1 id="o-que-aconteceria-ao-executar-esse-programa-em-c">O
+          que aconteceria ao executar esse programa em <em>C</em>?</h1>
+          <div class="sourceCode" id="cb2"><pre
+          class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> wtf<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;comecou</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    wtf<span class="op">();</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;terminou</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code></pre></div>
+          <ol type="1">
+          <li>termina pois dá erro</li>
+          <li>termina com sucesso</li>
+          <li>não termina</li>
+          </ol>
+          <hr />
+          <h1 id="o-que-aconteceria-ao-executar-esse-programa-em-c-1">O
+          que aconteceria ao executar esse programa em <em>C</em>?</h1>
+          <div class="sourceCode" id="cb3"><pre
+          class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> wtf<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;comecou</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    wtf<span class="op">();</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;terminou</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code></pre></div>
+          <ol type="1">
+          <li><strong>termina pois dá erro</strong></li>
+          <li>termina com sucesso</li>
+          <li>não termina</li>
+          </ol>
+          <p><strong>Não existe como fazer uma sequência infinita de
+          chamadas de função!</strong></p>
+          <hr />
+          <h1 id="simulação-de-chamadas-de-função">Simulação de chamadas
+          de função</h1>
+          <ul>
+          <li>a cada chamada de função adicionamos indentação na
+          saída</li>
+          <li>a cada chamada abrimos um <code>{</code> e colocamos ao
+          lado o nome da função e seus parâmetros</li>
+          <li>quando houver um <code>return</code> adicionamos um
+          <code>}</code> e colocamos ao lado o valor de retorno</li>
+          </ul>
+          <hr />
+          <h1 id="exemplo-1">Exemplo 1</h1>
+          <div class="sourceCode" id="cb4"><pre
+          class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> bar<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;X</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> foo<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;A</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    bar<span class="op">();</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;B</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    bar<span class="op">();</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;C</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;1</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    foo<span class="op">();</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;2</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    bar<span class="op">();</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;3</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    foo<span class="op">();</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;4</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+          <hr />
+          <h1 id="exemplo-2">Exemplo 2</h1>
+          <pre><code>REC(N):
+
+if N = 1 then
+    return 1
+end
+
+return N * REC(N-1)</code></pre>
+          <p>** Simule para <code>N=5</code></p>
+          <hr />
+          <!-- _class: front -->
+          <h1 id="atividade-1-simulação-recursiva">Atividade 1:
+          Simulação recursiva</h1>
+          <hr />
+          <h1 id="e-esse-programa-ele-está-correto">E esse programa? Ele
+          está correto?</h1>
+          <hr />
+          <h1 id="uma-maneira-melhor-de-pensar">Uma maneira melhor de
+          pensar</h1>
+          <ol type="1">
+          <li>Para quais entradas não precisamos fazer chamada
+          recursiva?</li>
+          <li>O programa termina?</li>
+          <li>O programa funciona, supondo que as chamadas recursivas
+          retornam o valor correto?</li>
+          </ol>
+          <hr />
+          <!-- _class: front -->
+          <h1
+          id="atividade-2---pensando-em-algoritmos-recursivos">Atividade
+          2 - pensando em algoritmos recursivos</h1>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

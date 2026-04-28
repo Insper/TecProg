@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Caminhos em Labirinto - Heurística - Técnicas de
+Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Caminhos em Labirinto - Heurística - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <p>O algoritmo da mão direita é muito complicado! Vamos
+          aproveitar hoje e “reciclar” uma ideia que já vimos outras
+          vezes: a enumeração exaustiva usando backtracking. Vocês já
+          viram essa ideia em IA com outro nome: <strong>busca em
+          profundidade</strong>. Em cada posição, a busca em
+          profundidade tenta visitar todas as casas vizinhas que ainda
+          não foram visitadas.</p>
+          <div class="done">
+          <p><strong>Definição</strong></p>
+          <p>Sejam duas casas distintas <code>f</code>(fonte) e
+          <code>d</code>(destino), existe um caminho que vai de
+          <code>f</code> até <code>d</code> se , e somente se, pelo
+          menos uma das alternativas abaixo é verdade</p>
+          <ul>
+          <li>existe um caminho entre a casa acima de <code>f</code> até
+          <code>d</code></li>
+          <li>existe um caminho entre a casa abaixo de <code>f</code>
+          até <code>d</code></li>
+          <li>existe um caminho entre a casa à esquerda de
+          <code>f</code> até <code>d</code></li>
+          <li>existe um caminho entre a casa à direita de <code>f</code>
+          até <code>d</code></li>
+          </ul>
+          </div>
+          <p>As 4 condições podem ser resumidas em uma só:
+          <strong>existe um caminho entre um dos vizinhos de
+          <code>f</code> até <code>d</code></strong>. Repare que essa
+          ideia não funciona somente no labirinto, mas em qualquer
+          situação em que tenhamos a ideia de nós que estão conectados a
+          outros. Estudaremos essas estruturas e seus algoritmos no
+          próximo semestre.</p>
+          <p>O desenvolvimento de um algoritmo para a busca em
+          profundidade vem direto da definição acima. Vamos tentar
+          destrinchá-la abaixo. Nosso problema será: dado uma casa
+          inicial <code>f</code>, existe caminho até uma casa destino
+          <code>d</code>?</p>
+          <p>Um algoritmo para este problema claramente seria recursivo,
+          já que a definição apresentada acima foi apresentada dessa
+          forma. Vamos então definir os seguintes pontos antes de montar
+          esse algoritmo:</p>
+          <ol type="1">
+          <li>estando em uma casa <code>C</code>, quais são as chamadas
+          recursivas que posso fazer?</li>
+          <li>qual seria a base da recursão? Ou seja, em quais casos
+          <strong>não fazemos chamadas recursivas?</strong></li>
+          </ol>
+          <h2 id="chamadas-recursivas">Chamadas recursivas</h2>
+          <p>Vamos começar pelo item 1. No labirinto abaixo, queremos
+          sair da casa <code>C</code> e chegar na casa <code>D</code>.
+          Toda casa marcada com <code>.</code> nunca foi visitada,
+          enquanto toda casa marcada com <code>x</code> já foi
+          visitada.</p>
+          <pre><code>##########
+#........#
+#..D.....#
+#........#
+#........#
+#........#
+#........#
+#......Cx#
+#.....xxx#
+##########</code></pre>
+          <p><strong>Exercício</strong>: Marque abaixo em quais vizinhos
+          deveriam ser feitas chamadas recursivas?</p>
+          <ul class="task-list">
+          <li><label><input type="checkbox" />cima</label></li>
+          <li><label><input type="checkbox" />baixo</label></li>
+          <li><label><input type="checkbox" />esquerda</label></li>
+          <li><label><input type="checkbox" />direita</label></li>
+          </ul>
+          <p>[break]</p>
+          <p>Vamos para mais um labirinto.</p>
+          <pre><code>##########
+#......Cx#
+#..D...xx#
+#......xx#
+#......xx#
+#.....xxx#
+#.xxxxxxx#
+#.xxxxxxx#
+#.xxxxxxx#
+##########</code></pre>
+          <p><strong>Exercício</strong>: Marque abaixo em quais vizinhos
+          deveriam ser feitas chamadas recursivas?</p>
+          <ul class="task-list">
+          <li><label><input type="checkbox" />cima</label></li>
+          <li><label><input type="checkbox" />baixo</label></li>
+          <li><label><input type="checkbox" />esquerda</label></li>
+          <li><label><input type="checkbox" />direita</label></li>
+          </ul>
+          <hr />
+          <pre><code>##########
+#......xx#
+#..D...xx#
+#......xx#
+#xx....xx#
+#Cx...xxx#
+#xxxxxxxx#
+#xxxxxxxx#
+#xxxxxxxx#
+##########</code></pre>
+          <p><strong>Exercício</strong>: Marque abaixo em quais vizinhos
+          deveriam ser feitas chamadas recursivas?</p>
+          <ul class="task-list">
+          <li><label><input type="checkbox" />cima</label></li>
+          <li><label><input type="checkbox" />baixo</label></li>
+          <li><label><input type="checkbox" />esquerda</label></li>
+          <li><label><input type="checkbox" />direita</label></li>
+          </ul>
+          <hr />
+          <p>Registre suas conclusões abaixo</p>
+          <div class="done">
+          <p><strong>Conclusões</strong></p>
+          <pre><code>
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+          </div>
+          <p>[break]</p>
+          <h2 id="critérios-de-parada">Critérios de parada</h2>
+          <p>Vamos agora definir o critério de parada de nosso
+          algoritmo. Levando em conta que temos uma casa <span
+          class="math inline"><em>f</em></span> fonte e uma casa <span
+          class="math inline"><em>d</em></span> destino….</p>
+          <p><strong>Exercício</strong>: escreva a condição de parada
+          para quando chegamos na casa <span
+          class="math inline"><em>d</em></span></p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: escreva a condição de parada
+          para quando todos os vizinhos já foram vizitados</p>
+          <p>[line-spacer]</p>
+          <hr />
+          <h2 id="montando-o-algoritmo-final">Montando o algoritmo
+          final</h2>
+          <p>Todos nossos algoritmos de enumeração exaustiva terão,
+          essencialmente, três partes:</p>
+          <ol type="1">
+          <li><strong>BASE</strong> - contém as condições de parada e os
+          valores de retorno correspondentes. Aqui <strong>não</strong>
+          são feitas chamadas recursivas</li>
+          <li><strong>RECURSÃO</strong> - contém uma ou mais chamadas
+          para a mesma função, mas com um tamanho de entrada menor.</li>
+          <li><strong>RETORNO</strong> - junta os valores de retorno das
+          chamadas do item anterior e define o valor de retorno da
+          chamada atual.</li>
+          </ol>
+          <p>Vamos agora tentar organizar nosso algoritmo. Usaremos as
+          seguintes variáveis/funções auxiliares</p>
+          <ul>
+          <li><code>L</code> - labirinto</li>
+          <li><code>F</code> - casa fonte</li>
+          <li><code>D</code> - casa destino</li>
+          <li><code>OCUPADA(C)</code> - devolve <span
+          class="math inline"><em>t</em><em>r</em><em>u</em><em>e</em></span>
+          se a casa já está ocupada</li>
+          <li><code>OCUPAR-CASA(C)</code></li>
+          <li><code>DESOCUPAR-CASA(C)</code></li>
+          </ul>
+          <pre><code>TEM-CAMINHO(L, F, D)
+
+# BASE
+
+
+
+
+
+
+
+
+# RECURSÃO
+
+
+
+
+
+
+
+
+
+
+# RETORNO
+
+
+
+
+</code></pre>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

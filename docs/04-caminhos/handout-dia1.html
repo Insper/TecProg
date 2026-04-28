@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Caminhos em Labirinto - Heurística - Técnicas de
+Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Caminhos em Labirinto - Heurística - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <p>Nesse handout iremos formalizar duas grandes ideias:</p>
+          <ul>
+          <li>a representação do nosso labirinto</li>
+          <li>como representar o algoritmo senso comum de sair do
+          labirinto seguindo as paredes</li>
+          </ul>
+          <h2 id="o-labirinto">O Labirinto</h2>
+          <p>Um primeiro passo para definirmos nossos algoritmos é
+          definir como o labirinto será representado para nosso código.
+          Inicialmente, o labirinto sempre é recebido como uma
+          <code>String</code> com o seguinte formato:</p>
+          <pre><code>#####
+#...#
+###.#</code></pre>
+          <ul>
+          <li>cada linha contém somente caracteres <code>'.'</code>
+          (livre) ou <code>'#'</code> (parede)</li>
+          <li>todas as linhas contém o mesmo número de caracteres</li>
+          </ul>
+          <p>O primeiro passo será transformar essa <code>String</code>
+          em um array <code>boolean casas_ocupadas[][]</code> em que a
+          posição <code>casas[i][j]</code> contém <code>true</code> se a
+          casa é parede e <code>false</code> caso contrário. Isso será
+          feito no exercício de implementação do PrairieLearn.</p>
+          <h2 id="algoritmo-de-seguir-paredes">Algoritmo de Seguir
+          Paredes</h2>
+          <p>Ao longo das próximas aulas iremos criar várias versões do
+          algoritmo <code>ENCONTRA_SAIDA(L, I, J, CAMINHO)</code>
+          onde</p>
+          <ul>
+          <li><code>L</code> é um labirinto representado como
+          <code>boolean[][]</code></li>
+          <li><code>I, J</code> é a posição inicial</li>
+          <li><code>CAMINHO</code> é um array que será preenchido com as
+          posições do labirinto até a saída</li>
+          </ul>
+          <p>A primeira ideia que estudaremos para a criação de um
+          algoritmo é simples:</p>
+          <blockquote>
+          <p>Para sair do labirinto basta colocar a mão direita na
+          parede mais próxima e seguir sempre com essa mão na parede.
+          Eventualmente chegamos na saída.</p>
+          </blockquote>
+          <p><strong>Exercício</strong>: isso chega na saída? Como você
+          argumentaria que isso é verdade?</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <p>Para implementar esse algoritmo precisamos definir algumas
+          coisas:</p>
+          <ul>
+          <li>estado: quais variáveis representam o andamento do
+          algoritmo.</li>
+          <li>critério de parada: quando decidimos que chegamos no
+          fim?</li>
+          </ul>
+          <p>Uma boa maneira de entender esses pontos é simular a ideia
+          em alguns cenários simples. Em todos labirintos, a posição
+          atual está marcada com <code>o</code>. Pode ser útil desenhar
+          em cima dos labirintos de cada exercício.</p>
+          <p>[break]</p>
+          <p><strong>Exercício</strong>: no labirinto abaixo, a mão está
+          em qual parede? Qual será a próxima casa a ser ocupada?</p>
+          <pre><code>######
+#.....
+#...##
+#....#
+#..o.#
+######</code></pre>
+          <p><strong>Exercício</strong>: no labirinto abaixo, a mão está
+          em qual parede? Qual será a próxima casa a ser ocupada?</p>
+          <pre><code>##########
+.....o....
+..........
+##########</code></pre>
+          <p><strong>Exercício</strong>: no labirinto abaixo, suponha
+          que a mão está na parede à direita. Qual será a próxima casa a
+          ser ocupada? A mão continua na mesma parede?</p>
+          <pre><code>##########
+.....o#...
+......#...
+##########</code></pre>
+          <p><strong>Exercício</strong>: no labirinto abaixo, suponha
+          que a mão está na parede à direita. Qual será a próxima casa a
+          ser ocupada? A mão continua na mesma parede?</p>
+          <pre><code>##########
+....#o#...
+....#.....
+#####.####</code></pre>
+          <p>Vamos agora para um caso difícil. Veja o labirinto
+          abaixo.</p>
+          <pre><code>##########
+..........
+....o#....
+.....#....
+##########</code></pre>
+          <p>Gostaríamos que o caminho envolvesse “dar a volta” na
+          parede à direita. Isso acontece pois se andarmos à frente não
+          haverá mais nenhuma parede para seguir. Vamos, então dar
+          <strong>dois passos</strong> de uma vez e posicionar a mão na
+          parede abaixo de <code>o</code>. Isto está mostrado abaixo. Os
+          <code>x</code> representam a posição inicial e o passo
+          anterior dado para resolver este caso.</p>
+          <pre><code>##########
+....xo....
+....x#....
+.....#....
+##########</code></pre>
+          <p>Note que agora continuamos na mesma situação, mas
+          rotacionada em sentido horário! Aplicando a mesma ideia
+          novamente teremos contornado a parede e estaremos do outro
+          lado dela.</p>
+          <p>[break]</p>
+          <h2 id="alguns-exemplos-completos">Alguns exemplos
+          completos</h2>
+          <p>Faça uma simulação da ideia desenvolvida na página anterior
+          para os labirintos abaixo. Você deve traçar o percurso feito
+          em cada labirinto até encontrar a saída.</p>
+          <pre><code>##########
+....o.....
+..........
+##########</code></pre>
+          <p>[line-spacer]</p>
+          <pre><code>##########
+...#......
+.....o#...
+##########</code></pre>
+          <p>[line-spacer]</p>
+          <pre><code>##########
+...#.#....
+....o.#...
+##########</code></pre>
+          <p>[line-spacer]</p>
+          <h2 id="formalizando-nosso-algoritmo">Formalizando nosso
+          algoritmo</h2>
+          <p>Agora está na hora de começar a formalizar o algoritmo. O
+          estado do algoritmo é</p>
+          <ul>
+          <li>linha <code>i</code> da posição atual</li>
+          <li>coluna<code>j</code> da posição atual</li>
+          <li>direção <code>m</code> da parede da mão direita
+          <ul>
+          <li>esse <code>m</code> pode ser uma string com as
+          direções</li>
+          </ul></li>
+          </ul>
+          <p><strong>Exercício</strong>: Como detectamos que a posição
+          atual é uma saída?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: E se o labirinto não tiver
+          saída? Como detectamos isso? Para ajudar, desenhe um labirinto
+          simples sem saída.</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Escreva a condição de parada do
+          algoritmo.</p>
+          <p>[line-spacer]</p>
+          <p>[break]</p>
+          <p><strong>Exercício</strong>: Para cada posição no labirinto,
+          nosso algoritmo precisa <strong>determinar a próxima posição
+          válida</strong>. Desenhe abaixo todas os casos que devemos
+          considerar para quando a mão está na parede à direita. No lado
+          direito de cada caso, desenhe a ação que deve ser feita.</p>
+          <p>[spacer]</p>
+          <p>[spacer]</p>
+          <p>[spacer]</p>
+          <p>[line-spacer]</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Levando em conta que as 4
+          direções no labirinto são simétricas, quantos casos
+          precisaremos considerar para cobrir todas as direções?</p>
+          <p>[line-spacer]</p>
+          <p>Com isso pronto, implemente sua heurística no exercício do
+          Prairie Learn.</p>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

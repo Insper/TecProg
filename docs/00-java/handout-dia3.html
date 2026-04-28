@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Algoritmos básicos em Strings - Técnicas de
+Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Algoritmos básicos em Strings - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <div class="tip">
+          <p>Instruções</p>
+          <p>Vamos agora tentar <strong>escrever</strong> pseudo código.
+          Cada exercício abaixo tem espaço para escrever e algumas
+          entradas de teste. A ideia é só partir pra implementação
+          <strong>depois</strong> de ter testado com sucesso para as
+          entradas do material impresso.</p>
+          <p>Não se esqueça de consultar o cheat sheet para ver como
+          traduzir o pseudo código para Java e os slides do dia 2 para
+          ver quais operações são possíveis.</p>
+          </div>
+          <h2 id="prefixo">Prefixo</h2>
+          <p>Dada uma string <span
+          class="math inline"><em>S</em></span>, verifique se a string
+          <span class="math inline"><em>Q</em></span> é um prefixo de
+          <span class="math inline"><em>S</em></span>. Ou seja, se os
+          primeiros <span
+          class="math inline"><em>Q</em>.<em>l</em><em>e</em><em>n</em><em>g</em><em>t</em><em>h</em></span>
+          caracteres de <span class="math inline"><em>S</em></span> são
+          exatamente iguais à string <span
+          class="math inline"><em>Q</em></span>.</p>
+          <p><strong>Entradas de teste</strong>:</p>
+          <ul>
+          <li><span
+          class="math inline"><em>S</em> = "aa", <em>Q</em> = "a"</span></li>
+          <li><span class="math inline"><em>S</em> = "abcaas sdfsd
+          a", Q="abc"</span></li>
+          <li><span
+          class="math inline"><em>S</em> = "a", <em>Q</em> = "abc"</span></li>
+          <li><span
+          class="math inline"><em>S</em> = "aabc", <em>Q</em> = "abc"</span></li>
+          </ul>
+          <p>[break]</p>
+          <h2 id="sufixo">Sufixo</h2>
+          <p>Dada uma string <span
+          class="math inline"><em>S</em></span>, verifique se a string
+          <span class="math inline"><em>Q</em></span> é um sufixo de
+          <span class="math inline"><em>S</em></span>. Ou seja, se os
+          últimos <span
+          class="math inline"><em>Q</em>.<em>l</em><em>e</em><em>n</em><em>g</em><em>t</em><em>h</em></span>
+          caracteres de <span class="math inline"><em>S</em></span> são
+          exatamente iguais à string <span
+          class="math inline"><em>Q</em></span>.</p>
+          <p><strong>Entradas de teste</strong>:</p>
+          <ul>
+          <li><span
+          class="math inline"><em>S</em> = "aa", <em>Q</em> = "a"</span></li>
+          <li><span class="math inline"><em>S</em> = "abcaas sdfsd
+          a", Q="abc"</span></li>
+          <li><span
+          class="math inline"><em>S</em> = "a", <em>Q</em> = "abc"</span></li>
+          <li><span
+          class="math inline"><em>S</em> = "aabc", <em>Q</em> = "abc"</span></li>
+          </ul>
+          <p>[break]</p>
+          <h2 id="busca-de-termo-1">Busca de termo 1</h2>
+          <p>Dada uma string <span
+          class="math inline"><em>S</em></span>, a string <span
+          class="math inline"><em>Q</em></span> está contida em <span
+          class="math inline"><em>S</em></span> em qual posição? Devolva
+          a <strong>primeira</strong> posição em que isso acontece. Se a
+          string <span class="math inline"><em>Q</em></span> não estiver
+          contida em <span class="math inline"><em>S</em></span> devolva
+          <span class="math inline">−1</span>. Em Java este método se
+          chama <code>indexOf</code>.</p>
+          <div class="tip">
+          <p>Dica</p>
+          <p>O algoritmo <em>Prefixo</em> pode te dar inspiração para
+          este exercício. Você não irá chamá-lo diretamente, mas ele
+          pode fazer parte da <em>Busca</em></p>
+          </div>
+          <p><strong>Entradas de teste</strong>:</p>
+          <ul>
+          <li><span
+          class="math inline"><em>S</em> = "aa", <em>Q</em> = "a"</span></li>
+          <li><span class="math inline"><em>S</em> = "saaabcaas sdfsd
+          a", Q="abc"</span></li>
+          <li><span
+          class="math inline"><em>S</em> = "a", <em>Q</em> = "abc"</span></li>
+          <li><span class="math inline"><em>S</em> = "aabcbca abc
+          bda", <em>Q</em> = "abc"</span></li>
+          </ul>
+          <p>[break]</p>
+          <h2 id="busca-de-termo-2">Busca de termo 2</h2>
+          <p>Dada uma string <span
+          class="math inline"><em>S</em></span>, a string <span
+          class="math inline"><em>Q</em></span> está contida em <span
+          class="math inline"><em>S</em></span> em qual posição? Devolva
+          a <strong>última</strong> posição em que isso acontece. Se a
+          string <span class="math inline"><em>Q</em></span> não estiver
+          contida em <span class="math inline"><em>S</em></span> devolva
+          <span class="math inline">−1</span>. Em Java este método se
+          chama <code>lastIndexOf</code>.</p>
+          <div class="tip">
+          <p>Dica</p>
+          <p>O algoritmo <em>Sufixo</em> pode te dar inspiração para
+          este exercício. Você não irá chamá-lo diretamente, mas ele
+          pode fazer parte da <em>Busca</em></p>
+          </div>
+          <p><strong>Entradas de teste</strong>:</p>
+          <ul>
+          <li><span
+          class="math inline"><em>S</em> = "aa", <em>Q</em> = "a"</span></li>
+          <li><span class="math inline"><em>S</em> = "saaabcaas sdfsd
+          a", Q="abc"</span></li>
+          <li><span
+          class="math inline"><em>S</em> = "a", <em>Q</em> = "abc"</span></li>
+          <li><span class="math inline"><em>S</em> = "aabcbca abc
+          bda", <em>Q</em> = "abc"</span></li>
+          </ul>
+          <p>[break]</p>
+          <h2 id="substituição">Substituição</h2>
+          <p>Dada uma string <span class="math inline"><em>S</em></span>
+          e duas string <span class="math inline"><em>Q</em></span> e
+          <span class="math inline"><em>N</em><em>q</em></span>, devolva
+          uma nova string <span class="math inline"><em>S</em>2</span>
+          em que a primeira ocorrência de <span
+          class="math inline"><em>Q</em></span> é substituída por <span
+          class="math inline"><em>N</em><em>q</em></span>. Em Java este
+          método é chamdado de <code>replace</code>.</p>
+          <div class="tip">
+          <p>Dica</p>
+          <p>Este exercício é parecido com a busca, mas como agora temos
+          que criar uma nova string precisamos usar a operação de
+          concatenação. Você pode, inclusive, chamar o algoritmo
+          <em>Busca</em> em seu pseudo código.</p>
+          <ul>
+          <li><span
+          class="math inline"><em>s</em><sub>1</sub> + <em>s</em><sub>2</sub></span>
+          cria uma nova string com as duas strings anteriores
+          concatenadas</li>
+          <li><span
+          class="math inline"><em>s</em><sub>1</sub> = ""</span> cria
+          uma string vazia (que você pode usar para ir concatenando o
+          resto!)</li>
+          </ul>
+          </div>
+          <p><strong>Entradas de teste</strong>:</p>
+          <ul>
+          <li><span class="math inline"><em>S</em> = "abc bla
+          bla", <em>Q</em> = "a", <em>N</em><em>q</em> = "b"</span></li>
+          <li><span class="math inline"><em>S</em> = "abc bla
+          bla", <em>Q</em> = "bla", <em>N</em><em>q</em> = "bu"</span></li>
+          <li><span class="math inline"><em>S</em> = "abc bla
+          bla", <em>Q</em> = "a", <em>N</em><em>q</em> = "bca"</span></li>
+          </ul>
+          <p>[break]</p>
+          <h2 id="substituir-todos">Substituir todos</h2>
+          <p>Dada uma string <span class="math inline"><em>S</em></span>
+          e duas string <span class="math inline"><em>Q</em></span> e
+          <span class="math inline"><em>N</em><em>q</em></span>, devolva
+          uma nova string <span class="math inline"><em>S</em>2</span>
+          em que a <strong>todas</strong> ocorrência de <span
+          class="math inline"><em>Q</em></span> são substituídas por
+          <span class="math inline"><em>N</em><em>q</em></span>. Em Java
+          este método é chamdado de <code>replaceAll</code>.</p>
+          <div class="warn">
+          <p>Aviso</p>
+          <p>Este é um exercício <strong>difícil</strong>. As entradas
+          abaixo são mais fáceis que as dos testes de unidade e vão
+          ajudá-los a entender problemas comuns no algoritmo de
+          vocês.</p>
+          </div>
+          <p><strong>Entradas de teste</strong>:</p>
+          <ul>
+          <li><span class="math inline"><em>S</em> = "abc bla
+          bla", <em>Q</em> = "a", <em>N</em><em>q</em> = "b"</span></li>
+          <li><span class="math inline"><em>S</em> = "abc bla
+          bla", <em>Q</em> = "bla", <em>N</em><em>q</em> = "bu"</span></li>
+          <li><span class="math inline"><em>S</em> = "abc bla
+          bla", <em>Q</em> = "a", <em>N</em><em>q</em> = "bca"</span></li>
+          </ul>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>

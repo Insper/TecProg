@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Análise de desempenho - Técnicas de Programação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (ev) => {
+        document.querySelectorAll("aside.menu ul").forEach( (el) => {
+          el.classList.add("menu-list");
+        });
+      });
+    </script>
+  </head>
+  <body>
+  <nav class="navbar is-fixed-top">
+    <div class="navbar-brand">
+      <h1 class="title navbar-item">
+        Análise de desempenho - Técnicas de Programação
+      </h1>
+    </div>
+  </nav>
+  <section class="section is-desktop">
+      <div class="columns">
+        <aside class="menu">
+          <p class="menu-label">Conteúdo</p>
+          
+        </aside>
+        <div class="content">      
+          <div class="warn">
+          <p>Atenção</p>
+          <p>Esta atividade usa os algoritmos da aula passada. Tenha sua
+          folha em mãos para facilitar o trabalho!</p>
+          </div>
+          <h2 id="parte-1---comparando-as-buscas">Parte 1 - comparando
+          as buscas</h2>
+          <p>Seja um algoritmo que faz <span
+          class="math inline"><em>f</em>(<em>n</em>)</span> operações e
+          um algoritmo que faz <span
+          class="math inline"><em>g</em>(<em>n</em>)</span> operações,
+          ambos no pior caso. O primeiro algoritmo cresce mais rápido
+          que o segundo se e somente se:</p>
+          <p><span class="math display">$$
+          \lim_{n\rightarrow +\infty} \frac{f(n)}{g(n)} = +\infty
+          $$</span></p>
+          <p><strong>Exercício</strong>: Escreva abaixo uma entrada de
+          tamanho <code>8</code> e um valor a ser buscado que faça a
+          busca sequencial e a busca binária fazerem o máximo de
+          operações possível (ou seja, rodarem o <strong>pior
+          caso</strong>). Ao lado, coloque o número de operções
+          feitas.</p>
+          <p>[spacer]</p>
+          <p><strong>Exercício</strong>: Tente escrever o número de
+          operações em função do tamanho <span
+          class="math inline"><em>N</em></span> do array.</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Calcule o limite <span
+          class="math inline">$\lim_{n\rightarrow +\infty}
+          \frac{n}{\log_2(n)}$</span>. (<strong>Use
+          L’Hôpital</strong>)</p>
+          <p>[break]</p>
+          <h2 id="parte-2---um-outro-exemplo-prático">Parte 2 - um outro
+          exemplo prático</h2>
+          <p>Vamos agora comparar os dois algoritmos acima com o
+          seguinte algoritmo <code>Busca2a2</code> mostrado abaixo.</p>
+          <p><strong>Exercício</strong>: Qual seria uma entrada de
+          tamanho <span class="math inline"><em>N</em> = 5</span> para o
+          algoritmo acima que resulta em seu pior caso? Escreva os
+          valores de <span class="math inline"><em>A</em></span> e <span
+          class="math inline"><em>V</em></span></p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: em termos de <span
+          class="math inline"><em>N</em> = <em>A</em>.<em>l</em><em>e</em><em>n</em><em>g</em><em>t</em><em>h</em></span>,
+          quantas operações são feitas no pior caso?</p>
+          <p>[line-spacer]</p>
+          <p><strong>Exercício</strong>: Compare o algoritmo
+          <code>Busca2a2</code> com a busca sequencial vista na aula
+          passada. Use a definição de limite.</p>
+          <p>[spacer]</p>
+          <p><strong>Exercício</strong>: Compare o algoritmo
+          <code>Busca2a2</code> com a busca binária vista na aula
+          passada. Use a definição de limite.</p>
+        </div>
+      </div>
+  </section>
+
+<section class="footer">
+  <div class="container is-max-tablet">
+
+    <p class="block">Última atualização: 28/04/2026 08:04</p>
+
+    <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+  </div>
+  </section>
+  </body>
+</html>
