@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Material - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#01-primeiro-contato">01 - Primeiro contato</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#02-codando-algoritmos-em-java">02 - Codando algoritmos em Java</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#03-primeiros-algoritmos">03 - Primeiros algoritmos</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Aulas</li>
+                  
+                
+                  
+                    <li>Aula 00 - Primeiros passos</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="aula-00-primeiros-passos">Aula 00 — Primeiros passos<a class="headerlink" href="#aula-00-primeiros-passos" title="Permanent link">&para;</a></h1>
+<h2 id="01-primeiro-contato">01 - Primeiro contato<a class="headerlink" href="#01-primeiro-contato" title="Permanent link">&para;</a></h2>
+<p>Vamos aprender a ler o básico de código Java antes de iniciarmos os exercícios. Não é exatamente complicado, mas tem muito mais código que um programa básico em Python e isso às vezes assusta quem está começando. Vamos lá:</p>
+<h3 id="a-funcao-main">A função <code>main</code><a class="headerlink" href="#a-funcao-main" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ClasseExemplo</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">args</span><span class="o">[]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="c1">// aqui vai o código que é executado ao rodar o programa. </span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
+</code></pre></div>
+<p>Muitos desses elementos já foram vistos em Python, só que agora tem um nome novo e explícito em Java.</p>
+<ol>
+<li><code>public class</code> define a criação de uma nova classe. Dentro de um arquivo podem ter várias classes, mas só uma dela pode ser <code>public</code>, que significa que ela é acessível para classes escritas em outros arquivos.</li>
+<li>Em Java definimos escopo com <code>{ }</code>. Ou seja, tudo o que está entre as chaves que começam na linha 1 é parte da classe <code>ClasseExemplo</code>.</li>
+<li>O código na função <code>main</code> é executado ao rodar o programa. </li>
+</ol>
+<h3 id="argumentos-de-funcao-e-variaveis">Argumentos de função e variáveis<a class="headerlink" href="#argumentos-de-funcao-e-variaveis" title="Permanent link">&para;</a></h3>
+<p>Em Java temos uma caraterística muito importante: toda variável, argumento de função e valor de retorno de função deve ter seu tipo escrito <em>explicitamente</em> no código. </p>
+<table>
+<thead>
+<tr>
+<th>Tipo da variável</th>
+<th>Nome do tipo em Java</th>
+<th>Exemplo de declaração</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inteiro</td>
+<td><code>int</code></td>
+<td><code class="language-java highlight"><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span></code></td>
+</tr>
+<tr>
+<td>Fracionário</td>
+<td><code>float</code> ou <code>double</code></td>
+<td><code class="language-java highlight"><span class="kt">double</span><span class="w"> </span><span class="n">preco</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span></code></td>
+</tr>
+<tr>
+<td>Texto</td>
+<td><code>String</code></td>
+<td><code class="language-java highlight"><span class="n">String</span><span class="w"> </span><span class="n">nome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Igor&quot;</span><span class="p">;</span></code></td>
+</tr>
+<tr>
+<td>Booleano</td>
+<td><code>boolean</code></td>
+<td><code class="language-java highlight"><span class="kt">boolean</span><span class="w"> </span><span class="n">cond</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="implementando-uma-funcao">Implementando uma função<a class="headerlink" href="#implementando-uma-funcao" title="Permanent link">&para;</a></h3>
+<p>Todos os nossos primeiros exercícios se resumirão a implementar uma única função em Java. Em geral eles seguirão o seguinte esqueleto, que já estará preenchido no código de suporte. </p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">br.edu.insper.tecprog.exemplos</span><span class="p">;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">NomeDoExercicio</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">tipoRetorno</span><span class="w"> </span><span class="nf">funcao</span><span class="p">(</span><span class="n">tipo1</span><span class="w"> </span><span class="n">arg1</span><span class="p">,</span><span class="w"> </span><span class="n">tipo2</span><span class="w"> </span><span class="n">arg2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="c1">// faz algo aqui</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>Na primeira linha definimos um "pacote" em java. Isso equivale (em termos beeeem simplificados) à pasta em que o arquivo se encontra no projeto. Ou seja, o arquivo acima se chamaria <code>NomeDoExercicio.java</code> e estaria dentro da pasta <code>br/edu/insper/tecprog/exemplos/</code>.</li>
+</ul>
+<h2 id="02-codando-algoritmos-em-java">02 - Codando algoritmos em Java<a class="headerlink" href="#02-codando-algoritmos-em-java" title="Permanent link">&para;</a></h2>
+<p>Usaremos um tipo especial de exercício chamado <strong>Workspace</strong>, em que abriremos um ambiente do VSCode já configurado para programar. A princípio será um ambiente quase idêntico ao que seria instalado no PC de vocês, porém acessível via Browser e pré-configurado. </p>
+<p><a class="ah-button ah-button--primary" href="https://us.prairielearn.com/pl/course_instance/220855">Entrar no PrairieLearn</a></p>
+<!--<ah-button primary href="https://us.prairielearn.com/pl/course_instance/220855">Entrar no PrairieLearn</ah-button>-->
+
+<p>Você deve ver o <em>Módulo 0</em> já disponível. Ao entrar nele haverão diversos exercícios de codificação. Vamos entrar no primeiro deles: <em>Hello World</em>. Depois de ler o enunciado é só ir em <em>Open Worspace</em> para que, depois de alguns segundos, a seguinte tela seja aberta.</p>
+<p><img alt="" src="aula-00/tela-vscode.png" /></p>
+<p>Esse é um VSCode rodando remotamente em uma VM na AWS. Cada exercício tem uma VM própria sem acesso à internet e com as extensões e pacotes de desenvolvimento Java já instalados e configurados. </p>
+<p>Na aba de projeto você deve ver um pacote <code>br.edu.insper.tecprog</code> com um arquivo <code>Hello.java</code>. Abra-o e use o botão <em>Run</em> como abaixo para executá-lo.</p>
+<p><img alt="" src="aula-00/tela-run.png" /></p>
+<p>Finalmente, veja na aba lateral que a extensão de testes identificou que existem testes disponíveis! Execute-os e veja que há uma falha. </p>
+<p><img alt="" src="aula-00/tela-teste.png" /></p>
+<div class="admonition exercise long  tag-long-text tag-text-exercise editable" data-slug="aulas/aula-00-primeiros-passos.html/leiturajava" id="leiturajava_0">
+<p class="admonition-title">Exercício 1<button class="editable-button"></button></p>
+<form class="exercise-form">
+<p>Leia o erro retornado e releia o código de <code>Hello.java</code>. O que deve ser modificado para que o teste passe?</p>
+<div class="form-elements">
+<div class="grow-wrap"><textarea name="data"></textarea></div>
+
+<input class="ah-button ah-button--primary" type="submit" value="Enviar"/>
+</div>
+</form>
+</div>
+<p>Faça a modificação e veja que agora os testes passam. O passo final é entregar o exercício feito. Para isso você deve voltar no enunciado do exercício e clicar em <em>Save and Grade</em>.</p>
+<p><img alt="" src="aula-00/tela-exercicio-entregue.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Atenção</p>
+<p>O exercício só está pronto e corrigido se clicar no <em>Save and Grade</em>. Não adianta só fazer o exercício dentro do workspace, tem que explicitamente entregar ele.</p>
+<p>Outro ponto: você pode tentar diversas soluções sem se preocupar com nota. A que vale será sempre a maior nota já obtida e não a última submissão.</p>
+</div>
+<h2 id="03-primeiros-algoritmos">03 - Primeiros algoritmos<a class="headerlink" href="#03-primeiros-algoritmos" title="Permanent link">&para;</a></h2>
+<p>Neste roteiro iremos criar nossos primeiros algoritmos em Pseudo-Código e explorar sua "tradução" para Java. Conforme o roteiro avança haverá leituras (curtas) recomendadas sobre sintaxe e semântica de Java.</p>
+<!-- 
+!!! warning "Pré-requisitos"
+    Esta aula é feita em conjunto com os exercício no PrairieLearn. Você precisa ter feito as seguintes atividades antes de prosseguir:
+
+    - [Java no PrairieLearn](java/infra.md): básico da infra usada na disciplina.
+    - [Primeiro contato com Java](java/primeiro-contato.md) 
+
+    Feitos esses dois guias, abra o *Módulo 0 - parte 1* no PrairieLearn e siga o handout. Cada problema tem um exercício de implementação em Java no PrairieLearn com testes automatizados que checam sua solução. -->
+
+<h3 id="o-esqueleto-de-um-algoritmo">O esqueleto de um algoritmo<a class="headerlink" href="#o-esqueleto-de-um-algoritmo" title="Permanent link">&para;</a></h3>
+<p>Todo algoritmo é formado pelo seguinte "esqueleto":</p>
+<hr />
+<ul>
+<li><strong>Entrada</strong>:<ul>
+<li>lista de parâmetros do algoritmo, incluindo tipos</li>
+<li>incluir também leitura de dados usando <code>LER_&lt;TIPO&gt;</code>.</li>
+<li>Inteiro <code>I</code> (parâmetro)</li>
+<li>String <code>S1</code> (parâmetro)</li>
+</ul>
+</li>
+<li><strong>Saída</strong>:<ul>
+<li>resumo da saída do algoritmo, incluindo possíveis <code>PRINT</code></li>
+<li>pode conter mais de um item se ajudar a entender saídas que são condicionais</li>
+<li>devolve X caso A</li>
+<li>devolve Y caso contrário</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>NOME_DO_ALGORITMO(I, S1)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a># Atribuições e operações matemáticas
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>MAIS_UM := I + 1
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a># Saída de texto
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>PRINT(MAIS_UM)
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a># Entrada de dados
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>NOVO_INT := LER_INTEIRO()
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>NOVO_FLOAT := LER_FRACIONARIO()
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>NOVO_TEXTO := LER_TEXTO()
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Atenção</p>
+<p>Usamos <code>:=</code> para atribuição e <code>=</code> para comparações.</p>
+</div>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../handouts/index.html"
+               class="ah-prev"
+               title="Índice de handouts">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Índice de handouts</span>
+            </a>
+          
+          
+            <a href="../handouts/cheat1-handout.pdf"
+               class="ah-next"
+               title="Cheatsheet">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Cheatsheet</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

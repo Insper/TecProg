@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Material - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#mapa">Mapa</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#tad-mapa">TAD Mapa</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#implementacao-de-hashmap">Implementação de HashMap</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#normalizacao-de-chaves">Normalização de chaves</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#conjunto">Conjunto</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#tad-conjunto">TAD Conjunto</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#implementacao-de-hashset">Implementação de HashSet</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#exemplo-guiado-detectar-duplicatas">Exemplo guiado: detectar duplicatas</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#map-ou-set">Map ou Set?</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#iteracao">Iteração</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#erros-comuns">Erros comuns</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Aulas</li>
+                  
+                
+                  
+                    <li>Aula 04 — Mapas e conjuntos</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="aula-04-mapas-e-conjuntos">Aula 04 — <code>Mapas</code> e <code>Conjuntos</code><a class="headerlink" href="#aula-04-mapas-e-conjuntos" title="Permanent link">&para;</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<p>Ao final desta aula, você deve ser capaz de:</p>
+<ul>
+<li>usar <code>HashMap</code> para associar chaves a valores;</li>
+<li>usar <code>HashSet</code> para representar presença sem repetição;</li>
+<li>implementar contadores e deduplicadores;</li>
+<li>escolher entre lista, mapa e conjunto;</li>
+<li>explicar por que consultas em hash costumam ser eficientes;</li>
+<li>reconhecer cuidados com normalização de chaves.</li>
+</ul>
+<!-- ## Pré-requisitos
+
+Você já deve saber percorrer arrays, strings e listas. Também deve saber que buscar repetidamente em uma lista pode custar caro, porque `contains` em `ArrayList` precisa comparar elemento por elemento no pior caso. -->
+
+<h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
+<p>Queremos analisar uma lista de palavras digitadas por estudantes em respostas curtas. Duas perguntas são comuns:</p>
+<ol>
+<li>Quais palavras diferentes apareceram?</li>
+<li>Quantas vezes cada palavra apareceu?</li>
+</ol>
+<p>Para a primeira pergunta, queremos um conjunto de palavras únicas. Para a segunda, queremos associar cada palavra a uma contagem.</p>
+<h2 id="mapa">Mapa<a class="headerlink" href="#mapa" title="Permanent link">&para;</a></h2>
+<p>Um <strong>mapa</strong> é uma estrutura de dados que armazena associações entre <strong>chaves</strong> e <strong>valores</strong>.</p>
+<p>Cada elemento do mapa é um par:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>chave -&gt; valor
+</code></pre></div>
+<p>Por exemplo, um mapa pode relacionar o nome de um aluno à sua nota:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&quot;Ana&quot;   -&gt; 8.5
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&quot;Bruno&quot; -&gt; 7.0
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>&quot;Carla&quot; -&gt; 9.2
+</code></pre></div>
+<p>Nesse exemplo:</p>
+<ul>
+<li><code>"Ana"</code>, <code>"Bruno"</code> e <code>"Carla"</code> são as chaves;</li>
+<li><code>8.5</code>, <code>7.0</code> e <code>9.2</code> são os valores.</li>
+</ul>
+<p>As chaves de um mapa são únicas. Portanto, não podem existir dois pares diferentes com a mesma chave. Ao inserir novamente uma chave existente, seu valor é substituído.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>INSERIR(M, &quot;Ana&quot;, 8.5)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>INSERIR(M, &quot;Ana&quot;, 9.0)
+</code></pre></div>
+<p>Após essas operações, o mapa contém:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&quot;Ana&quot; -&gt; 9.0
+</code></pre></div>
+<p>Mapas são úteis quando se deseja localizar um valor a partir de uma informação que o identifica, sem precisar conhecer sua posição numérica.</p>
+<p>Alguns exemplos de uso são:</p>
+<ul>
+<li>localizar um aluno pelo número de matrícula;</li>
+<li>localizar um produto pelo código;</li>
+<li>contar quantas vezes cada palavra aparece em um texto;</li>
+<li>associar nomes de configurações aos seus valores;</li>
+<li>armazenar dados de usuários utilizando o nome de usuário como chave.</li>
+</ul>
+<h3 id="por-que-o-mapa-e-eficiente">Por que o Mapa é eficiente?<a class="headerlink" href="#por-que-o-mapa-e-eficiente" title="Permanent link">&para;</a></h3>
+<p>Uma possível implementação de mapa seria armazenar todos os pares em uma lista.</p>
+<p>Para localizar uma chave nessa implementação, seria necessário percorrer os pares:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>(&quot;Ana&quot;, 8.5)
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>(&quot;Bruno&quot;, 7.0)
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>(&quot;Carla&quot;, 9.2)
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>...
+</code></pre></div>
+<p>Quanto maior fosse a lista, maior poderia ser a quantidade de comparações necessárias.</p>
+<p>O <code>Mapa</code> evita normalmente esse percurso completo usando uma <strong>função hash</strong>.</p>
+<p>A função hash recebe uma chave e produz um número inteiro:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>HASH(&quot;Ana&quot;) -&gt; 35721
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>HASH(&quot;Bruno&quot;) -&gt; 82416
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>HASH(&quot;Carla&quot;) -&gt; 19304
+</code></pre></div>
+<p>Esse número é transformado em uma posição do array interno:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>posicao &lt;- HASH(chave) MOD capacidade
+</code></pre></div>
+<p>Se o array possui capacidade <code>8</code>, por exemplo:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>HASH(&quot;Ana&quot;) MOD 8 -&gt; 1
+</code></pre></div>
+<p>Assim, o par associado à chave <code>"Ana"</code> será procurado diretamente no balde de posição <code>1</code>.</p>
+<p>Em vez de percorrer todos os elementos do mapa, a operação segue diretamente para uma pequena região na qual a chave deve estar.</p>
+<p>Essa é a principal razão da eficiência computacional de um Mapa:</p>
+<blockquote>
+<p>A função hash transforma a chave em uma posição provável de armazenamento.</p>
+</blockquote>
+<p>Quando a função hash distribui bem as chaves e o mapa mantém espaço livre suficiente, cada balde contém poucos elementos. Dessa forma, inserir, consultar e remover normalmente exigem apenas:</p>
+<ol>
+<li>calcular o hash da chave;</li>
+<li>localizar o balde correspondente;</li>
+<li>examinar poucos pares dentro desse balde.</li>
+</ol>
+<p>A quantidade total de elementos armazenados pode aumentar bastante sem fazer com que todas as consultas precisem percorrer o mapa inteiro.</p>
+<h3 id="colisoes">Colisões<a class="headerlink" href="#colisoes" title="Permanent link">&para;</a></h3>
+<p>Chaves diferentes podem produzir a mesma posição.</p>
+<p>Por exemplo:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>HASH(&quot;Ana&quot;) MOD 8 -&gt; 1
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>HASH(&quot;Carlos&quot;) MOD 8 -&gt; 1
+</code></pre></div>
+<p>Essa situação é chamada de <strong>colisão</strong>.</p>
+<p>Uma colisão não significa que as chaves são iguais. Significa apenas que elas foram direcionadas para o mesmo balde.</p>
+<p>Uma forma de tratar colisões é fazer com que cada posição do array armazene uma lista de pares:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Posição 0 -&gt; []
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Posição 1 -&gt; [(&quot;Ana&quot;, 8.5), (&quot;Carlos&quot;, 7.5)]
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Posição 2 -&gt; []
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Posição 3 -&gt; [(&quot;Bruno&quot;, 7.0)]
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Posição 4 -&gt; [(&quot;Carla&quot;, 9.2)]
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>Posição 5 -&gt; []
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>Posição 6 -&gt; []
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>Posição 7 -&gt; []
+</code></pre></div>
+<p>Ao consultar <code>"Carlos"</code>, o mapa calcula a posição <code>1</code> e procura a chave apenas na lista daquele balde.</p>
+<h3 id="par-chave-valor">Par chave-valor<a class="headerlink" href="#par-chave-valor" title="Permanent link">&para;</a></h3>
+<p>Cada elemento armazenado nos baldes é um par contendo uma chave e um valor.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>TAD Par
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  chave
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>  valor
+</code></pre></div>
+<h2 id="tad-mapa">TAD Mapa<a class="headerlink" href="#tad-mapa" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>TAD Mapa
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  baldes: array de listas de Par
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>  tamanho: number
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  capacidade: number
+</code></pre></div>
+<ul>
+<li><code>baldes</code> é o array usado para distribuir os pares;</li>
+<li><code>tamanho</code> indica quantos pares estão armazenados;</li>
+<li><code>capacidade</code> indica quantos baldes existem;</li>
+<li>cada balde contém uma lista de pares.</li>
+</ul>
+<h3 id="criar-um-mapa">Criar um mapa<a class="headerlink" href="#criar-um-mapa" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>CRIAR-MAPA()
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  Input: none
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  Output: Mapa
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>  M &lt;- novo Mapa
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  M.capacidade &lt;- 8
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  M.tamanho &lt;- 0
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>  M.baldes &lt;- novo array de tamanho M.capacidade
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>  FOR i &lt;- 0 TO M.capacidade - 1 DO
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>    M.baldes[i] &lt;- CRIAR-LISTA()
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>  RETURN M
+</code></pre></div>
+<p>Nosso mapa começa com oito baldes. Esse valor é apenas uma escolha inicial e pode ser alterado.</p>
+<h3 id="calcular-a-posicao-de-uma-chave">Calcular a posição de uma chave<a class="headerlink" href="#calcular-a-posicao-de-uma-chave" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>CALCULAR-POSICAO(chave, capacidade)
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  Input: chave, number capacidade
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>  Output: number
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>  codigo &lt;- HASH(chave)
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>  posicao &lt;- codigo MOD capacidade
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>  RETURN posicao
+</code></pre></div>
+<p>A função <code>HASH</code> depende do tipo da chave. Ela deve sempre produzir o mesmo código quando recebe a mesma chave.</p>
+<p>Também é desejável que ela distribua diferentes chaves entre várias posições do array.</p>
+<h3 id="inserir-um-par">Inserir um par<a class="headerlink" href="#inserir-um-par" title="Permanent link">&para;</a></h3>
+<p>A operação <code>INSERIR</code> associa uma chave a um valor.</p>
+<p>Caso a chave já exista, seu valor é substituído. Caso contrário, um novo par é adicionado.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>INSERIR(M, chave, valor)
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  Input: Mapa M, chave, valor
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>  Output: none
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>  IF PRECISA-REDIMENSIONAR(M) THEN
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>    REDIMENSIONAR(M)
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>  posicao &lt;- CALCULAR-POSICAO(chave, M.capacidade)
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>  balde &lt;- M.baldes[posicao]
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>  FOR i &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>    par &lt;- ACESSAR(balde, i)
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>    IF par.chave = chave THEN
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>      par.valor &lt;- valor
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>      RETURN
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>  novoPar &lt;- novo Par
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>  novoPar.chave &lt;- chave
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>  novoPar.valor &lt;- valor
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>  ADICIONAR-FIM(balde, novoPar)
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>  M.tamanho &lt;- M.tamanho + 1
+</code></pre></div>
+<p>Observe que substituir o valor de uma chave existente não aumenta o tamanho do mapa.</p>
+<h3 id="consultar-um-valor">Consultar um valor<a class="headerlink" href="#consultar-um-valor" title="Permanent link">&para;</a></h3>
+<p>A operação <code>OBTER</code> recebe uma chave e retorna o valor associado a ela.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>OBTER(M, chave)
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  Input: Mapa M, chave
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  Output: valor ou NULL
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  posicao &lt;- CALCULAR-POSICAO(chave, M.capacidade)
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>  balde &lt;- M.baldes[posicao]
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>  FOR i &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>    par &lt;- ACESSAR(balde, i)
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>    IF par.chave = chave THEN
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>      RETURN par.valor
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>  RETURN NULL
+</code></pre></div>
+<p>A operação retorna <code>NULL</code> quando a chave não está presente.</p>
+<p>Essa convenção exige cuidado caso <code>NULL</code> também possa ser armazenado como valor. Nesse caso, a operação <code>CONTEM-CHAVE</code> pode ser usada para distinguir as situações.</p>
+<h3 id="verificar-se-uma-chave-existe">Verificar se uma chave existe<a class="headerlink" href="#verificar-se-uma-chave-existe" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>CONTEM-CHAVE(M, chave)
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>  Input: Mapa M, chave
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>  Output: boolean
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>  posicao &lt;- CALCULAR-POSICAO(chave, M.capacidade)
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>  balde &lt;- M.baldes[posicao]
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>  FOR i &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>    par &lt;- ACESSAR(balde, i)
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>    IF par.chave = chave THEN
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>      RETURN true
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>  RETURN false
+</code></pre></div>
+<h3 id="remover-uma-chave">Remover uma chave<a class="headerlink" href="#remover-uma-chave" title="Permanent link">&para;</a></h3>
+<p>A operação <code>REMOVER</code> elimina o par associado à chave e retorna seu valor.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>REMOVER(M, chave)
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>  Input: Mapa M, chave
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>  Output: valor ou NULL
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>  posicao &lt;- CALCULAR-POSICAO(chave, M.capacidade)
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>  balde &lt;- M.baldes[posicao]
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>  FOR i &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>    par &lt;- ACESSAR(balde, i)
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>    IF par.chave = chave THEN
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>      removido &lt;- REMOVER(balde, i)
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>      M.tamanho &lt;- M.tamanho - 1
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>      RETURN removido.valor
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>  RETURN NULL
+</code></pre></div>
+<p>Se a chave não existir, a operação retorna <code>NULL</code>.</p>
+<h3 id="consultar-o-tamanho">Consultar o tamanho<a class="headerlink" href="#consultar-o-tamanho" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>TAMANHO-MAPA(M)
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  Input: Mapa M
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  Output: number
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>  RETURN M.tamanho
+</code></pre></div>
+<p>O tamanho corresponde à quantidade de pares chave-valor armazenados, e não à quantidade de baldes.</p>
+<h3 id="verificar-se-o-mapa-esta-vazio">Verificar se o mapa está vazio<a class="headerlink" href="#verificar-se-o-mapa-esta-vazio" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>VAZIO(M)
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  Input: Mapa M
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>  Output: boolean
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>  RETURN M.tamanho = 0
+</code></pre></div>
+<h3 id="percorrer-todos-os-pares">Percorrer todos os pares<a class="headerlink" href="#percorrer-todos-os-pares" title="Permanent link">&para;</a></h3>
+<p>Como os elementos estão distribuídos entre os baldes, é necessário percorrer cada balde e, em seguida, os pares contidos nele.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>PERCORRER(M)
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>  Input: Mapa M
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>  Output: none
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>  FOR i &lt;- 0 TO M.capacidade - 1 DO
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>    balde &lt;- M.baldes[i]
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>    FOR j &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>      par &lt;- ACESSAR(balde, j)
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>      PROCESSAR(par.chave, par.valor)
+</code></pre></div>
+<p><code>PROCESSAR</code> representa a ação realizada com cada par, como imprimir, copiar ou acumular informações.</p>
+<p>A ordem de percurso de um Mapa normalmente não corresponde à ordem em que os pares foram inseridos.</p>
+<h3 id="redimensionamento">Redimensionamento<a class="headerlink" href="#redimensionamento" title="Permanent link">&para;</a></h3>
+<p>Se muitos pares forem armazenados em poucos baldes, as colisões se tornam frequentes. Os baldes ficam maiores e as operações passam a exigir mais comparações.</p>
+<p>Para evitar esse problema, o mapa pode aumentar seu array interno quando a quantidade de elementos se aproxima da quantidade de baldes.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>PRECISA-REDIMENSIONAR(M)
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>  Input: Mapa M
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>  Output: boolean
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>  RETURN M.tamanho &gt;= M.capacidade * 0.75
+</code></pre></div>
+<p>Nesse exemplo, o mapa é redimensionado quando estiver utilizando pelo menos 75% de sua capacidade.</p>
+<p>A operação de redimensionamento cria um array maior e redistribui todos os pares.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>REDIMENSIONAR(M)
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>  Input: Mapa M
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>  Output: none
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>  baldesAntigos &lt;- M.baldes
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>  capacidadeAntiga &lt;- M.capacidade
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>  M.capacidade &lt;- M.capacidade * 2
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>  M.baldes &lt;- novo array de tamanho M.capacidade
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>  M.tamanho &lt;- 0
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>  FOR i &lt;- 0 TO M.capacidade - 1 DO
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>    M.baldes[i] &lt;- CRIAR-LISTA()
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>  FOR i &lt;- 0 TO capacidadeAntiga - 1 DO
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>    balde &lt;- baldesAntigos[i]
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>    FOR j &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>      par &lt;- ACESSAR(balde, j)
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>      INSERIR(M, par.chave, par.valor)
+</code></pre></div>
+<p>Os pares precisam ser redistribuídos porque a posição depende da capacidade:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>posicao &lt;- HASH(chave) MOD capacidade
+</code></pre></div>
+<p>Quando a capacidade muda, uma mesma chave pode passar a pertencer a outro balde.</p>
+<p>O redimensionamento exige percorrer todos os pares, mas não acontece em toda inserção. Ele ocorre apenas ocasionalmente, quando o mapa precisa de mais espaço.</p>
+<h3 id="exemplo-de-uso">Exemplo de uso<a class="headerlink" href="#exemplo-de-uso" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>notas &lt;- CRIAR-MAPA()
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>INSERIR(notas, &quot;Ana&quot;, 8.5)
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>INSERIR(notas, &quot;Bruno&quot;, 7.0)
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>INSERIR(notas, &quot;Carla&quot;, 9.2)
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>notaAna &lt;- OBTER(notas, &quot;Ana&quot;)
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>IMPRIMIR(notaAna)
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>INSERIR(notas, &quot;Ana&quot;, 9.0)
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>IF CONTEM-CHAVE(notas, &quot;Bruno&quot;) THEN
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>  IMPRIMIR(&quot;Bruno possui uma nota cadastrada&quot;)
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>
+<a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>notaRemovida &lt;- REMOVER(notas, &quot;Carla&quot;)
+</code></pre></div>
+<h3 id="resumo-das-operacoes">Resumo das operações<a class="headerlink" href="#resumo-das-operacoes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operação</th>
+<th>Comportamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CRIAR-MAPA()</code></td>
+<td>Cria um mapa vazio</td>
+</tr>
+<tr>
+<td><code>INSERIR(M, chave, valor)</code></td>
+<td>Insere um par ou atualiza uma chave existente</td>
+</tr>
+<tr>
+<td><code>OBTER(M, chave)</code></td>
+<td>Retorna o valor associado à chave</td>
+</tr>
+<tr>
+<td><code>CONTEM-CHAVE(M, chave)</code></td>
+<td>Informa se uma chave está presente</td>
+</tr>
+<tr>
+<td><code>REMOVER(M, chave)</code></td>
+<td>Remove a chave e retorna seu valor</td>
+</tr>
+<tr>
+<td><code>TAMANHO-MAPA(M)</code></td>
+<td>Retorna a quantidade de pares</td>
+</tr>
+<tr>
+<td><code>VAZIO(M)</code></td>
+<td>Informa se o mapa está vazio</td>
+</tr>
+<tr>
+<td><code>PERCORRER(M)</code></td>
+<td>Percorre todos os pares</td>
+</tr>
+<tr>
+<td><code>REDIMENSIONAR(M)</code></td>
+<td>Aumenta e reorganiza os baldes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="custos-das-operacoes">Custos das operações<a class="headerlink" href="#custos-das-operacoes" title="Permanent link">&para;</a></h3>
+<p>Quando a função hash distribui bem as chaves e o mapa é redimensionado adequadamente:</p>
+<ul>
+<li><code>OBTER</code> normalmente examina apenas um balde pequeno;</li>
+<li><code>CONTEM-CHAVE</code> normalmente examina apenas um balde pequeno;</li>
+<li><code>REMOVER</code> normalmente examina apenas um balde pequeno;</li>
+<li><code>INSERIR</code> normalmente examina apenas um balde pequeno e adiciona o novo par;</li>
+<li><code>TAMANHO-MAPA</code> e <code>VAZIO</code> consultam diretamente informações armazenadas;</li>
+<li><code>PERCORRER</code> precisa visitar todos os pares;</li>
+<li><code>REDIMENSIONAR</code> precisa redistribuir todos os pares, mas ocorre apenas ocasionalmente.</li>
+</ul>
+<p>Por isso, consultar uma chave em um Mapa costuma ser muito mais eficiente do que procurar um elemento em uma lista inteira.</p>
+<p>Entretanto, essa eficiência depende de alguns fatores:</p>
+<ul>
+<li>a função hash deve distribuir bem as chaves;</li>
+<li>a capacidade não deve ser muito pequena;</li>
+<li>o mapa deve ser redimensionado quando ficar cheio;</li>
+<li>as chaves devem permitir comparação;</li>
+<li>o valor usado como chave não deve mudar de forma que altere seu hash enquanto estiver armazenado.</li>
+</ul>
+<p>No pior caso, muitas chaves podem acabar no mesmo balde. Nesse cenário, a busca precisa percorrer uma lista grande e perde parte da vantagem do Mapa. Uma boa implementação procura evitar essa situação por meio de uma função hash adequada e do redimensionamento.</p>
+<h2 id="implementacao-de-hashmap">Implementação de <code>HashMap</code><a class="headerlink" href="#implementacao-de-hashmap" title="Permanent link">&para;</a></h2>
+<p>Um <code>Map</code> associa uma chave a um valor. Para contagem de palavras, a chave é a palavra e o valor é a quantidade de ocorrências.</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Frequencia</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">contar</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">palavras</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">        </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">freq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">palavra</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">palavras</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">chave</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">palavra</span><span class="p">.</span><span class="na">toLowerCase</span><span class="p">();</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">atual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">freq</span><span class="p">.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="n">chave</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="w">            </span><span class="n">freq</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">chave</span><span class="p">,</span><span class="w"> </span><span class="n">atual</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">freq</span><span class="p">;</span>
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="w">        </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">entrada</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;Java&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;java&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Hash&quot;</span><span class="p">};</span>
+<a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a><span class="w">        </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">freq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">contar</span><span class="p">(</span><span class="n">entrada</span><span class="p">);</span>
+<a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>
+<a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">freq</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;java&quot;</span><span class="p">));</span><span class="w">  </span><span class="c1">// 2</span>
+<a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">freq</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;array&quot;</span><span class="p">));</span><span class="w"> </span><span class="c1">// 1</span>
+<a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a><span class="p">}</span>
+</code></pre></div>
+<p>Operações principais:</p>
+<ul>
+<li><code>put(chave, valor)</code>: insere ou atualiza;</li>
+<li><code>get(chave)</code>: consulta valor ou retorna <code>null</code> se a chave não existir;</li>
+<li><code>getOrDefault(chave, padrao)</code>: consulta com valor padrão;</li>
+<li><code>containsKey(chave)</code>: verifica se a chave existe;</li>
+<li><code>remove(chave)</code>: remove associação.</li>
+</ul>
+<h2 id="normalizacao-de-chaves">Normalização de chaves<a class="headerlink" href="#normalizacao-de-chaves" title="Permanent link">&para;</a></h2>
+<p>Chaves precisam representar a ideia correta do problema. Em contagem de palavras, <code>"Java"</code> e <code>"java"</code> devem contar como a mesma palavra? Se sim, normalize com <code>toLowerCase()</code>. Pontuação deve ser removida? Espaços extras devem ser ignorados? Essas decisões fazem parte da modelagem.</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">normalizar</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">palavra</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">palavra</span><span class="p">.</span><span class="na">toLowerCase</span><span class="p">().</span><span class="na">trim</span><span class="p">();</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="p">}</span>
+</code></pre></div>
+<p>Uma estrutura de hash não corrige uma chave mal modelada. Ela apenas usa a chave que você entrega.</p>
+<p>A implementação abaixo usa um <strong>array de listas</strong>, no qual cada posição é um balde responsável por armazenar parte dos elementos.</p>
+<h2 id="conjunto">Conjunto<a class="headerlink" href="#conjunto" title="Permanent link">&para;</a></h2>
+<p>Um <strong>conjunto</strong> é uma estrutura de dados que armazena elementos sem permitir repetições.</p>
+<p>Por exemplo, considere um conjunto de linguagens de programação:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>{&quot;Java&quot;, &quot;Python&quot;, &quot;C&quot;}
+</code></pre></div>
+<p>Cada elemento aparece apenas uma vez. Se tentarmos inserir <code>"Java"</code> novamente, o conjunto permanece inalterado:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>ADICIONAR(C, &quot;Java&quot;)
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>ADICIONAR(C, &quot;Python&quot;)
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>ADICIONAR(C, &quot;C&quot;)
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>ADICIONAR(C, &quot;Java&quot;)
+</code></pre></div>
+<p>Ao final, o conjunto contém:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>{&quot;Java&quot;, &quot;Python&quot;, &quot;C&quot;}
+</code></pre></div>
+<p>Diferentemente de uma lista, um conjunto normalmente:</p>
+<ul>
+<li>não possui posições usadas diretamente pelo programador;</li>
+<li>não permite elementos repetidos;</li>
+<li>não garante que os elementos sejam percorridos na ordem de inserção;</li>
+<li>permite verificar rapidamente se um elemento está presente.</li>
+</ul>
+<p>Conjuntos são úteis quando o importante é saber se um elemento pertence ou não a uma coleção.</p>
+<p>Alguns exemplos de uso são:</p>
+<ul>
+<li>armazenar identificadores de usuários conectados;</li>
+<li>guardar palavras diferentes encontradas em um texto;</li>
+<li>eliminar valores repetidos;</li>
+<li>registrar disciplinas já concluídas por um aluno;</li>
+<li>controlar páginas já visitadas por um algoritmo;</li>
+<li>verificar rapidamente se um valor já foi processado.</li>
+</ul>
+<h3 id="comparacao-com-uma-lista">Comparação com uma lista<a class="headerlink" href="#comparacao-com-uma-lista" title="Permanent link">&para;</a></h3>
+<p>Uma lista pode conter elementos repetidos:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>[&quot;Java&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C&quot;, &quot;Python&quot;]
+</code></pre></div>
+<p>Um conjunto formado a partir desses elementos contém apenas os valores distintos:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>{&quot;Java&quot;, &quot;Python&quot;, &quot;C&quot;}
+</code></pre></div>
+<p>Também existe uma diferença importante na consulta.</p>
+<p>Em uma lista comum, para verificar se <code>"C"</code> está presente, pode ser necessário percorrer vários elementos:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>&quot;Java&quot;
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>&quot;Python&quot;
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>&quot;Java&quot;
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>&quot;C&quot;
+</code></pre></div>
+<p>Um conjunto implementado com uma tabela de dispersão (hash) utiliza uma função que calcula em qual região da estrutura o elemento provavelmente está armazenado. Dessa forma, normalmente não é necessário percorrer todos os elementos.</p>
+<h3 id="por-que-essa-estrutura-e-eficiente">Por que essa estrutura é eficiente?<a class="headerlink" href="#por-que-essa-estrutura-e-eficiente" title="Permanent link">&para;</a></h3>
+<p>A estrutura utiliza uma <strong>função hash</strong> para transformar cada elemento em um número inteiro:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>HASH(&quot;Java&quot;)   -&gt; 71825
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>HASH(&quot;Python&quot;) -&gt; 46219
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>HASH(&quot;C&quot;)      -&gt; 10342
+</code></pre></div>
+<p>Esse número é convertido em uma posição do array interno:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>posicao &lt;- HASH(elemento) MOD capacidade
+</code></pre></div>
+<p>Se o array possuir capacidade <code>8</code>, por exemplo:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>HASH(&quot;Java&quot;) MOD 8 -&gt; 1
+</code></pre></div>
+<p>Assim, o elemento <code>"Java"</code> será procurado diretamente no balde de posição <code>1</code>.</p>
+<p>Em vez de percorrer todos os elementos do conjunto, a operação segue diretamente para uma pequena região na qual o elemento deve estar.</p>
+<p>Essa é a principal razão de sua eficiência:</p>
+<blockquote>
+<p>A função hash permite localizar rapidamente o balde associado a um elemento.</p>
+</blockquote>
+<p>Quando os elementos estão bem distribuídos, cada balde contém poucos valores. Assim, adicionar, consultar e remover normalmente exigem:</p>
+<ol>
+<li>calcular o hash do elemento;</li>
+<li>localizar o balde correspondente;</li>
+<li>examinar poucos elementos dentro desse balde.</li>
+</ol>
+<p>A quantidade total de elementos pode crescer bastante sem fazer com que toda consulta precise percorrer o conjunto inteiro.</p>
+<h3 id="colisoes_1">Colisões<a class="headerlink" href="#colisoes_1" title="Permanent link">&para;</a></h3>
+<p>Elementos diferentes podem produzir a mesma posição.</p>
+<p>Por exemplo:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>HASH(&quot;Java&quot;) MOD 8 -&gt; 1
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>HASH(&quot;Ruby&quot;) MOD 8 -&gt; 1
+</code></pre></div>
+<p>Essa situação é chamada de <strong>colisão</strong>.</p>
+<p>Uma colisão não significa que os elementos são iguais. Significa apenas que eles foram direcionados para o mesmo balde.</p>
+<p>Uma forma de tratar colisões é fazer com que cada posição do array armazene uma lista:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>Posição 0 -&gt; []
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>Posição 1 -&gt; [&quot;Java&quot;, &quot;Ruby&quot;]
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>Posição 2 -&gt; []
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>Posição 3 -&gt; [&quot;Python&quot;]
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>Posição 4 -&gt; [&quot;C&quot;]
+<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>Posição 5 -&gt; []
+<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a>Posição 6 -&gt; []
+<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a>Posição 7 -&gt; []
+</code></pre></div>
+<p>Ao consultar <code>"Ruby"</code>, o conjunto calcula a posição <code>1</code> e procura o elemento apenas na lista daquele balde.</p>
+<h2 id="tad-conjunto">TAD Conjunto<a class="headerlink" href="#tad-conjunto" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>TAD Conjunto
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>  baldes: array de listas
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>  tamanho: number
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>  capacidade: number
+</code></pre></div>
+<ul>
+<li><code>baldes</code> é o array usado para distribuir os elementos;</li>
+<li><code>tamanho</code> indica quantos elementos distintos estão armazenados;</li>
+<li><code>capacidade</code> indica quantos baldes existem;</li>
+<li>cada balde contém uma lista de elementos.</li>
+</ul>
+<h3 id="criar-um-conjunto">Criar um conjunto<a class="headerlink" href="#criar-um-conjunto" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>CRIAR-CONJUNTO()
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>  Input: none
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>  Output: Conjunto
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>  C &lt;- novo Conjunto
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>  C.capacidade &lt;- 8
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>  C.tamanho &lt;- 0
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>  C.baldes &lt;- novo array de tamanho C.capacidade
+<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>
+<a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a>  FOR i &lt;- 0 TO C.capacidade - 1 DO
+<a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a>    C.baldes[i] &lt;- CRIAR-LISTA()
+<a id="__codelineno-39-12" name="__codelineno-39-12" href="#__codelineno-39-12"></a>
+<a id="__codelineno-39-13" name="__codelineno-39-13" href="#__codelineno-39-13"></a>  RETURN C
+</code></pre></div>
+<p>O conjunto começa com oito baldes. Esse valor é apenas uma capacidade inicial e pode ser alterado.</p>
+<h3 id="calcular-a-posicao-de-um-elemento">Calcular a posição de um elemento<a class="headerlink" href="#calcular-a-posicao-de-um-elemento" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>CALCULAR-POSICAO(elemento, capacidade)
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>  Input: elemento, number capacidade
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>  Output: number
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>  codigo &lt;- HASH(elemento)
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>  posicao &lt;- codigo MOD capacidade
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>
+<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>  RETURN posicao
+</code></pre></div>
+<p>A função <code>HASH</code> deve sempre produzir o mesmo código quando recebe o mesmo elemento.</p>
+<p>Também é desejável que elementos diferentes sejam bem distribuídos entre as posições disponíveis.</p>
+<h3 id="verificar-se-um-elemento-pertence-ao-conjunto">Verificar se um elemento pertence ao conjunto<a class="headerlink" href="#verificar-se-um-elemento-pertence-ao-conjunto" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>CONTEM(C, elemento)
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>  Input: Conjunto C, elemento
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>  Output: boolean
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>  posicao &lt;- CALCULAR-POSICAO(elemento, C.capacidade)
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>  balde &lt;- C.baldes[posicao]
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>  FOR i &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a>    atual &lt;- ACESSAR(balde, i)
+<a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a>
+<a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>    IF atual = elemento THEN
+<a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a>      RETURN true
+<a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a>
+<a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a>  RETURN false
+</code></pre></div>
+<p>A operação retorna:</p>
+<ul>
+<li><code>true</code> quando o elemento está presente;</li>
+<li><code>false</code> quando o elemento não está presente.</li>
+</ul>
+<p>A busca ocorre apenas no balde calculado para o elemento.</p>
+<h3 id="adicionar-um-elemento">Adicionar um elemento<a class="headerlink" href="#adicionar-um-elemento" title="Permanent link">&para;</a></h3>
+<p>A operação <code>ADICIONAR</code> insere um elemento somente quando ele ainda não pertence ao conjunto.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>ADICIONAR(C, elemento)
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>  Input: Conjunto C, elemento
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>  Output: boolean
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>
+<a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>  IF CONTEM(C, elemento) THEN
+<a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>    RETURN false
+<a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>
+<a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a>  IF PRECISA-REDIMENSIONAR(C) THEN
+<a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>    REDIMENSIONAR(C)
+<a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a>
+<a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a>  posicao &lt;- CALCULAR-POSICAO(elemento, C.capacidade)
+<a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a>  balde &lt;- C.baldes[posicao]
+<a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a>
+<a id="__codelineno-42-14" name="__codelineno-42-14" href="#__codelineno-42-14"></a>  ADICIONAR-FIM(balde, elemento)
+<a id="__codelineno-42-15" name="__codelineno-42-15" href="#__codelineno-42-15"></a>  C.tamanho &lt;- C.tamanho + 1
+<a id="__codelineno-42-16" name="__codelineno-42-16" href="#__codelineno-42-16"></a>
+<a id="__codelineno-42-17" name="__codelineno-42-17" href="#__codelineno-42-17"></a>  RETURN true
+</code></pre></div>
+<p>A operação retorna:</p>
+<ul>
+<li><code>true</code> quando o elemento é inserido;</li>
+<li><code>false</code> quando ele já estava presente.</li>
+</ul>
+<p>Tentar inserir um elemento repetido não altera o conjunto.</p>
+<p>Observe que a posição é calculada novamente depois do possível redimensionamento, pois a capacidade pode ter mudado.</p>
+<h3 id="remover-um-elemento">Remover um elemento<a class="headerlink" href="#remover-um-elemento" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>REMOVER(C, elemento)
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>  Input: Conjunto C, elemento
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>  Output: boolean
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>  posicao &lt;- CALCULAR-POSICAO(elemento, C.capacidade)
+<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>  balde &lt;- C.baldes[posicao]
+<a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>
+<a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>  FOR i &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a>    atual &lt;- ACESSAR(balde, i)
+<a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a>
+<a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a>    IF atual = elemento THEN
+<a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a>      REMOVER(balde, i)
+<a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a>      C.tamanho &lt;- C.tamanho - 1
+<a id="__codelineno-43-14" name="__codelineno-43-14" href="#__codelineno-43-14"></a>
+<a id="__codelineno-43-15" name="__codelineno-43-15" href="#__codelineno-43-15"></a>      RETURN true
+<a id="__codelineno-43-16" name="__codelineno-43-16" href="#__codelineno-43-16"></a>
+<a id="__codelineno-43-17" name="__codelineno-43-17" href="#__codelineno-43-17"></a>  RETURN false
+</code></pre></div>
+<p>A operação retorna:</p>
+<ul>
+<li><code>true</code> quando o elemento é encontrado e removido;</li>
+<li><code>false</code> quando o elemento não pertence ao conjunto.</li>
+</ul>
+<h3 id="consultar-o-tamanho_1">Consultar o tamanho<a class="headerlink" href="#consultar-o-tamanho_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>TAMANHO-CONJUNTO(C)
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>  Input: Conjunto C
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>  Output: number
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>  RETURN C.tamanho
+</code></pre></div>
+<p>O tamanho corresponde à quantidade de elementos distintos armazenados, e não à quantidade de baldes.</p>
+<p>Por exemplo:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>ADICIONAR(C, &quot;Java&quot;)
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>ADICIONAR(C, &quot;Python&quot;)
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>ADICIONAR(C, &quot;Java&quot;)
+</code></pre></div>
+<p>O tamanho do conjunto será <code>2</code>, pois a segunda inserção de <code>"Java"</code> não adiciona um novo elemento.</p>
+<h3 id="verificar-se-o-conjunto-esta-vazio">Verificar se o conjunto está vazio<a class="headerlink" href="#verificar-se-o-conjunto-esta-vazio" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>VAZIO(C)
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>  Input: Conjunto C
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>  Output: boolean
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>  RETURN C.tamanho = 0
+</code></pre></div>
+<p>A operação retorna <code>true</code> quando não há elementos armazenados.</p>
+<h3 id="percorrer-todos-os-elementos">Percorrer todos os elementos<a class="headerlink" href="#percorrer-todos-os-elementos" title="Permanent link">&para;</a></h3>
+<p>Como os elementos estão distribuídos entre vários baldes, é necessário percorrer cada balde.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>PERCORRER(C)
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>  Input: Conjunto C
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>  Output: none
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>
+<a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>  FOR i &lt;- 0 TO C.capacidade - 1 DO
+<a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>    balde &lt;- C.baldes[i]
+<a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>
+<a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>    FOR j &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a>      elemento &lt;- ACESSAR(balde, j)
+<a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a>      PROCESSAR(elemento)
+</code></pre></div>
+<p><code>PROCESSAR</code> representa a ação realizada com cada elemento, como imprimir, copiar ou contar.</p>
+<p>A ordem de percurso normalmente não corresponde à ordem em que os elementos foram inseridos.</p>
+<h3 id="redimensionamento_1">Redimensionamento<a class="headerlink" href="#redimensionamento_1" title="Permanent link">&para;</a></h3>
+<p>Se muitos elementos forem armazenados em poucos baldes, as colisões se tornam mais frequentes. Os baldes ficam maiores e as operações passam a exigir mais comparações.</p>
+<p>Para evitar isso, o conjunto pode aumentar seu array interno quando a quantidade de elementos se aproxima da quantidade de baldes.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>PRECISA-REDIMENSIONAR(C)
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>  Input: Conjunto C
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>  Output: boolean
+<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>
+<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>  RETURN C.tamanho &gt;= C.capacidade * 0.75
+</code></pre></div>
+<p>Nesse exemplo, o conjunto é redimensionado quando a quantidade de elementos atinge pelo menos 75% da quantidade de baldes.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>REDIMENSIONAR(C)
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>  Input: Conjunto C
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>  Output: none
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>
+<a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>  baldesAntigos &lt;- C.baldes
+<a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>  capacidadeAntiga &lt;- C.capacidade
+<a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>
+<a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>  C.capacidade &lt;- C.capacidade * 2
+<a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>  C.baldes &lt;- novo array de tamanho C.capacidade
+<a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a>  C.tamanho &lt;- 0
+<a id="__codelineno-49-11" name="__codelineno-49-11" href="#__codelineno-49-11"></a>
+<a id="__codelineno-49-12" name="__codelineno-49-12" href="#__codelineno-49-12"></a>  FOR i &lt;- 0 TO C.capacidade - 1 DO
+<a id="__codelineno-49-13" name="__codelineno-49-13" href="#__codelineno-49-13"></a>    C.baldes[i] &lt;- CRIAR-LISTA()
+<a id="__codelineno-49-14" name="__codelineno-49-14" href="#__codelineno-49-14"></a>
+<a id="__codelineno-49-15" name="__codelineno-49-15" href="#__codelineno-49-15"></a>  FOR i &lt;- 0 TO capacidadeAntiga - 1 DO
+<a id="__codelineno-49-16" name="__codelineno-49-16" href="#__codelineno-49-16"></a>    balde &lt;- baldesAntigos[i]
+<a id="__codelineno-49-17" name="__codelineno-49-17" href="#__codelineno-49-17"></a>
+<a id="__codelineno-49-18" name="__codelineno-49-18" href="#__codelineno-49-18"></a>    FOR j &lt;- 0 TO TAMANHO(balde) - 1 DO
+<a id="__codelineno-49-19" name="__codelineno-49-19" href="#__codelineno-49-19"></a>      elemento &lt;- ACESSAR(balde, j)
+<a id="__codelineno-49-20" name="__codelineno-49-20" href="#__codelineno-49-20"></a>      ADICIONAR(C, elemento)
+</code></pre></div>
+<p>Os elementos precisam ser redistribuídos porque a posição depende da capacidade:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>posicao &lt;- HASH(elemento) MOD capacidade
+</code></pre></div>
+<p>Quando a capacidade muda, um elemento pode passar a pertencer a outro balde.</p>
+<p>O redimensionamento precisa percorrer todos os elementos, mas ocorre apenas ocasionalmente.</p>
+<h3 id="exemplo-de-uso_1">Exemplo de uso<a class="headerlink" href="#exemplo-de-uso_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>visitadas &lt;- CRIAR-CONJUNTO()
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>ADICIONAR(visitadas, &quot;pagina-inicial&quot;)
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>ADICIONAR(visitadas, &quot;produtos&quot;)
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>ADICIONAR(visitadas, &quot;contato&quot;)
+<a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>
+<a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>IF CONTEM(visitadas, &quot;produtos&quot;) THEN
+<a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>  IMPRIMIR(&quot;A página de produtos já foi visitada&quot;)
+<a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>
+<a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a>ADICIONAR(visitadas, &quot;produtos&quot;)
+<a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a>
+<a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a>IMPRIMIR(TAMANHO-CONJUNTO(visitadas))
+<a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a>
+<a id="__codelineno-51-14" name="__codelineno-51-14" href="#__codelineno-51-14"></a>REMOVER(visitadas, &quot;contato&quot;)
+</code></pre></div>
+<p>A segunda tentativa de adicionar <code>"produtos"</code> não altera o conjunto.</p>
+<h3 id="resumo-das-operacoes_1">Resumo das operações<a class="headerlink" href="#resumo-das-operacoes_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operação</th>
+<th>Comportamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CRIAR-CONJUNTO()</code></td>
+<td>Cria um conjunto vazio</td>
+</tr>
+<tr>
+<td><code>ADICIONAR(C, elemento)</code></td>
+<td>Adiciona um elemento se ele ainda não estiver presente</td>
+</tr>
+<tr>
+<td><code>CONTEM(C, elemento)</code></td>
+<td>Informa se o elemento pertence ao conjunto</td>
+</tr>
+<tr>
+<td><code>REMOVER(C, elemento)</code></td>
+<td>Remove um elemento, caso ele esteja presente</td>
+</tr>
+<tr>
+<td><code>TAMANHO-CONJUNTO(C)</code></td>
+<td>Retorna a quantidade de elementos distintos</td>
+</tr>
+<tr>
+<td><code>VAZIO(C)</code></td>
+<td>Informa se o conjunto está vazio</td>
+</tr>
+<tr>
+<td><code>PERCORRER(C)</code></td>
+<td>Percorre todos os elementos</td>
+</tr>
+<tr>
+<td><code>ESVAZIAR(C)</code></td>
+<td>Remove todos os elementos</td>
+</tr>
+<tr>
+<td><code>REDIMENSIONAR(C)</code></td>
+<td>Aumenta e reorganiza os baldes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="custos-das-operacoes_1">Custos das operações<a class="headerlink" href="#custos-das-operacoes_1" title="Permanent link">&para;</a></h3>
+<p>Quando a função hash distribui bem os elementos e a capacidade é ajustada adequadamente:</p>
+<ul>
+<li><code>CONTEM</code> normalmente examina apenas um balde pequeno;</li>
+<li><code>ADICIONAR</code> normalmente consulta um balde pequeno e insere o elemento;</li>
+<li><code>REMOVER</code> normalmente examina apenas um balde pequeno;</li>
+<li><code>TAMANHO-CONJUNTO</code> e <code>VAZIO</code> consultam diretamente informações armazenadas;</li>
+<li><code>PERCORRER</code> precisa visitar todos os baldes e todos os elementos;</li>
+<li><code>REDIMENSIONAR</code> precisa redistribuir todos os elementos, mas ocorre apenas ocasionalmente.</li>
+</ul>
+<p>Por isso, verificar se um elemento pertence ao conjunto costuma ser muito mais eficiente do que procurar esse elemento percorrendo uma lista inteira.</p>
+<p>Essa eficiência depende de alguns fatores:</p>
+<ul>
+<li>a função hash deve distribuir bem os elementos;</li>
+<li>a capacidade não deve ser muito pequena;</li>
+<li>o conjunto deve ser redimensionado quando necessário;</li>
+<li>os elementos precisam permitir comparação;</li>
+<li>um elemento não deve mudar de maneira que altere seu hash enquanto estiver armazenado.</li>
+</ul>
+<p>No pior caso, muitos elementos podem ser enviados para o mesmo balde. Nesse cenário, a busca precisa percorrer uma lista grande e perde parte de sua eficiência. Uma boa implementação procura evitar isso com uma função hash adequada e redimensionamentos periódicos.</p>
+<h2 id="implementacao-de-hashset">Implementação de <code>HashSet</code><a class="headerlink" href="#implementacao-de-hashset" title="Permanent link">&para;</a></h2>
+<p>Um <code>Set</code> representa um conjunto: cada elemento aparece no máximo uma vez. Se tentamos adicionar o mesmo elemento novamente, o conjunto continua com uma única ocorrência.</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashSet</span><span class="p">;</span>
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">PalavrasUnicas</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a><span class="w">        </span><span class="n">HashSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">palavras</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a>
+<a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="w">        </span><span class="n">palavras</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;java&quot;</span><span class="p">);</span>
+<a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a><span class="w">        </span><span class="n">palavras</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;array&quot;</span><span class="p">);</span>
+<a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a><span class="w">        </span><span class="n">palavras</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;java&quot;</span><span class="p">);</span>
+<a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a>
+<a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">palavras</span><span class="p">.</span><span class="na">size</span><span class="p">());</span><span class="w">          </span><span class="c1">// 2</span>
+<a id="__codelineno-52-12" name="__codelineno-52-12" href="#__codelineno-52-12"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">palavras</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;java&quot;</span><span class="p">));</span><span class="w"> </span><span class="c1">// true</span>
+<a id="__codelineno-52-13" name="__codelineno-52-13" href="#__codelineno-52-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-52-14" name="__codelineno-52-14" href="#__codelineno-52-14"></a><span class="p">}</span>
+</code></pre></div>
+<p>Operações principais:</p>
+<ul>
+<li><code>add(x)</code>: adiciona se ainda não estiver presente;</li>
+<li><code>contains(x)</code>: verifica presença;</li>
+<li><code>remove(x)</code>: remove;</li>
+<li><code>size()</code>: devolve quantidade de elementos únicos.</li>
+</ul>
+<h2 id="exemplo-guiado-detectar-duplicatas">Exemplo guiado: detectar duplicatas<a class="headerlink" href="#exemplo-guiado-detectar-duplicatas" title="Permanent link">&para;</a></h2>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashSet</span><span class="p">;</span>
+<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>
+<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Duplicatas</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">temDuplicata</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">valores</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="w">        </span><span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vistos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a>
+<a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">valores</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">vistos</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="n">valor</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a><span class="w">            </span><span class="n">vistos</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">valor</span><span class="p">);</span>
+<a id="__codelineno-53-12" name="__codelineno-53-12" href="#__codelineno-53-12"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-53-13" name="__codelineno-53-13" href="#__codelineno-53-13"></a>
+<a id="__codelineno-53-14" name="__codelineno-53-14" href="#__codelineno-53-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<a id="__codelineno-53-15" name="__codelineno-53-15" href="#__codelineno-53-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-53-16" name="__codelineno-53-16" href="#__codelineno-53-16"></a>
+<a id="__codelineno-53-17" name="__codelineno-53-17" href="#__codelineno-53-17"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-53-18" name="__codelineno-53-18" href="#__codelineno-53-18"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">temDuplicata</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">}));</span><span class="w"> </span><span class="c1">// true</span>
+<a id="__codelineno-53-19" name="__codelineno-53-19" href="#__codelineno-53-19"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">temDuplicata</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}));</span><span class="w">    </span><span class="c1">// false</span>
+<a id="__codelineno-53-20" name="__codelineno-53-20" href="#__codelineno-53-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-53-21" name="__codelineno-53-21" href="#__codelineno-53-21"></a><span class="p">}</span>
+</code></pre></div>
+<p>Sem <code>HashSet</code>, poderíamos comparar cada par de elementos com dois laços. Isso teria custo quadrático no pior caso. Com conjunto, a ideia é registrar o que já apareceu e consultar rapidamente.</p>
+<h2 id="map-ou-set">Map ou Set?<a class="headerlink" href="#map-ou-set" title="Permanent link">&para;</a></h2>
+<p>Use <code>HashSet</code> quando basta saber se algo está presente:</p>
+<ul>
+<li>matrículas já processadas;</li>
+<li>palavras distintas;</li>
+<li>códigos bloqueados;</li>
+<li>posições visitadas.</li>
+</ul>
+<p>Use <code>HashMap</code> quando cada chave tem informação associada:</p>
+<ul>
+<li>palavra para contagem;</li>
+<li>matrícula para nota;</li>
+<li>produto para estoque;</li>
+<li>cidade para lista de vizinhos.</li>
+</ul>
+<p>Se você está usando <code>HashMap&lt;String, Boolean&gt;</code>, pergunte se um <code>HashSet&lt;String&gt;</code> não expressa melhor o problema.</p>
+<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<p>Em média, operações de <code>HashMap</code> e <code>HashSet</code> como inserir, consultar e remover são eficientes e costumam ser tratadas como custo constante esperado. Isso não significa que são mágicas ou sempre constantes em qualquer circunstância. Colisões existem, e a qualidade das chaves importa. Para esta disciplina, o foco é a comparação prática: muitas consultas por chave costumam ser muito melhores com hash do que com busca em listas.</p>
+<p>Compare:</p>
+<ul>
+<li>procurar cada palavra em uma <code>ArrayList</code> de palavras já vistas pode custar linear a cada consulta;</li>
+<li>procurar em um <code>HashSet</code> tende a ser muito mais direto.</li>
+</ul>
+<h2 id="iteracao">Iteração<a class="headerlink" href="#iteracao" title="Permanent link">&para;</a></h2>
+<p>Podemos percorrer chaves e entradas:</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">chave</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">freq</span><span class="p">.</span><span class="na">keySet</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">chave</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">freq</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">chave</span><span class="p">));</span>
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="p">}</span>
+<a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a>
+<a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="n">entrada</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">freq</span><span class="p">.</span><span class="na">entrySet</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">entrada</span><span class="p">.</span><span class="na">getKey</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">entrada</span><span class="p">.</span><span class="na">getValue</span><span class="p">());</span>
+<a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>A ordem de iteração de <code>HashMap</code> e <code>HashSet</code> não deve ser usada como parte da resposta. Se o problema exige ordem, precisamos pensar em outra estrutura ou ordenar depois.</p>
+<h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Usar <code>get(chave)</code> e somar <code>1</code> sem tratar <code>null</code>.</li>
+<li>Esperar que <code>HashMap</code> mantenha ordem de inserção.</li>
+<li>Usar chave sem normalizar quando o enunciado exige equivalência.</li>
+<li>Escolher <code>ArrayList</code> para muitas consultas de presença.</li>
+<li>Usar <code>HashSet</code> quando é necessário guardar contagem ou outro valor.</li>
+<li>Alterar campos usados em <code>equals</code>/<code>hashCode</code> de objetos usados como chave.</li>
+</ul>
+<!-- ## Exercícios de fixação
+
+1. Implemente `palavrasUnicas(String[] palavras)` retornando um `HashSet<String>`.
+2. Implemente `contarOcorrencias(int[] valores)` retornando `HashMap<Integer, Integer>`.
+3. Dado um array de matrículas, verifique se existe matrícula repetida.
+4. Explique a diferença entre `contains` em `ArrayList` e `contains` em `HashSet`.
+5. Monte um mapa de produto para quantidade em estoque e atualize três produtos.
+6. Explique por que a ordem impressa por um `HashSet` não deve ser usada em testes.
+
+## Exercício integrador
+
+Implemente `RelatorioTexto`, que recebe uma string com palavras separadas por espaço e imprime:
+
+- quantidade total de palavras;
+- quantidade de palavras distintas;
+- frequência de cada palavra normalizada;
+- a palavra mais frequente.
+
+Use `HashMap` para frequências e `HashSet` se quiser guardar palavras distintas explicitamente. -->
+
+<h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei usar <code>HashSet</code> para presença.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei usar <code>HashMap</code> para associação chave-valor.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei implementar contagem com <code>getOrDefault</code>.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei decidir entre mapa, conjunto e lista.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar custo esperado de consultas em hash.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei identificar cuidados de normalização.</li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf"
+               class="ah-prev"
+               title="Handout">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+          
+            <a href="../handouts/aula-04-hashmap-hashset.pdf"
+               class="ah-next"
+               title="Handout">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

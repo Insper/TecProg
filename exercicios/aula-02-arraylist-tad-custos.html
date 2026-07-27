@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Exercícios — Aula 02 — `ArrayList`, TAD e custos de operações - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li></li>
+            </ul>
+            <h1>Exercícios — Aula 02 — `ArrayList`, TAD e custos de operações</h1>
+            <h2>Técnicas de Programação</h2>
+          </div>
+          
+            <section class="progress-section show">
+<h2 id="instrucoes">Instruções<a class="headerlink" href="#instrucoes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Neste handout, <code>Lista</code> é um TAD: use as operações abstratas, não detalhes de uma linguagem.</li>
+<li>Simule o estado da lista após cada operação.</li>
+<li>Quando analisar custo, pense no pior caso e na operação dominante.</li>
+</ul>
+<h2 id="exercicio-1-simulacao-de-operacoes-em-lista">Exercício 1 — Simulação de operações em lista<a class="headerlink" href="#exercicio-1-simulacao-de-operacoes-em-lista" title="Permanent link">&para;</a></h2>
+<p>Simule o pseudocódigo abaixo. Depois de cada linha numerada, escreva o estado da lista e a saída, se houver.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{LISTA-DE-TAREFAS}.}
+\Input{none}
+\Output{textos impressos}
+\BlankLine
+\BlankLine
+$L \gets \texttt{LISTA-VAZIA}()$\;
+\BlankLine
+$\texttt{ADICIONAR-FIM}(L, "ler")$\;
+$\texttt{ADICIONAR-FIM}(L, "simular")$\;
+$\texttt{ADICIONAR-FIM}(L, "testar")$\;
+$\texttt{IMPRIMIR}(\texttt{OBTER}(L, 1))$\;
+\BlankLine
+$\texttt{ALTERAR}(L, 1, "desenhar tabela")$\;
+$\texttt{ADICIONAR-FIM}(L, "entregar")$\;
+$\texttt{REMOVER}(L, 0)$\;
+\BlankLine
+\If{$\texttt{CONTEM}(L, "testar")$}{
+    $\texttt{IMPRIMIR}("ainda falta testar")$\;
+} \Else{
+    $\texttt{IMPRIMIR}("teste removido")$\;
+\BlankLine
+}
+$\texttt{IMPRIMIR}(\texttt{TAMANHO}(L))$\;
+\caption{ListaDeTarefas}
+\end{algorithm}</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">passo</th>
+<th>operação</th>
+<th>estado de <code>L</code> após o passo</th>
+<th>saída</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td><code>ADICIONAR-FIM(L, "ler")</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td><code>ADICIONAR-FIM(L, "simular")</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td><code>ADICIONAR-FIM(L, "testar")</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td><code>IMPRIMIR(OBTER(L, 1))</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td><code>ALTERAR(L, 1, "desenhar tabela")</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td><code>ADICIONAR-FIM(L, "entregar")</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td><code>REMOVER(L, 0)</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td><code>CONTEM(L, "testar")</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td><code>IMPRIMIR(TAMANHO(L))</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>[break]</p>
+<h2 id="exercicio-2-custo-das-operacoes">Exercício 2 — Custo das operações<a class="headerlink" href="#exercicio-2-custo-das-operacoes" title="Permanent link">&para;</a></h2>
+<p>Classifique o custo esperado de cada operação em uma lista baseada em array como <code>constante</code>, <code>linear</code> ou <code>depende da posição</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Operação</th>
+<th>Custo</th>
+<th>Justificativa curta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OBTER(L, i)</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ALTERAR(L, i, valor)</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADICIONAR(L, valor)</code> no fim</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>INSERIR(L, 0, valor)</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>REMOVER(L, 0)</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>REMOVER(L, TAMANHO(L)-1)</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CONTEM(L, valor)</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Em qual dessas operações pode ser necessário deslocar vários elementos?</p>
+<p>[break]</p>
+<h2 id="exercicio-3-filtrar-valores-maiores-que-um-limite">Exercício 3 — Filtrar valores maiores que um limite<a class="headerlink" href="#exercicio-3-filtrar-valores-maiores-que-um-limite" title="Permanent link">&para;</a></h2>
+<p>Complete o pseudocódigo para devolver uma nova lista com os valores maiores que <code>limite</code>, preservando a ordem original.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{MAIORES-QUE}.}
+\Input{list values, number limite}
+\Output{list resposta}
+\BlankLine
+\BlankLine
+$resposta \gets \texttt{LISTA-VAZIA}()$\;
+\BlankLine
+\For{$i \gets 0 \textbf{ to } \texttt{TAMANHO}(valores) - 1$}{
+    $valor \gets \texttt{OBTER}(valores, i)$\;
+\BlankLine
+    \If{$__________________________$}{
+        $__________________________$\;
+\BlankLine
+    }
+}
+\Return{resposta}\;
+\caption{MaioresQue}
+\end{algorithm}</p>
+<p>Teste com:</p>
+<ul>
+<li><code>valores = [4, 10, 3, 12, 8]</code>, <code>limite = 7</code>;</li>
+<li><code>valores = [1, 2, 3]</code>, <code>limite = 5</code>;</li>
+<li><code>valores = []</code>, <code>limite = 0</code>.</li>
+</ul>
+<p>[break]</p>
+<h2 id="exercicio-4-remocao-durante-percurso">Exercício 4 — Remoção durante percurso<a class="headerlink" href="#exercicio-4-remocao-durante-percurso" title="Permanent link">&para;</a></h2>
+<p>O algoritmo abaixo tenta remover todas as ocorrências de <code>"ausente"</code> de uma lista. Ele parece razoável, mas possui um erro.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{REMOVE-AUSENTES-COM-ERRO}.}
+\Input{list nomes}
+\Output{list nomes alterada}
+\BlankLine
+\BlankLine
+\For{$i \gets 0 \textbf{ to } \texttt{TAMANHO}(nomes) - 1$}{
+    \If{$\texttt{OBTER}(nomes, i) = "ausente"$}{
+        $\texttt{REMOVER}(nomes, i)$\;
+\BlankLine
+    }
+}
+\Return{nomes}\;
+\caption{RemoveAusentesComErro}
+\end{algorithm}</p>
+<ol>
+<li>Simule para <code>nomes = ["Ana", "ausente", "ausente", "Bia"]</code>.</li>
+<li>Qual o erro? Quando ele acontece?</li>
+<li>Reescreva o algoritmo usando as estratégias abaixo e veja qual delas soluciona o problema:</li>
+<li>percorrer de trás para frente;</li>
+<li>manter <code>i</code> no mesmo lugar quando uma remoção acontece.</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-5-historico-de-notas">Exercício 5 — Histórico de notas<a class="headerlink" href="#exercicio-5-historico-de-notas" title="Permanent link">&para;</a></h2>
+<p>Escreva pseudocódigo para um TAD <code>HistoricoNotas</code> usando uma lista de notas.</p>
+<p>Ele deve oferecer as operações:</p>
+<ul>
+<li><code>ADICIONAR-NOTA(H, nota)</code>;</li>
+<li><code>MEDIA(H)</code>;</li>
+<li><code>MAIOR-NOTA(H)</code>;</li>
+<li><code>REMOVER-POSICAO(H, indice)</code>.</li>
+</ul>
+<p>Onde H é uma instância do TAD <code>HistoricoNotas</code>. Defina o que cada operação retorna quando a lista está vazia ou quando o índice é inválido.</p>
+<p>[break]</p>
+<h2 id="exercicio-6-array-fixo-ou-lista-dinamica">Exercício 6 — Array fixo ou lista dinâmica<a class="headerlink" href="#exercicio-6-array-fixo-ou-lista-dinamica" title="Permanent link">&para;</a></h2>
+<p>Para cada situação, escolha <code>array fixo</code> ou <code>lista dinâmica</code> e justifique em uma frase.</p>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Escolha</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Guardar as 4 notas bimestrais de um estudante</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Montar a lista de inscritos enquanto as inscrições chegam</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Guardar 7 temperaturas, uma para cada dia da semana</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Registrar mensagens recebidas até o usuário fechar o sistema</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Percorrer uma coleção sem saber antes quantos itens válidos haverá</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

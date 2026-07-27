@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Material - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#o-centro-da-aula-intercalar">O centro da aula: intercalar</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#implementacao-do-merge">Implementação do merge</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#simulacao-da-intercalacao">Simulação da intercalação</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#por-que-e-estavel">Por que é estável?</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#mergesort-completo">Mergesort completo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#erros-comuns">Erros comuns</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Aulas</li>
+                  
+                
+                  
+                    <li>Aula 11 — Mergesort</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="aula-11-mergesort">Aula 11 — Mergesort<a class="headerlink" href="#aula-11-mergesort" title="Permanent link">&para;</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<p>Ao final desta aula, você deve ser capaz de:</p>
+<ul>
+<li>explicar mergesort como algoritmo de divisão e conquista;</li>
+<li>implementar a intercalação de duas partes ordenadas;</li>
+<li>implementar mergesort com vetor auxiliar;</li>
+<li>justificar estabilidade em uma ordenação;</li>
+<li>estimar custo <code>O(n log n)</code> por níveis;</li>
+<li>reconhecer o custo de memória adicional.</li>
+</ul>
+<!-- ## Pré-requisitos
+
+Você deve conhecer recursão, intervalos em arrays, divisão e conquista e insertion sort. Mergesort é o primeiro algoritmo de ordenação eficiente da sequência: ele troca deslocamentos quadráticos por divisões equilibradas e intercalações lineares. -->
+
+<h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
+<p>Imagine duas pilhas de provas já ordenadas por nota. Para produzir uma única pilha ordenada, não precisamos reordenar tudo do zero. Basta olhar o primeiro elemento de cada pilha, retirar o menor e repetir. Essa operação é chamada de intercalação, ou merge.</p>
+<p>Mergesort usa essa ideia: divide o array até partes pequenas, ordena recursivamente e intercala as metades ordenadas.</p>
+<h2 id="o-centro-da-aula-intercalar">O centro da aula: intercalar<a class="headerlink" href="#o-centro-da-aula-intercalar" title="Permanent link">&para;</a></h2>
+<p>Antes do algoritmo completo, precisamos saber juntar duas faixas ordenadas:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>esquerda:  [2, 7, 9]
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>direita:   [1, 5, 8]
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>resultado: [1, 2, 5, 7, 8, 9]
+</code></pre></div>
+<p>Usamos três índices: um para a esquerda, um para a direita e um para o vetor auxiliar. Em cada passo, copiamos o menor elemento disponível.</p>
+<h2 id="implementacao-do-merge">Implementação do merge<a class="headerlink" href="#implementacao-do-merge" title="Permanent link">&para;</a></h2>
+<p>Vamos usar intervalo aberto no fim: a metade esquerda é <code>[inicio, meio)</code> e a direita é <code>[meio, fim)</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>MERGESORT(v, aux, inicio, fim)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    IF fim - inicio &lt;= 1 THEN
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        RETURN
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    meio &lt;- inicio + (fim - inicio) / 2
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    MERGESORT(v, aux, inicio, meio)
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    MERGESORT(v, aux, meio, fim)
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    MERGE(v, aux, inicio, meio, fim)
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>MERGE(v, aux, inicio, meio, fim)
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    i &lt;- inicio; j &lt;- meio; k &lt;- inicio
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    WHILE i &lt; meio AND j &lt; fim DO
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        IF v[i] &lt;= v[j] THEN
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>            aux[k] &lt;- v[i]; i &lt;- i + 1
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        ELSE
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>            aux[k] &lt;- v[j]; j &lt;- j + 1
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        k &lt;- k + 1
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    IF i &lt; meio THEN
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>        WHILE i &lt; meio DO
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>            aux[k] &lt;- v[i]; i &lt;- i + 1; k &lt;- k + 1
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    ELSE
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>        WHILE j &lt; fim DO
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>            aux[k] &lt;- v[j]; j &lt;- j + 1; k &lt;- k + 1
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>    FOR p &lt;- inicio TO fim - 1 DO
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>        v[p] &lt;- aux[p]
+</code></pre></div>
+<p>Os três índices têm papéis fixos: <code>i</code> lê a metade esquerda, <code>j</code> lê a direita e <code>k</code> escreve no auxiliar. Nenhum deles precisa voltar durante uma intercalação.</p>
+<!-- ```java
+public class MergeSort {
+    public static void ordenar(int[] v) {
+        int[] aux = new int[v.length];
+        ordenar(v, aux, 0, v.length);
+    }
+
+    private static void ordenar(int[] v, int[] aux, int inicio, int fim) {
+        if (fim - inicio <= 1) {
+            return;
+        }
+
+        int meio = inicio + (fim - inicio) / 2;
+        ordenar(v, aux, inicio, meio);
+        ordenar(v, aux, meio, fim);
+        merge(v, aux, inicio, meio, fim);
+    }
+
+    private static void merge(int[] v, int[] aux, int inicio, int meio, int fim) {
+        int i = inicio;
+        int j = meio;
+        int k = inicio;
+
+        while (i < meio && j < fim) {
+            if (v[i] <= v[j]) {
+                aux[k] = v[i];
+                i++;
+            } else {
+                aux[k] = v[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < meio) {
+            aux[k] = v[i];
+            i++;
+            k++;
+        }
+
+        while (j < fim) {
+            aux[k] = v[j];
+            j++;
+            k++;
+        }
+
+        for (int p = inicio; p < fim; p++) {
+            v[p] = aux[p];
+        }
+    }
+}
+``` -->
+
+<p>O vetor <code>aux</code> é criado uma vez e reutilizado. Isso evita criar vários arrays durante as chamadas.</p>
+<h2 id="simulacao-da-intercalacao">Simulação da intercalação<a class="headerlink" href="#simulacao-da-intercalacao" title="Permanent link">&para;</a></h2>
+<p>Considere <code>v = {2, 7, 9, 1, 5, 8}</code>, com <code>inicio = 0</code>, <code>meio = 3</code>, <code>fim = 6</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">i</th>
+<th style="text-align: right;">j</th>
+<th>comparação</th>
+<th>copiado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td>2 &lt;= 1? não</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td>2 &lt;= 5? sim</td>
+<td>2</td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td>7 &lt;= 5? não</td>
+<td>5</td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td>7 &lt;= 8? sim</td>
+<td>7</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td>9 &lt;= 8? não</td>
+<td>8</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td>direita acabou</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>Depois copiamos <code>aux</code> de volta para <code>v</code>.</p>
+<h2 id="por-que-e-estavel">Por que é estável?<a class="headerlink" href="#por-que-e-estavel" title="Permanent link">&para;</a></h2>
+<p>Uma ordenação é estável quando elementos empatados preservam a ordem relativa original. No merge acima, usamos <code>v[i] &lt;= v[j]</code>. Em caso de empate, escolhemos primeiro o elemento que veio da metade esquerda. Como a metade esquerda aparece antes no array original, essa escolha preserva estabilidade.</p>
+<p>Se trocássemos por <code>v[i] &lt; v[j]</code>, empates vindos da direita poderiam passar à frente.</p>
+<h2 id="mergesort-completo">Mergesort completo<a class="headerlink" href="#mergesort-completo" title="Permanent link">&para;</a></h2>
+<p>O algoritmo completo segue o padrão da aula anterior:</p>
+<ul>
+<li>dividir: calcular <code>meio</code>;</li>
+<li>resolver: ordenar a metade esquerda e a metade direita;</li>
+<li>combinar: intercalar as duas metades ordenadas;</li>
+<li>caso base: intervalo com zero ou um elemento.</li>
+</ul>
+<p>É importante notar que a intercalação só funciona corretamente porque as duas metades já estão ordenadas. Essa é a confiança recursiva do algoritmo.</p>
+<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<p>Em cada nível da árvore de chamadas, todos os elementos participam de alguma intercalação. Portanto, cada nível custa <code>O(n)</code>. Como o array é dividido ao meio repetidamente, há cerca de <code>log n</code> níveis. O custo total é <code>O(n * log n)</code>.</p>
+<p>O custo de memória extra é <code>O(n)</code>, por causa do vetor auxiliar. Além disso, existe custo de pilha recursiva <code>O(log n)</code> em divisões equilibradas.</p>
+<h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Tentar fazer merge antes de ordenar as metades.</li>
+<li>Misturar intervalo fechado com intervalo aberto no fim.</li>
+<li>Esquecer de copiar o vetor auxiliar de volta.</li>
+<li>Parar o merge quando uma metade acaba e perder o restante da outra.</li>
+<li>Criar vetor auxiliar novo em toda chamada sem necessidade.</li>
+<li>Usar <code>&lt;</code> quando a estabilidade é desejada.</li>
+</ul>
+<!-- ## Exercícios de fixação
+
+1. Simule o merge de `[3, 6, 10]` com `[1, 4, 8]`.
+2. Implemente apenas o método `merge` e teste com duas metades já ordenadas.
+3. Teste mergesort com array vazio, um elemento, repetidos e já ordenado.
+4. Explique por que `fim - inicio <= 1` é caso base.
+5. Explique por que mergesort não é in-place nesta versão.
+6. Compare insertion sort e mergesort para arrays grandes.
+
+## Exercício integrador
+
+Implemente uma versão de mergesort que conta quantas vezes o método `merge` é chamado e quantos elementos são copiados de volta para o array original. Teste com arrays de tamanho `4`, `8` e `16` e relacione os resultados com a ideia de níveis. -->
+
+<h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar a intercalação.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei implementar mergesort com vetor auxiliar.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei usar intervalo <code>[inicio, fim)</code>.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar estabilidade.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei justificar <code>O(n log n)</code>.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei reconhecer o custo de memória.</li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../handouts/aula-10-divisao-e-conquista.pdf"
+               class="ah-prev"
+               title="Handout">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+          
+            <a href="../handouts/aula-11-mergesort.pdf"
+               class="ah-next"
+               title="Handout">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

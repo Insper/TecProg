@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Exercícios — Aula 16 — Problemas com BFS e DFS - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li></li>
+            </ul>
+            <h1>Exercícios — Aula 16 — Problemas com BFS e DFS</h1>
+            <h2>Técnicas de Programação</h2>
+          </div>
+          
+            <section class="progress-section show">
+<h2 id="instrucoes">Instruções<a class="headerlink" href="#instrucoes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Antes de escolher DFS ou BFS, identifique a pergunta principal do problema.</li>
+<li>Em matrizes, valide limites antes de acessar uma posição.</li>
+<li>Use vizinhança de 4 direções, exceto quando o exercício disser outra coisa.</li>
+</ul>
+<h2 id="exercicio-1-simulacao-de-contagem-de-ilhas">Exercício 1 — Simulação de contagem de ilhas<a class="headerlink" href="#exercicio-1-simulacao-de-contagem-de-ilhas" title="Permanent link">&para;</a></h2>
+<p>Considere a matriz abaixo, em que <code>1</code> é terra e <code>0</code> é água.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>1 1 0 0
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>0 1 0 1
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>1 0 0 1
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>0 0 1 1
+</code></pre></div>
+<p>Simule o algoritmo de contagem de ilhas com DFS.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{CONTAR-ILHAS}.}
+\Input{matrix mapa}
+\Output{int}
+\BlankLine
+\BlankLine
+$visitado \gets \texttt{MATRIZ-DE-FALSOS}(\text{same dimensions as } mapa)$\;
+$total \gets 0$\;
+\BlankLine
+\For{$l \gets 0 \textbf{ to } \texttt{LINHAS}(mapa) - 1$}{
+    \For{$c \gets 0 \textbf{ to } \texttt{COLUNAS}(mapa) - 1$}{
+        \If{$mapa[l][c] = 1 \textbf{ and } visitado[l][c] = \textbf{false}$}{
+            $\texttt{MARCAR-ILHA}(mapa, l, c, visitado)$\;
+            $total \gets total + 1$\;
+\BlankLine
+        }
+    }
+}
+\Return{total}\;
+\BlankLine
+\caption{ContarIlhas}
+\end{algorithm}</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{MARCAR-ILHA}.}
+\Input{mapa, l, c, visitado}
+\Output{none}
+\BlankLine
+\BlankLine
+\If{$\text{l or c is outside the matrix}$}{
+    \Return{}\;
+\BlankLine
+}
+\If{$mapa[l][c] \ne  1 \textbf{ or } visitado[l][c] = \textbf{true}$}{
+    \Return{}\;
+\BlankLine
+}
+$visitado[l][c] \gets \textbf{true}$\;
+$\texttt{MARCAR-ILHA}(mapa, l - 1, c, visitado)$\;
+$\texttt{MARCAR-ILHA}(mapa, l + 1, c, visitado)$\;
+$\texttt{MARCAR-ILHA}(mapa, l, c - 1, visitado)$\;
+$\texttt{MARCAR-ILHA}(mapa, l, c + 1, visitado)$\;
+\caption{MarcarIlha}
+\end{algorithm}</p>
+<p>Preencha a tabela.</p>
+<table>
+<thead>
+<tr>
+<th>célula encontrada no percurso externo</th>
+<th>começa nova DFS?</th>
+<th>células marcadas por essa DFS</th>
+<th style="text-align: right;">total após a DFS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(0, 0)</code></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>próxima terra não visitada</td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>próxima terra não visitada</td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Quantas ilhas existem?</p>
+<p>[break]</p>
+<h2 id="exercicio-2-maior-regiao">Exercício 2 — Maior região<a class="headerlink" href="#exercicio-2-maior-regiao" title="Permanent link">&para;</a></h2>
+<p>Escreva pseudocódigo para <code>MAIOR-ILHA</code>.</p>
+<p>Contrato:</p>
+<ul>
+<li>entrada: matriz <code>mapa</code> com <code>1</code> para terra e <code>0</code> para água;</li>
+<li>saída: tamanho da maior ilha;</li>
+<li>use DFS;</li>
+<li>o algoritmo auxiliar deve retornar o tamanho da região marcada.</li>
+</ul>
+<p>Esqueleto sugerido:</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{TAMANHO-ILHA}.}
+\Input{mapa, l, c, visitado}
+\Output{int}
+\BlankLine
+\BlankLine
+\If{$\text{invalid position, water, or already visited}$}{
+    \Return{0}\;
+\BlankLine
+}
+$visitado[l][c] \gets \textbf{true}$\;
+\BlankLine
+\Return{1}\;
+    $+ \texttt{TAMANHO-ILHA}(mapa, l - 1, c, visitado)$\;
+    $+ \texttt{TAMANHO-ILHA}(mapa, l + 1, c, visitado)$\;
+    $+ \texttt{TAMANHO-ILHA}(mapa, l, c - 1, visitado)$\;
+    $+ \texttt{TAMANHO-ILHA}(mapa, l, c + 1, visitado)$\;
+\caption{TamanhoIlha}
+\end{algorithm}</p>
+<p>Teste com a matriz do Exercício 1.</p>
+<p>[break]</p>
+<h2 id="exercicio-3-flood-fill">Exercício 3 — Flood fill<a class="headerlink" href="#exercicio-3-flood-fill" title="Permanent link">&para;</a></h2>
+<p>Escreva pseudocódigo para <code>PREENCHER-REGIAO</code>.</p>
+<p>Contrato:</p>
+<ul>
+<li>entrada: matriz <code>tela</code>, posição inicial <code>(l, c)</code>, valor <code>novo</code>;</li>
+<li>todas as células conectadas ao ponto inicial que têm o valor original devem receber <code>novo</code>;</li>
+<li>use vizinhança de 4 direções;</li>
+<li>se <code>original = novo</code>, retorne sem fazer alterações.</li>
+</ul>
+<p>Teste com:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>A A B B
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>A B B A
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>A A B A
+</code></pre></div>
+<p>iniciando em <code>(0, 0)</code> e usando <code>novo = C</code>.</p>
+<p>Mostre a matriz final.</p>
+<p>[break]</p>
+<h2 id="exercicio-4-menor-caminho-com-bfs">Exercício 4 — Menor caminho com BFS<a class="headerlink" href="#exercicio-4-menor-caminho-com-bfs" title="Permanent link">&para;</a></h2>
+<p>No labirinto abaixo, calcule a menor distância de <code>S</code> até <code>D</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>########
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>#S..#..#
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>#.#.#D.#
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>#.#....#
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>#......#
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>########
+</code></pre></div>
+<ol>
+<li>Preencha a matriz de distâncias usando BFS.</li>
+<li>Marque a ordem em que as células entram na fila até <code>D</code> ser alcançado.</li>
+<li>Qual é a menor distância?</li>
+<li>DFS poderia encontrar algum caminho?</li>
+<li>DFS garantiria essa mesma distância?</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-5-escolher-dfs-ou-bfs">Exercício 5 — Escolher DFS ou BFS<a class="headerlink" href="#exercicio-5-escolher-dfs-ou-bfs" title="Permanent link">&para;</a></h2>
+<p>Escolha a técnica mais adequada.</p>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>DFS, BFS ou ambos?</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Saber se existe caminho entre duas salas</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Menor número de passos até a saída</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Contar quantas ilhas existem</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Pintar uma região conectada</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Encontrar qualquer caminho para depuração</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Calcular menor caminho quando cada movimento custa 1</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Depois, crie um exemplo em que escolher DFS no lugar de BFS ainda encontra uma resposta correta, mas não a melhor resposta pedida.</p>
+<p>[break]</p>
+<h2 id="exercicio-6-testes-de-borda-para-matriz">Exercício 6 — Testes de borda para matriz<a class="headerlink" href="#exercicio-6-testes-de-borda-para-matriz" title="Permanent link">&para;</a></h2>
+<p>Crie testes de borda para algoritmos de DFS/BFS em matriz.</p>
+<p>Preencha a tabela com uma matriz pequena e o resultado esperado.</p>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Matriz de teste</th>
+<th>Resultado esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>matriz <code>1x1</code> livre</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>origem igual ao destino</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>destino bloqueado por paredes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nenhuma terra para contar ilhas</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>uma única ilha ocupando tudo</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>várias ilhas separadas</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>caminho existe, mas não é direto</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Qual desses testes costuma revelar erro de validação de limites?</p>
+<h2 id="creditos-e-reaproveitamento">Créditos e reaproveitamento<a class="headerlink" href="#creditos-e-reaproveitamento" title="Permanent link">&para;</a></h2>
+<p>Exercícios adaptados de labirintos, critérios de parada, chamadas em vizinhos e comparação DFS/BFS dos handouts antigos devem indicar:</p>
+<blockquote>
+<p>Adaptado de material de Igor Montagner para a disciplina Técnicas de Programação.</p>
+</blockquote>
+<p>Fonte externa opcional para variações conceituais: Princeton Undirected Graphs, <a href="https://algs4.cs.princeton.edu/41graph/">https://algs4.cs.princeton.edu/41graph/</a>.</p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

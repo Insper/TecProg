@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Material - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#pre-condicao-array-ordenado">Pré-condição: array ordenado</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#ideia-com-intervalo-fechado">Ideia com intervalo fechado</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#pseudocodigo">Pseudocódigo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Aulas</li>
+                  
+                
+                  
+                    <li>Aula 06 — Busca binária iterativa</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="aula-06-busca-binaria-iterativa">Aula 06 — Busca binária iterativa<a class="headerlink" href="#aula-06-busca-binaria-iterativa" title="Permanent link">&para;</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<p>Ao final desta aula, você deve ser capaz de:</p>
+<ul>
+<li>explicar a pré-condição de ordenação da busca binária;</li>
+<li>implementar busca binária iterativa com intervalo fechado;</li>
+<li>atualizar corretamente <code>inicio</code>, <code>fim</code> e <code>meio</code>;</li>
+<li>simular a busca com alvo presente e ausente;</li>
+<li>identificar erros comuns de limite e laço infinito;</li>
+<li>justificar o custo logarítmico de forma informal.</li>
+</ul>
+<!-- ## Pré-requisitos
+
+Você deve saber implementar busca linear, percorrer arrays e interpretar índices. Também deve estar confortável com a ideia de pior caso e com a notação `O(n)` vista na aula anterior. -->
+
+<h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
+<p>Suponha que temos um array com códigos de alunos em ordem crescente:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>{3, 8, 12, 19, 25, 31, 42, 57, 68}
+</code></pre></div>
+<p>Queremos descobrir se o código <code>42</code> está presente. A busca linear olharia um por um. Mas, como os dados estão ordenados, podemos começar pelo meio. Se o valor do meio é menor que o alvo, descartamos toda a metade esquerda. Se é maior, descartamos toda a metade direita. A cada passo, o intervalo de candidatos diminui drasticamente.</p>
+<p>Essa é a busca binária.</p>
+<h2 id="pre-condicao-array-ordenado">Pré-condição: array ordenado<a class="headerlink" href="#pre-condicao-array-ordenado" title="Permanent link">&para;</a></h2>
+<p>Busca binária só é correta quando o array está ordenado segundo o mesmo critério usado na comparação. Se o array não está ordenado, comparar com o elemento do meio não permite descartar metade dos dados.</p>
+<p>Esta pré-condição precisa aparecer na explicação e nos testes:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Pré-condição: v está ordenado em ordem crescente.
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Pós-condição: retorna o índice do alvo ou -1 se o alvo não aparece.
+</code></pre></div>
+<p>Usar busca binária em dados não ordenados é um erro de corretude, não apenas de desempenho.</p>
+<h2 id="ideia-com-intervalo-fechado">Ideia com intervalo fechado<a class="headerlink" href="#ideia-com-intervalo-fechado" title="Permanent link">&para;</a></h2>
+<p>Vamos usar a convenção de intervalo fechado: os candidatos estão entre <code>inicio</code> e <code>fim</code>, inclusive. No começo:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>inicio = 0
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>fim = v.length - 1
+</code></pre></div>
+<p>Enquanto <code>inicio &lt;= fim</code>, ainda existe pelo menos um candidato. Calculamos o meio, comparamos e descartamos uma parte:</p>
+<ul>
+<li>se <code>v[meio] == alvo</code>, encontramos;</li>
+<li>se <code>v[meio] &lt; alvo</code>, o alvo só pode estar à direita;</li>
+<li>se <code>v[meio] &gt; alvo</code>, o alvo só pode estar à esquerda.</li>
+</ul>
+<h2 id="pseudocodigo">Pseudocódigo<a class="headerlink" href="#pseudocodigo" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>BUSCA-BINARIA(v, alvo)
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    inicio &lt;- 0
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    fim &lt;- TAMANHO(v) - 1
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    WHILE inicio &lt;= fim DO
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        meio &lt;- inicio + (fim - inicio) / 2
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        IF v[meio] = alvo THEN
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>            RETURN meio
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        ELSE IF v[meio] &lt; alvo THEN
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>            inicio &lt;- meio + 1
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        ELSE
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>            fim &lt;- meio - 1
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    RETURN -1
+</code></pre></div>
+<!-- ## Implementação Java
+
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BuscaBinariaIterativa</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">buscar</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">inicio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">fim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">inicio</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">fim</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inicio</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">fim</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">inicio</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="o">[</span><span class="n">meio</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">meio</span><span class="p">;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="o">[</span><span class="n">meio</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">                </span><span class="n">inicio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">                </span><span class="n">fim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">};</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">buscar</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">));</span><span class="w"> </span><span class="c1">// 6</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">buscar</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">));</span><span class="w">  </span><span class="c1">// -1</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">buscar</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">));</span><span class="w">  </span><span class="c1">// 0</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">buscar</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">));</span><span class="w"> </span><span class="c1">// 8</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="p">}</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="err">```</span><span class="w"> </span><span class="o">--&gt;</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="n">A</span><span class="w"> </span><span class="n">expressão</span><span class="w"> </span><span class="err">`</span><span class="n">inicio</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">fim</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">inicio</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="err">`</span><span class="w"> </span><span class="n">evita</span><span class="w"> </span><span class="n">uma</span><span class="w"> </span><span class="n">soma</span><span class="w"> </span><span class="n">potencialmente</span><span class="w"> </span><span class="n">grande</span><span class="w"> </span><span class="n">em</span><span class="w"> </span><span class="n">arrays</span><span class="w"> </span><span class="n">enormes</span><span class="p">.</span><span class="w"> </span><span class="n">Para</span><span class="w"> </span><span class="n">nossos</span><span class="w"> </span><span class="n">exemplos</span><span class="p">,</span><span class="w"> </span><span class="err">`</span><span class="p">(</span><span class="n">inicio</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fim</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="err">`</span><span class="w"> </span><span class="n">funcionaria</span><span class="p">,</span><span class="w"> </span><span class="n">mas</span><span class="w"> </span><span class="n">é</span><span class="w"> </span><span class="n">bom</span><span class="w"> </span><span class="n">praticar</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">forma</span><span class="w"> </span><span class="n">mais</span><span class="w"> </span><span class="n">robusta</span><span class="p">.</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="err">##</span><span class="w"> </span><span class="n">Simulação</span><span class="w"> </span><span class="n">com</span><span class="w"> </span><span class="n">alvo</span><span class="w"> </span><span class="n">presente</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="n">Para</span><span class="w"> </span><span class="err">`</span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">}</span><span class="err">`</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">alvo</span><span class="w"> </span><span class="err">`</span><span class="mi">42</span><span class="err">`</span><span class="p">:</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="o">|</span><span class="w"> </span><span class="n">passo</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">inicio</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">fim</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">v</span><span class="o">[</span><span class="n">meio</span><span class="o">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">decisão</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="o">|</span><span class="w"> </span><span class="o">----</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">-----</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">--</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">---</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">------</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">-------</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">25</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">alvo</span><span class="w"> </span><span class="n">está</span><span class="w"> </span><span class="n">à</span><span class="w"> </span><span class="n">direita</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">encontrou</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="n">Em</span><span class="w"> </span><span class="n">vez</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">comparar</span><span class="w"> </span><span class="n">sete</span><span class="w"> </span><span class="n">elementos</span><span class="w"> </span><span class="n">como</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">busca</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">faria</span><span class="w"> </span><span class="n">até</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">índice</span><span class="w"> </span><span class="err">`</span><span class="mi">6</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">busca</span><span class="w"> </span><span class="n">binária</span><span class="w"> </span><span class="n">fez</span><span class="w"> </span><span class="n">duas</span><span class="w"> </span><span class="n">comparações</span><span class="p">.</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="err">##</span><span class="w"> </span><span class="n">Simulação</span><span class="w"> </span><span class="n">com</span><span class="w"> </span><span class="n">alvo</span><span class="w"> </span><span class="n">ausente</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="n">Para</span><span class="w"> </span><span class="err">`</span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">}</span><span class="err">`</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">alvo</span><span class="w"> </span><span class="err">`</span><span class="mi">4</span><span class="err">`</span><span class="p">:</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a>
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="o">|</span><span class="w"> </span><span class="n">passo</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">inicio</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">fim</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">v</span><span class="o">[</span><span class="n">meio</span><span class="o">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">decisão</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="o">|</span><span class="w"> </span><span class="o">----</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">-----</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">--</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">---</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">------</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">-------</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">25</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">alvo</span><span class="w"> </span><span class="n">está</span><span class="w"> </span><span class="n">à</span><span class="w"> </span><span class="n">esquerda</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">alvo</span><span class="w"> </span><span class="n">está</span><span class="w"> </span><span class="n">à</span><span class="w"> </span><span class="n">esquerda</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">alvo</span><span class="w"> </span><span class="n">está</span><span class="w"> </span><span class="n">à</span><span class="w"> </span><span class="n">direita</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a><span class="o">|</span><span class="w"> </span><span class="n">fim</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">intervalo</span><span class="w"> </span><span class="n">vazio</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a>
+<a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a><span class="n">Quando</span><span class="w"> </span><span class="err">`</span><span class="n">inicio</span><span class="err">`</span><span class="w"> </span><span class="n">passa</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="err">`</span><span class="n">fim</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="n">não</span><span class="w"> </span><span class="n">há</span><span class="w"> </span><span class="n">candidatos</span><span class="w"> </span><span class="n">restantes</span><span class="p">.</span><span class="w"> </span><span class="n">O</span><span class="w"> </span><span class="n">retorno</span><span class="w"> </span><span class="n">é</span><span class="w"> </span><span class="err">`</span><span class="o">-</span><span class="mi">1</span><span class="err">`</span><span class="p">.</span>
+<a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a>
+<a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a><span class="err">##</span><span class="w"> </span><span class="n">Invariante</span><span class="w"> </span><span class="n">informal</span>
+<a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a>
+<a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a><span class="n">Durante</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">execução</span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">alvo</span><span class="w"> </span><span class="n">ainda</span><span class="w"> </span><span class="n">pode</span><span class="w"> </span><span class="n">estar</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">array</span><span class="p">,</span><span class="w"> </span><span class="n">ele</span><span class="w"> </span><span class="n">está</span><span class="w"> </span><span class="n">dentro</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">intervalo</span><span class="w"> </span><span class="err">`</span><span class="n">inicio</span><span class="p">..</span><span class="na">fim</span><span class="err">`</span><span class="p">.</span><span class="w"> </span><span class="n">Cada</span><span class="w"> </span><span class="n">atualização</span><span class="w"> </span><span class="n">precisa</span><span class="w"> </span><span class="n">preservar</span><span class="w"> </span><span class="n">essa</span><span class="w"> </span><span class="n">frase</span><span class="p">.</span><span class="w"> </span><span class="n">Quando</span><span class="w"> </span><span class="n">descartamos</span><span class="w"> </span><span class="n">uma</span><span class="w"> </span><span class="n">metade</span><span class="p">,</span><span class="w"> </span><span class="n">fazemos</span><span class="w"> </span><span class="n">isso</span><span class="w"> </span><span class="n">porque</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">ordenação</span><span class="w"> </span><span class="n">garante</span><span class="w"> </span><span class="n">que</span><span class="w"> </span><span class="n">nenhum</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="n">daquela</span><span class="w"> </span><span class="n">metade</span><span class="w"> </span><span class="n">pode</span><span class="w"> </span><span class="n">ser</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">alvo</span><span class="p">.</span>
+<a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a>
+<a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a><span class="n">Esse</span><span class="w"> </span><span class="n">raciocínio</span><span class="w"> </span><span class="n">é</span><span class="w"> </span><span class="n">mais</span><span class="w"> </span><span class="n">importante</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">que</span><span class="w"> </span><span class="n">decorar</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">código</span><span class="p">.</span><span class="w"> </span><span class="n">Ele</span><span class="w"> </span><span class="n">explica</span><span class="w"> </span><span class="n">por</span><span class="w"> </span><span class="n">que</span><span class="w"> </span><span class="err">`</span><span class="n">inicio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="err">`</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="err">`</span><span class="n">fim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="err">`</span><span class="w"> </span><span class="n">avançam</span><span class="w"> </span><span class="n">corretamente</span><span class="p">.</span>
+<a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a>
+<a id="__codelineno-4-64" name="__codelineno-4-64" href="#__codelineno-4-64"></a><span class="o">&lt;!--</span><span class="w"> </span><span class="err">##</span><span class="w"> </span><span class="n">Análise</span><span class="w"> </span><span class="n">informal</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">custo</span>
+<a id="__codelineno-4-65" name="__codelineno-4-65" href="#__codelineno-4-65"></a>
+<a id="__codelineno-4-66" name="__codelineno-4-66" href="#__codelineno-4-66"></a><span class="n">A</span><span class="w"> </span><span class="n">busca</span><span class="w"> </span><span class="n">linear</span><span class="w"> </span><span class="n">reduz</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">problema</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="err">`</span><span class="n">n</span><span class="err">`</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="err">`</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="n">depois</span><span class="w"> </span><span class="err">`</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">assim</span><span class="w"> </span><span class="n">por</span><span class="w"> </span><span class="n">diante</span><span class="p">.</span><span class="w"> </span>
+<a id="__codelineno-4-67" name="__codelineno-4-67" href="#__codelineno-4-67"></a>
+<a id="__codelineno-4-68" name="__codelineno-4-68" href="#__codelineno-4-68"></a><span class="n">A</span><span class="w"> </span><span class="n">busca</span><span class="w"> </span><span class="n">binária</span><span class="w"> </span><span class="n">é</span><span class="w"> </span><span class="n">um</span><span class="w"> </span><span class="n">algoritmo</span><span class="w"> </span><span class="n">utilizado</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="n">procurar</span><span class="w"> </span><span class="n">um</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="n">em</span><span class="w"> </span><span class="n">um</span><span class="w"> </span><span class="o">**</span><span class="n">array</span><span class="w"> </span><span class="n">ordenado</span><span class="o">**</span><span class="p">.</span>
+<a id="__codelineno-4-69" name="__codelineno-4-69" href="#__codelineno-4-69"></a>
+<a id="__codelineno-4-70" name="__codelineno-4-70" href="#__codelineno-4-70"></a><span class="n">A</span><span class="w"> </span><span class="n">ideia</span><span class="w"> </span><span class="n">principal</span><span class="w"> </span><span class="n">é</span><span class="w"> </span><span class="n">comparar</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="n">procurado</span><span class="w"> </span><span class="n">com</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">elemento</span><span class="w"> </span><span class="n">que</span><span class="w"> </span><span class="n">está</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">array</span><span class="p">.</span>
+<a id="__codelineno-4-71" name="__codelineno-4-71" href="#__codelineno-4-71"></a>
+<a id="__codelineno-4-72" name="__codelineno-4-72" href="#__codelineno-4-72"></a><span class="o">*</span><span class="w"> </span><span class="n">Se</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">elemento</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="n">procurado</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">busca</span><span class="w"> </span><span class="n">termina</span><span class="p">.</span>
+<a id="__codelineno-4-73" name="__codelineno-4-73" href="#__codelineno-4-73"></a><span class="o">*</span><span class="w"> </span><span class="n">Se</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="n">procurado</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">menor</span><span class="p">,</span><span class="w"> </span><span class="n">continuamos</span><span class="w"> </span><span class="n">apenas</span><span class="w"> </span><span class="n">na</span><span class="w"> </span><span class="n">metade</span><span class="w"> </span><span class="n">esquerda</span><span class="p">.</span>
+<a id="__codelineno-4-74" name="__codelineno-4-74" href="#__codelineno-4-74"></a><span class="o">*</span><span class="w"> </span><span class="n">Se</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="n">procurado</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">maior</span><span class="p">,</span><span class="w"> </span><span class="n">continuamos</span><span class="w"> </span><span class="n">apenas</span><span class="w"> </span><span class="n">na</span><span class="w"> </span><span class="n">metade</span><span class="w"> </span><span class="n">direita</span><span class="p">.</span>
+<a id="__codelineno-4-75" name="__codelineno-4-75" href="#__codelineno-4-75"></a>
+<a id="__codelineno-4-76" name="__codelineno-4-76" href="#__codelineno-4-76"></a><span class="n">Assim</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">cada</span><span class="w"> </span><span class="n">comparação</span><span class="p">,</span><span class="w"> </span><span class="n">aproximadamente</span><span class="w"> </span><span class="n">metade</span><span class="w"> </span><span class="n">dos</span><span class="w"> </span><span class="n">elementos</span><span class="w"> </span><span class="n">restantes</span><span class="w"> </span><span class="n">é</span><span class="w"> </span><span class="n">descartada</span><span class="p">.</span>
+<a id="__codelineno-4-77" name="__codelineno-4-77" href="#__codelineno-4-77"></a>
+<a id="__codelineno-4-78" name="__codelineno-4-78" href="#__codelineno-4-78"></a><span class="n">Para</span><span class="w"> </span><span class="n">entender</span><span class="w"> </span><span class="n">por</span><span class="w"> </span><span class="n">que</span><span class="w"> </span><span class="n">esse</span><span class="w"> </span><span class="n">comportamento</span><span class="w"> </span><span class="n">está</span><span class="w"> </span><span class="n">relacionado</span><span class="w"> </span><span class="n">ao</span><span class="w"> </span><span class="n">logaritmo</span><span class="p">,</span><span class="w"> </span><span class="n">primeiro</span><span class="w"> </span><span class="n">precisamos</span><span class="w"> </span><span class="n">entender</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">significado</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">um</span><span class="w"> </span><span class="n">logaritmo</span><span class="w"> </span><span class="n">na</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="mf">2.</span><span class="w"> </span><span class="o">--&gt;</span>
+<a id="__codelineno-4-79" name="__codelineno-4-79" href="#__codelineno-4-79"></a>
+<a id="__codelineno-4-80" name="__codelineno-4-80" href="#__codelineno-4-80"></a><span class="o">---</span>
+<a id="__codelineno-4-81" name="__codelineno-4-81" href="#__codelineno-4-81"></a>
+<a id="__codelineno-4-82" name="__codelineno-4-82" href="#__codelineno-4-82"></a><span class="err">##</span><span class="w"> </span><span class="n">Análise</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">custo</span>
+<a id="__codelineno-4-83" name="__codelineno-4-83" href="#__codelineno-4-83"></a>
+<a id="__codelineno-4-84" name="__codelineno-4-84" href="#__codelineno-4-84"></a><span class="n">Considere</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">seguinte</span><span class="w"> </span><span class="n">potência</span><span class="p">:</span>
+<a id="__codelineno-4-85" name="__codelineno-4-85" href="#__codelineno-4-85"></a>
+<a id="__codelineno-4-86" name="__codelineno-4-86" href="#__codelineno-4-86"></a><span class="o">[</span>
+<a id="__codelineno-4-87" name="__codelineno-4-87" href="#__codelineno-4-87"></a><span class="mi">2</span><span class="o">^</span><span class="mi">3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-4-88" name="__codelineno-4-88" href="#__codelineno-4-88"></a><span class="o">]</span>
+<a id="__codelineno-4-89" name="__codelineno-4-89" href="#__codelineno-4-89"></a>
+<a id="__codelineno-4-90" name="__codelineno-4-90" href="#__codelineno-4-90"></a><span class="n">Essa</span><span class="w"> </span><span class="n">expressão</span><span class="w"> </span><span class="n">responde</span><span class="w"> </span><span class="n">à</span><span class="w"> </span><span class="n">pergunta</span><span class="p">:</span>
+<a id="__codelineno-4-91" name="__codelineno-4-91" href="#__codelineno-4-91"></a>
+<a id="__codelineno-4-92" name="__codelineno-4-92" href="#__codelineno-4-92"></a><span class="o">&gt;</span><span class="w"> </span><span class="n">Qual</span><span class="w"> </span><span class="n">é</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">resultado</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">multiplicar</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">número</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">por</span><span class="w"> </span><span class="n">ele</span><span class="w"> </span><span class="n">mesmo</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">vezes</span><span class="o">?</span>
+<a id="__codelineno-4-93" name="__codelineno-4-93" href="#__codelineno-4-93"></a>
+<a id="__codelineno-4-94" name="__codelineno-4-94" href="#__codelineno-4-94"></a><span class="o">[</span>
+<a id="__codelineno-4-95" name="__codelineno-4-95" href="#__codelineno-4-95"></a><span class="mi">2</span><span class="o">^</span><span class="mi">3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">\</span><span class="n">times</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">\</span><span class="n">times</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-4-96" name="__codelineno-4-96" href="#__codelineno-4-96"></a><span class="o">]</span>
+<a id="__codelineno-4-97" name="__codelineno-4-97" href="#__codelineno-4-97"></a>
+<a id="__codelineno-4-98" name="__codelineno-4-98" href="#__codelineno-4-98"></a><span class="n">O</span><span class="w"> </span><span class="n">logaritmo</span><span class="w"> </span><span class="n">faz</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">pergunta</span><span class="w"> </span><span class="n">inversa</span><span class="p">.</span>
+<a id="__codelineno-4-99" name="__codelineno-4-99" href="#__codelineno-4-99"></a>
+<a id="__codelineno-4-100" name="__codelineno-4-100" href="#__codelineno-4-100"></a><span class="o">[</span>
+<a id="__codelineno-4-101" name="__codelineno-4-101" href="#__codelineno-4-101"></a><span class="err">\</span><span class="n">log_2</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<a id="__codelineno-4-102" name="__codelineno-4-102" href="#__codelineno-4-102"></a><span class="o">]</span>
+<a id="__codelineno-4-103" name="__codelineno-4-103" href="#__codelineno-4-103"></a>
+<a id="__codelineno-4-104" name="__codelineno-4-104" href="#__codelineno-4-104"></a><span class="n">Essa</span><span class="w"> </span><span class="n">expressão</span><span class="w"> </span><span class="n">pode</span><span class="w"> </span><span class="n">ser</span><span class="w"> </span><span class="n">lida</span><span class="w"> </span><span class="n">como</span><span class="p">:</span>
+<a id="__codelineno-4-105" name="__codelineno-4-105" href="#__codelineno-4-105"></a>
+<a id="__codelineno-4-106" name="__codelineno-4-106" href="#__codelineno-4-106"></a><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">qual</span><span class="w"> </span><span class="n">potência</span><span class="w"> </span><span class="n">devemos</span><span class="w"> </span><span class="n">elevar</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="n">obter</span><span class="w"> </span><span class="mi">8</span><span class="o">?</span>
+<a id="__codelineno-4-107" name="__codelineno-4-107" href="#__codelineno-4-107"></a>
+<a id="__codelineno-4-108" name="__codelineno-4-108" href="#__codelineno-4-108"></a><span class="nl">Como</span><span class="p">:</span>
+<a id="__codelineno-4-109" name="__codelineno-4-109" href="#__codelineno-4-109"></a>
+<a id="__codelineno-4-110" name="__codelineno-4-110" href="#__codelineno-4-110"></a><span class="o">[</span>
+<a id="__codelineno-4-111" name="__codelineno-4-111" href="#__codelineno-4-111"></a><span class="mi">2</span><span class="o">^</span><span class="mi">3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-4-112" name="__codelineno-4-112" href="#__codelineno-4-112"></a><span class="o">]</span>
+<a id="__codelineno-4-113" name="__codelineno-4-113" href="#__codelineno-4-113"></a>
+<a id="__codelineno-4-114" name="__codelineno-4-114" href="#__codelineno-4-114"></a><span class="nl">então</span><span class="p">:</span>
+<a id="__codelineno-4-115" name="__codelineno-4-115" href="#__codelineno-4-115"></a>
+<a id="__codelineno-4-116" name="__codelineno-4-116" href="#__codelineno-4-116"></a><span class="o">[</span>
+<a id="__codelineno-4-117" name="__codelineno-4-117" href="#__codelineno-4-117"></a><span class="err">\</span><span class="n">log_2</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<a id="__codelineno-4-118" name="__codelineno-4-118" href="#__codelineno-4-118"></a><span class="o">]</span>
+<a id="__codelineno-4-119" name="__codelineno-4-119" href="#__codelineno-4-119"></a>
+<a id="__codelineno-4-120" name="__codelineno-4-120" href="#__codelineno-4-120"></a><span class="n">De</span><span class="w"> </span><span class="n">maneira</span><span class="w"> </span><span class="n">geral</span><span class="p">:</span>
+<a id="__codelineno-4-121" name="__codelineno-4-121" href="#__codelineno-4-121"></a>
+<a id="__codelineno-4-122" name="__codelineno-4-122" href="#__codelineno-4-122"></a><span class="o">[</span>
+<a id="__codelineno-4-123" name="__codelineno-4-123" href="#__codelineno-4-123"></a><span class="err">\</span><span class="n">log_2</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span>
+<a id="__codelineno-4-124" name="__codelineno-4-124" href="#__codelineno-4-124"></a><span class="o">]</span>
+<a id="__codelineno-4-125" name="__codelineno-4-125" href="#__codelineno-4-125"></a>
+<a id="__codelineno-4-126" name="__codelineno-4-126" href="#__codelineno-4-126"></a><span class="n">significa</span><span class="w"> </span><span class="n">que</span><span class="p">:</span>
+<a id="__codelineno-4-127" name="__codelineno-4-127" href="#__codelineno-4-127"></a>
+<a id="__codelineno-4-128" name="__codelineno-4-128" href="#__codelineno-4-128"></a><span class="o">[</span>
+<a id="__codelineno-4-129" name="__codelineno-4-129" href="#__codelineno-4-129"></a><span class="mi">2</span><span class="o">^</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span>
+<a id="__codelineno-4-130" name="__codelineno-4-130" href="#__codelineno-4-130"></a><span class="o">]</span>
+<a id="__codelineno-4-131" name="__codelineno-4-131" href="#__codelineno-4-131"></a>
+<a id="__codelineno-4-132" name="__codelineno-4-132" href="#__codelineno-4-132"></a><span class="n">Portanto</span><span class="p">,</span><span class="w"> </span><span class="n">potência</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">logaritmo</span><span class="w"> </span><span class="n">são</span><span class="w"> </span><span class="n">operações</span><span class="w"> </span><span class="n">inversas</span><span class="p">.</span>
+<a id="__codelineno-4-133" name="__codelineno-4-133" href="#__codelineno-4-133"></a>
+<a id="__codelineno-4-134" name="__codelineno-4-134" href="#__codelineno-4-134"></a><span class="o">---</span>
+<a id="__codelineno-4-135" name="__codelineno-4-135" href="#__codelineno-4-135"></a>
+<a id="__codelineno-4-136" name="__codelineno-4-136" href="#__codelineno-4-136"></a><span class="err">###</span><span class="w"> </span><span class="n">Outra</span><span class="w"> </span><span class="n">interpretação</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">logaritmo</span><span class="w"> </span><span class="n">na</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="mi">2</span>
+<a id="__codelineno-4-137" name="__codelineno-4-137" href="#__codelineno-4-137"></a>
+<a id="__codelineno-4-138" name="__codelineno-4-138" href="#__codelineno-4-138"></a><span class="n">O</span><span class="w"> </span><span class="n">logaritmo</span><span class="w"> </span><span class="n">na</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">também</span><span class="w"> </span><span class="n">pode</span><span class="w"> </span><span class="n">ser</span><span class="w"> </span><span class="n">entendido</span><span class="w"> </span><span class="n">como</span><span class="p">:</span>
+<a id="__codelineno-4-139" name="__codelineno-4-139" href="#__codelineno-4-139"></a>
+<a id="__codelineno-4-140" name="__codelineno-4-140" href="#__codelineno-4-140"></a><span class="o">&gt;</span><span class="w"> </span><span class="n">Quantas</span><span class="w"> </span><span class="n">vezes</span><span class="w"> </span><span class="n">podemos</span><span class="w"> </span><span class="n">dividir</span><span class="w"> </span><span class="n">um</span><span class="w"> </span><span class="n">número</span><span class="w"> </span><span class="n">por</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">até</span><span class="w"> </span><span class="n">chegar</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="mi">1</span><span class="o">?</span>
+<a id="__codelineno-4-141" name="__codelineno-4-141" href="#__codelineno-4-141"></a>
+<a id="__codelineno-4-142" name="__codelineno-4-142" href="#__codelineno-4-142"></a><span class="n">Por</span><span class="w"> </span><span class="n">exemplo</span><span class="p">,</span><span class="w"> </span><span class="n">começando</span><span class="w"> </span><span class="n">com</span><span class="w"> </span><span class="mi">8</span><span class="p">:</span>
+<a id="__codelineno-4-143" name="__codelineno-4-143" href="#__codelineno-4-143"></a>
+<a id="__codelineno-4-144" name="__codelineno-4-144" href="#__codelineno-4-144"></a><span class="o">[</span>
+<a id="__codelineno-4-145" name="__codelineno-4-145" href="#__codelineno-4-145"></a><span class="mi">8</span><span class="w"> </span><span class="err">\</span><span class="n">div</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
+<a id="__codelineno-4-146" name="__codelineno-4-146" href="#__codelineno-4-146"></a><span class="o">]</span>
+<a id="__codelineno-4-147" name="__codelineno-4-147" href="#__codelineno-4-147"></a>
+<a id="__codelineno-4-148" name="__codelineno-4-148" href="#__codelineno-4-148"></a><span class="o">[</span>
+<a id="__codelineno-4-149" name="__codelineno-4-149" href="#__codelineno-4-149"></a><span class="mi">4</span><span class="w"> </span><span class="err">\</span><span class="n">div</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<a id="__codelineno-4-150" name="__codelineno-4-150" href="#__codelineno-4-150"></a><span class="o">]</span>
+<a id="__codelineno-4-151" name="__codelineno-4-151" href="#__codelineno-4-151"></a>
+<a id="__codelineno-4-152" name="__codelineno-4-152" href="#__codelineno-4-152"></a><span class="o">[</span>
+<a id="__codelineno-4-153" name="__codelineno-4-153" href="#__codelineno-4-153"></a><span class="mi">2</span><span class="w"> </span><span class="err">\</span><span class="n">div</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-4-154" name="__codelineno-4-154" href="#__codelineno-4-154"></a><span class="o">]</span>
+<a id="__codelineno-4-155" name="__codelineno-4-155" href="#__codelineno-4-155"></a>
+<a id="__codelineno-4-156" name="__codelineno-4-156" href="#__codelineno-4-156"></a><span class="n">Foram</span><span class="w"> </span><span class="n">realizadas</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">divisões</span><span class="p">.</span>
+<a id="__codelineno-4-157" name="__codelineno-4-157" href="#__codelineno-4-157"></a>
+<a id="__codelineno-4-158" name="__codelineno-4-158" href="#__codelineno-4-158"></a><span class="n">Por</span><span class="w"> </span><span class="n">isso</span><span class="p">:</span>
+<a id="__codelineno-4-159" name="__codelineno-4-159" href="#__codelineno-4-159"></a>
+<a id="__codelineno-4-160" name="__codelineno-4-160" href="#__codelineno-4-160"></a><span class="o">[</span>
+<a id="__codelineno-4-161" name="__codelineno-4-161" href="#__codelineno-4-161"></a><span class="err">\</span><span class="n">log_2</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<a id="__codelineno-4-162" name="__codelineno-4-162" href="#__codelineno-4-162"></a><span class="o">]</span>
+<a id="__codelineno-4-163" name="__codelineno-4-163" href="#__codelineno-4-163"></a>
+<a id="__codelineno-4-164" name="__codelineno-4-164" href="#__codelineno-4-164"></a><span class="o">---</span>
+<a id="__codelineno-4-165" name="__codelineno-4-165" href="#__codelineno-4-165"></a>
+<a id="__codelineno-4-166" name="__codelineno-4-166" href="#__codelineno-4-166"></a><span class="err">###</span><span class="w"> </span><span class="n">Exemplo</span><span class="w"> </span><span class="n">com</span><span class="w"> </span><span class="n">um</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">tamanho</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-4-167" name="__codelineno-4-167" href="#__codelineno-4-167"></a>
+<a id="__codelineno-4-168" name="__codelineno-4-168" href="#__codelineno-4-168"></a><span class="n">Considere</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">seguinte</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">ordenado</span><span class="p">:</span>
+<a id="__codelineno-4-169" name="__codelineno-4-169" href="#__codelineno-4-169"></a>
+<a id="__codelineno-4-170" name="__codelineno-4-170" href="#__codelineno-4-170"></a><span class="err">```</span><span class="n">text</span>
+<a id="__codelineno-4-171" name="__codelineno-4-171" href="#__codelineno-4-171"></a><span class="nl">Índice</span><span class="p">:</span><span class="w">  </span><span class="mi">0</span><span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">2</span><span class="w">   </span><span class="mi">3</span><span class="w">   </span><span class="mi">4</span><span class="w">   </span><span class="mi">5</span><span class="w">   </span><span class="mi">6</span><span class="w">   </span><span class="mi">7</span>
+<a id="__codelineno-4-172" name="__codelineno-4-172" href="#__codelineno-4-172"></a><span class="nl">Valor</span><span class="p">:</span><span class="w">  </span><span class="mi">10</span><span class="w">  </span><span class="mi">20</span><span class="w">  </span><span class="mi">30</span><span class="w">  </span><span class="mi">40</span><span class="w">  </span><span class="mi">50</span><span class="w">  </span><span class="mi">60</span><span class="w">  </span><span class="mi">70</span><span class="w">  </span><span class="mi">80</span>
+</code></pre></div>
+
+Suponha que queremos procurar o valor `80`.
+
+No início, existem 8 elementos que podem conter o valor procurado.
+
+### Primeira comparação
+
+Analisamos um elemento próximo ao meio do array.
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>10  20  30  40  50  60  70  80
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>             ^
+</code></pre></div>
+
+Comparamos o valor procurado, `80`, com `40`.
+
+Como:
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>80 &gt; 40
+</code></pre></div>
+
+podemos descartar a metade esquerda, incluindo o valor `40`.
+
+A região de busca passa a ter aproximadamente 4 elementos:
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>50  60  70  80
+</code></pre></div>
+
+Portanto:
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>8 elementos -&gt; 4 elementos
+</code></pre></div>
+
+### Segunda comparação
+
+Analisamos novamente um elemento próximo ao meio da região restante.
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>50  60  70  80
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>        ^
+</code></pre></div>
+
+Comparamos `80` com `70`.
+
+Como:
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>80 &gt; 70
+</code></pre></div>
+
+descartamos novamente uma parte da região.
+
+Restam aproximadamente 2 elementos:
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>70  80
+</code></pre></div>
+
+Pensando apenas na redução do espaço de busca, temos:
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>4 elementos -&gt; 2 elementos
+</code></pre></div>
+
+### Terceira comparação
+
+Analisamos novamente a região restante.
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>70  80
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    ^
+</code></pre></div>
+
+O valor `80` é encontrado.
+
+A redução do espaço de busca foi aproximadamente:
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>8 -&gt; 4 -&gt; 2 -&gt; 1
+</code></pre></div>
+
+Foram necessários 3 passos de divisão para transformar uma região de tamanho 8 em uma região de tamanho 1.
+
+Isso pode ser representado por:
+
+[
+\frac{8}{2^3} = 1
+]
+
+Como:
+
+[
+2^3 = 8
+]
+
+temos:
+
+[
+\log_2 8 = 3
+]
+
+Portanto, para um array de tamanho 8, a busca binária precisa de aproximadamente 3 divisões do espaço de busca.
+
+---
+
+### Exemplo com um array de tamanho 16
+
+Agora considere um array ordenado com 16 elementos:
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Índice:  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Valor:   5  10  15  20  25  30  35  40  45  50  55  60  65  70  75  80
+</code></pre></div>
+
+Suponha que queremos procurar o valor `80`.
+
+Os valores comparados serão:
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>40 -&gt; 60 -&gt; 70 -&gt; 75 -&gt; 80
+</code></pre></div>
+
+A cada etapa, a região de busca é reduzida aproximadamente pela metade.
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>16 -&gt; 8 -&gt; 4 -&gt; 2 -&gt; 1
+</code></pre></div>
+
+Foram realizadas 4 reduções.
+
+Logo:
+
+[
+\log_2 16 = 4
+]
+
+Isso acontece porque:
+
+[
+2^4 = 16
+]
+
+---
+
+### Comparando arrays de tamanho 8 e 16
+
+Observe a comparação:
+
+| Tamanho do array | Reduções até chegar a 1 |       Logaritmo |
+| ---------------: | ----------------------: | --------------: |
+|                8 |                       3 |  (\log_2 8 = 3) |
+|               16 |                       4 | (\log_2 16 = 4) |
+
+Ao dobrarmos o tamanho do array de 8 para 16, o número de reduções aumenta apenas de 3 para 4.
+
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>8 elementos  -&gt; aproximadamente 3 reduções
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>16 elementos -&gt; aproximadamente 4 reduções
+</code></pre></div>
+
+Esse é um comportamento importante da busca binária: mesmo que o tamanho do array dobre, o número de etapas aumenta apenas em uma unidade.
+
+Portanto, o número de etapas da busca binária cresce de acordo com:
+
+[
+\log_2 n
+]
+
+É por isso que dizemos que o custo da busca binária é:
+
+[
+O(\log n)
+]
+
+Normalmente, a base 2 não é escrita na notação de custo. Isso acontece porque, na análise do crescimento de algoritmos, mudar a base do logaritmo altera apenas um fator constante, sem mudar o comportamento geral do crescimento.
+
+---
+
+## Erros comuns
+
+- Usar busca binária em array não ordenado.
+- Escrever `while (inicio < fim)` e deixar de testar o último candidato.
+- Atualizar `inicio = meio` ou `fim = meio`, causando laço infinito.
+- Calcular `meio` fora do laço e não recalcular.
+- Retornar `-1` dentro do laço após uma comparação que falha.
+- Misturar convenção de intervalo fechado com intervalo aberto.
+
+<!-- ## Exercícios de fixação
+
+1. Simule a busca por `31` no array do exemplo.
+2. Simule a busca por `70` no array do exemplo.
+3. Implemente `contem(int[] v, int alvo)` usando busca binária.
+4. Teste arrays de tamanho `0`, `1`, `2` e `3`.
+5. Explique por que `inicio = meio + 1` é necessário.
+6. Escreva um parágrafo comparando busca linear e binária.
+
+## Exercício integrador
+
+Implemente um método `consultarCodigosOrdenados(int[] codigos, int[] consultas)` que, para cada consulta, imprime se o código aparece e em qual posição. Use busca binária e inclua uma explicação curta da pré-condição de ordenação. -->
+
+<h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei declarar a pré-condição de ordenação.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei implementar busca binária iterativa.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei simular <code>inicio</code>, <code>fim</code> e <code>meio</code>.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar por que o intervalo diminui.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei reconhecer erros de limite.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei justificar <code>O(log n)</code> informalmente.</li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../handouts/aula-05-busca-linear-big-o.pdf"
+               class="ah-prev"
+               title="Handout">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+          
+            <a href="../handouts/aula-06-busca-binaria-iterativa.pdf"
+               class="ah-next"
+               title="Handout">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

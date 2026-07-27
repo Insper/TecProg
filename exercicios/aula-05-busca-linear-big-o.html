@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Exercícios — Aula 05 — Busca linear e introdução prática a Big-O - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li></li>
+            </ul>
+            <h1>Exercícios — Aula 05 — Busca linear e introdução prática a Big-O</h1>
+            <h2>Técnicas de Programação</h2>
+          </div>
+          
+            <section class="progress-section show">
+<h2 id="instrucoes">Instruções<a class="headerlink" href="#instrucoes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Em buscas, deixe claro se a saída é booleano, índice, contagem ou outra informação.</li>
+<li>Ao simular, conte a comparação principal entre elemento e alvo.</li>
+<li>Use Big-O para falar de crescimento no pior caso, não de tempo exato em segundos.</li>
+</ul>
+<h2 id="exercicio-1-simulacao-de-busca-linear">Exercício 1 — Simulação de busca linear<a class="headerlink" href="#exercicio-1-simulacao-de-busca-linear" title="Permanent link">&para;</a></h2>
+<p>Simule o algoritmo para o array <code>v = [42, 17, 93, 58, 17]</code> nos três alvos: <code>42</code>, <code>17</code> e <code>10</code>.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{BUSCA-LINEAR-INDICE}.}
+\Input{array v, value alvo}
+\Output{índice da primeira ocorrência ou -1}
+\BlankLine
+\BlankLine
+$comparacoes \gets 0$\;
+\BlankLine
+\For{$i \gets 0 \textbf{ to } \texttt{TAMANHO}(v) - 1$}{
+    $comparacoes \gets comparacoes + 1$\;
+\BlankLine
+    \If{$v[i] = alvo$}{
+        $\texttt{IMPRIMIR}("comparacoes = ", comparacoes)$\;
+        \Return{i}\;
+\BlankLine
+    }
+}
+$\texttt{IMPRIMIR}("comparacoes = ", comparacoes)$\;
+\Return{-1}\;
+\caption{BuscaLinearIndice}
+\end{algorithm}</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">alvo</th>
+<th>i visitados</th>
+<th style="text-align: right;">comparações</th>
+<th style="text-align: right;">retorno</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">42</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">17</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Por que o alvo <code>17</code> retorna a primeira posição em que aparece?</p>
+<p>[break]</p>
+<h2 id="exercicio-2-primeira-ocorrencia">Exercício 2 — Primeira ocorrência<a class="headerlink" href="#exercicio-2-primeira-ocorrencia" title="Permanent link">&para;</a></h2>
+<p>Escreva pseudocódigo para <code>PRIMEIRA-OCORRENCIA</code>.</p>
+<p>Contrato:</p>
+<ul>
+<li>entrada: array <code>v</code>, valor <code>alvo</code>;</li>
+<li>saída: primeiro índice em que <code>alvo</code> aparece;</li>
+<li>se o alvo não aparece, retorne <code>-1</code>.</li>
+</ul>
+<p>Teste com:</p>
+<ul>
+<li><code>v = [3, 8, 3, 1]</code>, <code>alvo = 3</code>;</li>
+<li><code>v = [3, 8, 3, 1]</code>, <code>alvo = 1</code>;</li>
+<li><code>v = [3, 8, 3, 1]</code>, <code>alvo = 7</code>;</li>
+<li><code>v = []</code>, <code>alvo = 3</code>.</li>
+</ul>
+<p>[break]</p>
+<h2 id="exercicio-3-ultima-ocorrencia">Exercício 3 — Última ocorrência<a class="headerlink" href="#exercicio-3-ultima-ocorrencia" title="Permanent link">&para;</a></h2>
+<p>Agora escreva pseudocódigo para <code>ULTIMA-OCORRENCIA</code>.</p>
+<p>Contrato:</p>
+<ul>
+<li>entrada: array <code>v</code>, valor <code>alvo</code>;</li>
+<li>saída: último índice em que <code>alvo</code> aparece;</li>
+<li>se o alvo não aparece, retorne <code>-1</code>.</li>
+</ul>
+<p>Você pode escolher uma das duas estratégias:</p>
+<ul>
+<li>percorrer do fim para o início e parar no primeiro encontro;</li>
+<li>percorrer do início ao fim guardando a última posição encontrada.</li>
+</ul>
+<p>Compare as duas estratégias para <code>v = [5, 1, 5, 2, 5]</code>, <code>alvo = 5</code> e <code>alvo = 1</code>.</p>
+<p>[break]</p>
+<h2 id="exercicio-4-criando-o-pior-caso">Exercício 4 — Criando o pior caso<a class="headerlink" href="#exercicio-4-criando-o-pior-caso" title="Permanent link">&para;</a></h2>
+<p>Para cada tamanho, crie um array e um alvo que façam a busca linear executar o pior caso.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">tamanho do array</th>
+<th>array escolhido</th>
+<th style="text-align: right;">alvo</th>
+<th style="text-align: right;">comparações no pior caso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>O pior caso exige que o alvo esteja ausente? Explique.</p>
+<p>[break]</p>
+<h2 id="exercicio-5-operacao-principal-e-big-o">Exercício 5 — Operação principal e Big-O<a class="headerlink" href="#exercicio-5-operacao-principal-e-big-o" title="Permanent link">&para;</a></h2>
+<p>Para cada algoritmo, indique a operação principal e o custo no pior caso.</p>
+<table>
+<thead>
+<tr>
+<th>Algoritmo</th>
+<th>Operação principal</th>
+<th>Pior caso</th>
+<th>Big-O</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>buscar primeira ocorrência</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>buscar última ocorrência percorrendo do fim</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>contar todas as ocorrências</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>verificar se todos são maiores que um limite</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>comparar todos os pares de elementos</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Em qual linha o custo deixa de ser linear?</p>
+<p>[break]</p>
+<h2 id="exercicio-6-busca-linear-ou-conjunto">Exercício 6 — Busca linear ou conjunto?<a class="headerlink" href="#exercicio-6-busca-linear-ou-conjunto" title="Permanent link">&para;</a></h2>
+<p>Considere dois cenários.</p>
+<p><strong>Cenário A:</strong> há um array de 12 nomes e uma única consulta de presença.</p>
+<p><strong>Cenário B:</strong> há um array de 10000 matrículas e 5000 consultas de presença.</p>
+<p>Responda:</p>
+<ol>
+<li>Em qual cenário a busca linear é simples e suficiente?</li>
+<li>Em qual cenário vale considerar construir um conjunto?</li>
+<li>Qual é o custo de construir o conjunto antes das consultas?</li>
+<li>Por que não faz sentido comparar apenas uma consulta isolada no cenário B?</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-7-retorno-no-lugar-errado">Exercício 7 — Retorno no lugar errado<a class="headerlink" href="#exercicio-7-retorno-no-lugar-errado" title="Permanent link">&para;</a></h2>
+<p>O algoritmo abaixo deveria procurar <code>alvo</code>, mas retorna <code>-1</code> cedo demais.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{BUSCA-COM-ERRO}.}
+\Input{array v, value alvo}
+\Output{índice ou -1}
+\BlankLine
+\BlankLine
+\For{$i \gets 0 \textbf{ to } \texttt{TAMANHO}(v) - 1$}{
+    \If{$v[i] = alvo$}{
+        \Return{i}\;
+    } \Else{
+        \Return{-1}\;
+    }
+}
+\caption{BuscaComErro}
+\end{algorithm}</p>
+<ol>
+<li>Simule para <code>v = [4, 9, 1, 9]</code>, <code>alvo = 9</code>.</li>
+<li>Qual retorno o algoritmo produz?</li>
+<li>Qual deveria ser o retorno?</li>
+<li>Reescreva o pseudocódigo corrigindo a posição do <code>RETORNE -1</code>.</li>
+</ol>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Material - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#pilha-lifo">Pilha: LIFO</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#implementacao-da-pilha-em-java">Implementação da Pilha em Java</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#fila-fifo">Fila: FIFO</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#resumo-das-operacoes_1">Resumo das operações</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#custos-das-operacoes_1">Custos das operações</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#implementacao-mais-eficiente">Implementação mais eficiente</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#implementacao-da-fila-em-java">Implementação da Fila em Java</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#exemplo-guiado-atendimento">Exemplo guiado: atendimento</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#quando-usar-pilha-ou-fila">Quando usar pilha ou fila</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#erros-comuns">Erros comuns</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Aulas</li>
+                  
+                
+                  
+                    <li>Aula 03 — Pilhas e filas</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="aula-03-pilhas-e-filas-com-arraydeque">Aula 03 — Pilhas e filas com <code>ArrayDeque</code><a class="headerlink" href="#aula-03-pilhas-e-filas-com-arraydeque" title="Permanent link">&para;</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<p>Ao final desta aula, você deve ser capaz de:</p>
+<ul>
+<li>explicar os comportamentos LIFO e FIFO;</li>
+<li>usar <code>ArrayDeque</code> como pilha e como fila;</li>
+<li>aplicar operações de inserção, remoção e consulta sem remover;</li>
+<li>resolver problemas simples de validação com pilha;</li>
+<li>resolver problemas simples de atendimento com fila;</li>
+<li>justificar por que pilhas e filas têm operações principais eficientes.</li>
+</ul>
+<!-- ## Pré-requisitos
+
+Você já deve saber usar classes da biblioteca Java, laços, condicionais e listas. Na aula anterior, vimos que remover do começo de um `ArrayList` pode ser caro. Agora veremos uma estrutura mais adequada para operações nas extremidades. -->
+
+<h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
+<p>Considere dois sistemas:</p>
+<ol>
+<li>Um editor precisa verificar se os parênteses de uma expressão estão balanceados.</li>
+<li>Uma central de atendimento precisa chamar pessoas na ordem em que chegaram.</li>
+</ol>
+<!-- No primeiro caso, o último símbolo de abertura precisa ser o primeiro a ser fechado. Isso é comportamento de pilha. No segundo caso, a primeira pessoa que entrou deve ser a primeira atendida. Isso é comportamento de fila. -->
+
+<h2 id="pilha-lifo">Pilha: LIFO<a class="headerlink" href="#pilha-lifo" title="Permanent link">&para;</a></h2>
+<p>Uma <strong>pilha</strong> é uma estrutura de dados na qual os elementos são inseridos e removidos sempre pela mesma extremidade, chamada <strong>topo</strong>.</p>
+<p>Ela segue a regra <strong>LIFO</strong> (<em>Last In, First Out</em>), isto é:</p>
+<blockquote>
+<p>O último elemento inserido é o primeiro elemento removido.</p>
+</blockquote>
+<p>Um exemplo cotidiano é uma pilha de pratos. Um novo prato é colocado no topo, e o primeiro prato retirado também é o que está no topo.</p>
+<p>Considere a seguinte sequência de operações:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>EMPILHAR(P, 10)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>EMPILHAR(P, 20)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>EMPILHAR(P, 30)
+</code></pre></div>
+<p>A pilha passa a ter a seguinte organização:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Topo -&gt; 30
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>        20
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        10
+</code></pre></div>
+<p>Ao remover um elemento:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>DESEMPILHAR(P)
+</code></pre></div>
+<p>o valor <code>30</code> é removido, pois ele está no topo da pilha.</p>
+<p>Depois da remoção:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Topo -&gt; 20
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>        10
+</code></pre></div>
+<p>Em uma pilha, não é permitido inserir ou remover diretamente elementos que estejam no meio da estrutura. Para acessar o valor <code>10</code>, por exemplo, seria necessário remover primeiro os valores <code>30</code> e <code>20</code>.</p>
+<h3 id="tad-pilha">TAD Pilha<a class="headerlink" href="#tad-pilha" title="Permanent link">&para;</a></h3>
+<p>A pilha pode utilizar internamente uma lista redimensionável. O último elemento da lista representa o topo da pilha.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>TAD Pilha
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  elementos: Lista
+</code></pre></div>
+<p>As principais operações do TAD são:</p>
+<ul>
+<li>criar uma pilha;</li>
+<li>empilhar um elemento;</li>
+<li>desempilhar o elemento do topo;</li>
+<li>consultar o elemento do topo;</li>
+<li>verificar se a pilha está vazia;</li>
+<li>consultar a quantidade de elementos.</li>
+</ul>
+<h3 id="criar-uma-pilha">Criar uma pilha<a class="headerlink" href="#criar-uma-pilha" title="Permanent link">&para;</a></h3>
+<p>A operação de criação inicializa uma pilha sem nenhum elemento.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>CRIAR-PILHA()
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  Input: none
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  Output: Pilha
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  P &lt;- nova Pilha
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  P.elementos &lt;- CRIAR-LISTA()
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  RETURN P
+</code></pre></div>
+<h3 id="empilhar-um-elemento">Empilhar um elemento<a class="headerlink" href="#empilhar-um-elemento" title="Permanent link">&para;</a></h3>
+<p>Empilhar significa inserir um novo elemento no topo da pilha.</p>
+<p>Como o topo corresponde ao final da lista, o elemento é adicionado ao final de <code>P.elementos</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>EMPILHAR(P, elemento)
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  Input: Pilha P, elemento
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  Output: none
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  ADICIONAR-FIM(P.elementos, elemento)
+</code></pre></div>
+<p>Por exemplo:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>EMPILHAR(P, 10)
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>EMPILHAR(P, 20)
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>EMPILHAR(P, 30)
+</code></pre></div>
+<p>Depois dessas operações, o valor <code>30</code> está no topo da pilha.</p>
+<h3 id="consultar-o-topo">Consultar o topo<a class="headerlink" href="#consultar-o-topo" title="Permanent link">&para;</a></h3>
+<p>A operação <code>TOPO</code> retorna o elemento que está no topo sem removê-lo.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>TOPO(P)
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  Input: Pilha P
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  Output: elemento ou NULL
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  IF VAZIA(P) THEN
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    RETURN NULL
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>  ultimaPosicao &lt;- TAMANHO(P.elementos) - 1
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>  RETURN ACESSAR(P.elementos, ultimaPosicao)
+</code></pre></div>
+<p>Quando a pilha está vazia, não existe um elemento no topo. Nesse caso, a operação retorna <code>NULL</code>.</p>
+<h3 id="desempilhar-um-elemento">Desempilhar um elemento<a class="headerlink" href="#desempilhar-um-elemento" title="Permanent link">&para;</a></h3>
+<p>Desempilhar significa remover e retornar o elemento que está no topo da pilha.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>DESEMPILHAR(P)
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  Input: Pilha P
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  Output: elemento ou NULL
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>  IF VAZIA(P) THEN
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    RETURN NULL
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  ultimaPosicao &lt;- TAMANHO(P.elementos) - 1
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>  RETURN REMOVER(P.elementos, ultimaPosicao)
+</code></pre></div>
+<p>Quando a pilha está vazia, não existe um elemento que possa ser removido. Nesse caso, a operação retorna <code>NULL</code>.</p>
+<p>Por exemplo, considere:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>EMPILHAR(P, 10)
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>EMPILHAR(P, 20)
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>EMPILHAR(P, 30)
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>valor &lt;- DESEMPILHAR(P)
+</code></pre></div>
+<p>Ao final, <code>valor</code> contém <code>30</code>, e o topo da pilha passa a ser <code>20</code>.</p>
+<h3 id="verificar-se-a-pilha-esta-vazia">Verificar se a pilha está vazia<a class="headerlink" href="#verificar-se-a-pilha-esta-vazia" title="Permanent link">&para;</a></h3>
+<p>A pilha está vazia quando sua lista interna não possui elementos.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>VAZIA(P)
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  Input: Pilha P
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>  Output: boolean
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>  RETURN TAMANHO(P.elementos) = 0
+</code></pre></div>
+<p>A operação retorna:</p>
+<ul>
+<li><code>true</code> quando não há elementos;</li>
+<li><code>false</code> quando há pelo menos um elemento.</li>
+</ul>
+<h3 id="consultar-o-tamanho">Consultar o tamanho<a class="headerlink" href="#consultar-o-tamanho" title="Permanent link">&para;</a></h3>
+<p>A operação <code>TAMANHO-PILHA</code> retorna a quantidade de elementos atualmente armazenados.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>TAMANHO-PILHA(P)
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  Input: Pilha P
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  Output: number
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>  RETURN TAMANHO(P.elementos)
+</code></pre></div>
+<p>A capacidade interna da lista não interfere no tamanho da pilha. Apenas os elementos efetivamente inseridos são contados.</p>
+<h3 id="remover-todos-os-elementos">Remover todos os elementos<a class="headerlink" href="#remover-todos-os-elementos" title="Permanent link">&para;</a></h3>
+<p>Uma operação opcional é esvaziar completamente a pilha.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ESVAZIAR(P)
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  Input: Pilha P
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>  Output: none
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>  WHILE NOT VAZIA(P) DO
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    DESEMPILHAR(P)
+</code></pre></div>
+<p>Os elementos são removidos um de cada vez, sempre a partir do topo.</p>
+<h3 id="resumo-das-operacoes">Resumo das operações<a class="headerlink" href="#resumo-das-operacoes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operação</th>
+<th>Comportamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CRIAR-PILHA()</code></td>
+<td>Cria uma pilha vazia</td>
+</tr>
+<tr>
+<td><code>EMPILHAR(P, elemento)</code></td>
+<td>Insere um elemento no topo</td>
+</tr>
+<tr>
+<td><code>TOPO(P)</code></td>
+<td>Retorna o elemento do topo sem removê-lo</td>
+</tr>
+<tr>
+<td><code>DESEMPILHAR(P)</code></td>
+<td>Remove e retorna o elemento do topo</td>
+</tr>
+<tr>
+<td><code>VAZIA(P)</code></td>
+<td>Informa se a pilha está vazia</td>
+</tr>
+<tr>
+<td><code>TAMANHO-PILHA(P)</code></td>
+<td>Retorna a quantidade de elementos</td>
+</tr>
+<tr>
+<td><code>ESVAZIAR(P)</code></td>
+<td>Remove todos os elementos</td>
+</tr>
+</tbody>
+</table>
+<p>As operações <code>TOPO</code> e <code>DESEMPILHAR</code> retornam <code>NULL</code> quando a pilha está vazia. Outra convenção possível seria indicar um erro de pilha vazia, mas o comportamento escolhido deve ser declarado e utilizado de forma consistente.</p>
+<h3 id="custos-das-operacoes">Custos das operações<a class="headerlink" href="#custos-das-operacoes" title="Permanent link">&para;</a></h3>
+<p>Quando o topo é representado pelo final de uma lista redimensionável:</p>
+<ul>
+<li>consultar o topo exige apenas localizar o último elemento;</li>
+<li>desempilhar exige apenas remover o último elemento;</li>
+<li>verificar se a pilha está vazia e consultar seu tamanho são operações diretas;</li>
+<li>empilhar normalmente exige apenas colocar o elemento na próxima posição livre;</li>
+<li>ocasionalmente, empilhar pode exigir a criação de um array interno maior e a cópia dos elementos da lista.</li>
+</ul>
+<p>Mesmo que algumas inserções exijam redimensionamento, isso não ocorre em todas as chamadas. Por isso, adicionar elementos ao topo continua sendo eficiente ao longo de uma sequência de operações.</p>
+<h2 id="implementacao-da-pilha-em-java">Implementação da Pilha em Java<a class="headerlink" href="#implementacao-da-pilha-em-java" title="Permanent link">&para;</a></h2>
+<p>Em Java, podemos usar a interface <code>Deque</code> com implementação <code>ArrayDeque</code>:</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayDeque</span><span class="p">;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Deque</span><span class="p">;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ExemploPilha</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">        </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pilha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">        </span><span class="n">pilha</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="s">&quot;primeiro&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">        </span><span class="n">pilha</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="s">&quot;segundo&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">        </span><span class="n">pilha</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="s">&quot;terceiro&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">pilha</span><span class="p">.</span><span class="na">peek</span><span class="p">());</span><span class="w"> </span><span class="c1">// terceiro</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">pilha</span><span class="p">.</span><span class="na">pop</span><span class="p">());</span><span class="w">  </span><span class="c1">// terceiro</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">pilha</span><span class="p">.</span><span class="na">pop</span><span class="p">());</span><span class="w">  </span><span class="c1">// segundo</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="p">}</span>
+</code></pre></div>
+<p>As operações principais são:</p>
+<ul>
+<li><code>push(x)</code>: empilha;</li>
+<li><code>pop()</code>: remove e retorna o topo;</li>
+<li><code>peek()</code>: consulta o topo sem remover;</li>
+<li><code>isEmpty()</code>: verifica se está vazia.</li>
+</ul>
+<h3 id="exemplo-guiado-parenteses-balanceados">Exemplo guiado: parênteses balanceados<a class="headerlink" href="#exemplo-guiado-parenteses-balanceados" title="Permanent link">&para;</a></h3>
+<p>Queremos validar expressões como <code>(a + b) * (c + d)</code> e rejeitar expressões como <code>(a + b))</code>.</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayDeque</span><span class="p">;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Deque</span><span class="p">;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Balanceamento</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">balanceado</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">texto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">        </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pilha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="na">length</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">            </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="na">charAt</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;(&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">                </span><span class="n">pilha</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pilha</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">                </span><span class="p">}</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">                </span><span class="n">pilha</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">pilha</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">();</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">balanceado</span><span class="p">(</span><span class="s">&quot;(a + b)&quot;</span><span class="p">));</span><span class="w">  </span><span class="c1">// true</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">balanceado</span><span class="p">(</span><span class="s">&quot;(a + b))&quot;</span><span class="p">));</span><span class="w"> </span><span class="c1">// false</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">balanceado</span><span class="p">(</span><span class="s">&quot;((a)&quot;</span><span class="p">));</span><span class="w">     </span><span class="c1">// false</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a><span class="p">}</span>
+</code></pre></div>
+<p>A pilha guarda aberturas pendentes. Quando aparece um fechamento, precisamos ter uma abertura disponível para casar. Ao final, a pilha deve estar vazia.</p>
+<h2 id="fila-fifo">Fila: FIFO<a class="headerlink" href="#fila-fifo" title="Permanent link">&para;</a></h2>
+<p>Uma <strong>fila</strong> é uma estrutura de dados na qual os elementos são inseridos em uma extremidade e removidos pela outra.</p>
+<p>Ela segue a regra <strong>FIFO</strong> (<em>First In, First Out</em>), isto é:</p>
+<blockquote>
+<p>O primeiro elemento inserido é o primeiro elemento removido.</p>
+</blockquote>
+<p>Um exemplo cotidiano é uma fila de pessoas aguardando atendimento. Uma nova pessoa entra no final da fila, enquanto a pessoa que está há mais tempo é atendida primeiro.</p>
+<p>Considere a seguinte sequência de operações:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ENFILEIRAR(F, 10)
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ENFILEIRAR(F, 20)
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>ENFILEIRAR(F, 30)
+</code></pre></div>
+<p>A fila passa a ter a seguinte organização:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Frente -&gt; 10, 20, 30 &lt;- Final
+</code></pre></div>
+<p>Ao remover um elemento:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>DESENFILEIRAR(F)
+</code></pre></div>
+<p>o valor <code>10</code> é removido, pois ele está na frente da fila.</p>
+<p>Depois da remoção:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Frente -&gt; 20, 30 &lt;- Final
+</code></pre></div>
+<p>Em uma fila, novos elementos sempre entram no final, enquanto as remoções sempre acontecem na frente.</p>
+<h3 id="tad-fila">TAD Fila<a class="headerlink" href="#tad-fila" title="Permanent link">&para;</a></h3>
+<p>A fila pode utilizar internamente uma lista redimensionável.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>TAD Fila
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>  elementos: Lista
+</code></pre></div>
+<p>As principais operações do TAD são:</p>
+<ul>
+<li>criar uma fila;</li>
+<li>inserir um elemento no final;</li>
+<li>remover o elemento da frente;</li>
+<li>consultar o elemento da frente;</li>
+<li>verificar se a fila está vazia;</li>
+<li>consultar a quantidade de elementos.</li>
+</ul>
+<h3 id="criar-uma-fila">Criar uma fila<a class="headerlink" href="#criar-uma-fila" title="Permanent link">&para;</a></h3>
+<p>A operação de criação inicializa uma fila sem nenhum elemento.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>CRIAR-FILA()
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>  Input: none
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>  Output: Fila
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>  F &lt;- nova Fila
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>  F.elementos &lt;- CRIAR-LISTA()
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>  RETURN F
+</code></pre></div>
+<h3 id="enfileirar-um-elemento">Enfileirar um elemento<a class="headerlink" href="#enfileirar-um-elemento" title="Permanent link">&para;</a></h3>
+<p>Enfileirar significa inserir um novo elemento no final da fila.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>ENFILEIRAR(F, elemento)
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>  Input: Fila F, elemento
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>  Output: none
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>  ADICIONAR-FIM(F.elementos, elemento)
+</code></pre></div>
+<p>Por exemplo:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>ENFILEIRAR(F, 10)
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>ENFILEIRAR(F, 20)
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>ENFILEIRAR(F, 30)
+</code></pre></div>
+<p>Depois dessas operações, o valor <code>10</code> está na frente da fila e o valor <code>30</code> está no final.</p>
+<h3 id="consultar-a-frente">Consultar a frente<a class="headerlink" href="#consultar-a-frente" title="Permanent link">&para;</a></h3>
+<p>A operação <code>FRENTE</code> retorna o primeiro elemento da fila sem removê-lo.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>FRENTE(F)
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>  Input: Fila F
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>  Output: elemento ou NULL
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>  IF VAZIA(F) THEN
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>    RETURN NULL
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>  RETURN ACESSAR(F.elementos, 0)
+</code></pre></div>
+<p>Quando a fila está vazia, não existe um elemento na frente. Nesse caso, a operação retorna <code>NULL</code>.</p>
+<h3 id="desenfileirar-um-elemento">Desenfileirar um elemento<a class="headerlink" href="#desenfileirar-um-elemento" title="Permanent link">&para;</a></h3>
+<p>Desenfileirar significa remover e retornar o elemento que está na frente da fila.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>DESENFILEIRAR(F)
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>  Input: Fila F
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>  Output: elemento ou NULL
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>  IF VAZIA(F) THEN
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>    RETURN NULL
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>  RETURN REMOVER(F.elementos, 0)
+</code></pre></div>
+<p>Quando a fila está vazia, não existe um elemento que possa ser removido. Nesse caso, a operação retorna <code>NULL</code>.</p>
+<p>Por exemplo:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>ENFILEIRAR(F, 10)
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>ENFILEIRAR(F, 20)
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>ENFILEIRAR(F, 30)
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>valor &lt;- DESENFILEIRAR(F)
+</code></pre></div>
+<p>Ao final, <code>valor</code> contém <code>10</code>, e o elemento na frente da fila passa a ser <code>20</code>.</p>
+<h3 id="verificar-se-a-fila-esta-vazia">Verificar se a fila está vazia<a class="headerlink" href="#verificar-se-a-fila-esta-vazia" title="Permanent link">&para;</a></h3>
+<p>A fila está vazia quando sua lista interna não possui elementos.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>VAZIA(F)
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>  Input: Fila F
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>  Output: boolean
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>  RETURN TAMANHO(F.elementos) = 0
+</code></pre></div>
+<p>A operação retorna:</p>
+<ul>
+<li><code>true</code> quando não há elementos;</li>
+<li><code>false</code> quando há pelo menos um elemento.</li>
+</ul>
+<h3 id="consultar-o-tamanho_1">Consultar o tamanho<a class="headerlink" href="#consultar-o-tamanho_1" title="Permanent link">&para;</a></h3>
+<p>A operação <code>TAMANHO-FILA</code> retorna a quantidade de elementos atualmente armazenados.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>TAMANHO-FILA(F)
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>  Input: Fila F
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>  Output: number
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>  RETURN TAMANHO(F.elementos)
+</code></pre></div>
+<p>O tamanho representa apenas a quantidade de elementos presentes na fila.</p>
+<h3 id="remover-todos-os-elementos_1">Remover todos os elementos<a class="headerlink" href="#remover-todos-os-elementos_1" title="Permanent link">&para;</a></h3>
+<p>Uma operação opcional é esvaziar completamente a fila.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>ESVAZIAR(F)
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>  Input: Fila F
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>  Output: none
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>  WHILE NOT VAZIA(F) DO
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>    DESENFILEIRAR(F)
+</code></pre></div>
+<p>Os elementos são removidos um de cada vez, sempre a partir da frente da fila.</p>
+<h2 id="resumo-das-operacoes_1">Resumo das operações<a class="headerlink" href="#resumo-das-operacoes_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operação</th>
+<th>Comportamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CRIAR-FILA()</code></td>
+<td>Cria uma fila vazia</td>
+</tr>
+<tr>
+<td><code>ENFILEIRAR(F, elemento)</code></td>
+<td>Insere um elemento no final</td>
+</tr>
+<tr>
+<td><code>FRENTE(F)</code></td>
+<td>Retorna o primeiro elemento sem removê-lo</td>
+</tr>
+<tr>
+<td><code>DESENFILEIRAR(F)</code></td>
+<td>Remove e retorna o primeiro elemento</td>
+</tr>
+<tr>
+<td><code>VAZIA(F)</code></td>
+<td>Informa se a fila está vazia</td>
+</tr>
+<tr>
+<td><code>TAMANHO-FILA(F)</code></td>
+<td>Retorna a quantidade de elementos</td>
+</tr>
+<tr>
+<td><code>ESVAZIAR(F)</code></td>
+<td>Remove todos os elementos</td>
+</tr>
+</tbody>
+</table>
+<p>As operações <code>FRENTE</code> e <code>DESENFILEIRAR</code> retornam <code>NULL</code> quando a fila está vazia. Outra convenção possível seria indicar um erro de fila vazia, desde que o comportamento seja declarado e utilizado de maneira consistente.</p>
+<h2 id="custos-das-operacoes_1">Custos das operações<a class="headerlink" href="#custos-das-operacoes_1" title="Permanent link">&para;</a></h2>
+<p>Quando a fila é implementada usando diretamente uma lista:</p>
+<ul>
+<li>consultar a frente exige apenas acessar a posição <code>0</code>;</li>
+<li>enfileirar normalmente exige apenas adicionar um elemento ao final;</li>
+<li>verificar se a fila está vazia e consultar seu tamanho são operações diretas;</li>
+<li>desenfileirar exige remover a posição <code>0</code>;</li>
+<li>ao remover a posição <code>0</code>, todos os elementos restantes precisam ser deslocados uma posição para a esquerda.</li>
+</ul>
+<p>Assim, essa implementação é simples, mas a remoção da frente pode exigir bastante trabalho quando há muitos elementos na fila.</p>
+<h2 id="implementacao-mais-eficiente">Implementação mais eficiente<a class="headerlink" href="#implementacao-mais-eficiente" title="Permanent link">&para;</a></h2>
+<p>Para evitar o deslocamento dos elementos a cada remoção, a fila pode manter uma variável que indique a posição atual da frente.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>TAD Fila
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>  elementos: Lista
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>  inicio: number
+</code></pre></div>
+<h3 id="criar-uma-fila_1">Criar uma fila<a class="headerlink" href="#criar-uma-fila_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>CRIAR-FILA()
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>  Input: none
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>  Output: Fila
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>  F &lt;- nova Fila
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>  F.elementos &lt;- CRIAR-LISTA()
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>  F.inicio &lt;- 0
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>  RETURN F
+</code></pre></div>
+<h3 id="enfileirar-um-elemento_1">Enfileirar um elemento<a class="headerlink" href="#enfileirar-um-elemento_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>ENFILEIRAR(F, elemento)
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>  Input: Fila F, elemento
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>  Output: none
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>  ADICIONAR-FIM(F.elementos, elemento)
+</code></pre></div>
+<h3 id="consultar-a-frente_1">Consultar a frente<a class="headerlink" href="#consultar-a-frente_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>FRENTE(F)
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>  Input: Fila F
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>  Output: elemento ou NULL
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>  IF VAZIA(F) THEN
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>    RETURN NULO
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>  RETURN ACESSAR(F.elementos, F.inicio)
+</code></pre></div>
+<h3 id="desenfileirar-um-elemento_1">Desenfileirar um elemento<a class="headerlink" href="#desenfileirar-um-elemento_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>DESENFILEIRAR(F)
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>  Input: Fila F
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>  Output: elemento ou NULO
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>  IF VAZIA(F) THEN
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>    RETURN NULO
+<a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>
+<a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>  elemento &lt;- ACESSAR(F.elementos, F.inicio)
+<a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a>  F.inicio &lt;- F.inicio + 1
+<a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>
+<a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a>  RETURN elemento
+</code></pre></div>
+<p>Nessa versão, os elementos não são deslocados. A variável <code>inicio</code> simplesmente avança para a próxima posição.</p>
+<h3 id="verificar-se-a-fila-esta-vazia_1">Verificar se a fila está vazia<a class="headerlink" href="#verificar-se-a-fila-esta-vazia_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>VAZIA(F)
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>  Input: Fila F
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>  Output: boolean
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>  RETURN F.inicio = TAMANHO(F.elementos)
+</code></pre></div>
+<h3 id="consultar-o-tamanho_2">Consultar o tamanho<a class="headerlink" href="#consultar-o-tamanho_2" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>TAMANHO-FILA(F)
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>  Input: Fila F
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>  Output: number
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>  RETURN TAMANHO(F.elementos) - F.inicio
+</code></pre></div>
+<p>Essa versão torna a remoção da frente mais eficiente. Entretanto, as posições anteriores a <code>F.inicio</code> deixam de ser utilizadas. Uma implementação completa pode ocasionalmente reorganizar a lista ou utilizar um array circular para reaproveitar essas posições.</p>
+<h2 id="implementacao-da-fila-em-java">Implementação da Fila em Java<a class="headerlink" href="#implementacao-da-fila-em-java" title="Permanent link">&para;</a></h2>
+<p>Também podemos usar <code>ArrayDeque</code>, mas agora com operações de fila:</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayDeque</span><span class="p">;</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Deque</span><span class="p">;</span>
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ExemploFila</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="w">        </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">fila</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a>
+<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="w">        </span><span class="n">fila</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="s">&quot;Ana&quot;</span><span class="p">);</span>
+<a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a><span class="w">        </span><span class="n">fila</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="s">&quot;Bruno&quot;</span><span class="p">);</span>
+<a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="w">        </span><span class="n">fila</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="s">&quot;Carla&quot;</span><span class="p">);</span>
+<a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a>
+<a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">fila</span><span class="p">.</span><span class="na">peekFirst</span><span class="p">());</span><span class="w">   </span><span class="c1">// Ana</span>
+<a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">fila</span><span class="p">.</span><span class="na">removeFirst</span><span class="p">());</span><span class="w"> </span><span class="c1">// Ana</span>
+<a id="__codelineno-37-14" name="__codelineno-37-14" href="#__codelineno-37-14"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">fila</span><span class="p">.</span><span class="na">removeFirst</span><span class="p">());</span><span class="w"> </span><span class="c1">// Bruno</span>
+<a id="__codelineno-37-15" name="__codelineno-37-15" href="#__codelineno-37-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-37-16" name="__codelineno-37-16" href="#__codelineno-37-16"></a><span class="p">}</span>
+</code></pre></div>
+<p>As operações principais são:</p>
+<ul>
+<li><code>addLast(x)</code>: entra no fim da fila;</li>
+<li><code>removeFirst()</code>: remove o primeiro;</li>
+<li><code>peekFirst()</code>: consulta o primeiro sem remover;</li>
+<li><code>isEmpty()</code>: verifica se não há elementos.</li>
+</ul>
+<h2 id="exemplo-guiado-atendimento">Exemplo guiado: atendimento<a class="headerlink" href="#exemplo-guiado-atendimento" title="Permanent link">&para;</a></h2>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayDeque</span><span class="p">;</span>
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Deque</span><span class="p">;</span>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Atendimento</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">fila</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">chegar</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">nome</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="w">        </span><span class="n">fila</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="n">nome</span><span class="p">);</span>
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>
+<a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">atender</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fila</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Ninguem aguardando&quot;</span><span class="p">;</span>
+<a id="__codelineno-38-14" name="__codelineno-38-14" href="#__codelineno-38-14"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-38-15" name="__codelineno-38-15" href="#__codelineno-38-15"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">fila</span><span class="p">.</span><span class="na">removeFirst</span><span class="p">();</span>
+<a id="__codelineno-38-16" name="__codelineno-38-16" href="#__codelineno-38-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-38-17" name="__codelineno-38-17" href="#__codelineno-38-17"></a>
+<a id="__codelineno-38-18" name="__codelineno-38-18" href="#__codelineno-38-18"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">proximo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-19" name="__codelineno-38-19" href="#__codelineno-38-19"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fila</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-20" name="__codelineno-38-20" href="#__codelineno-38-20"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Ninguem aguardando&quot;</span><span class="p">;</span>
+<a id="__codelineno-38-21" name="__codelineno-38-21" href="#__codelineno-38-21"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-38-22" name="__codelineno-38-22" href="#__codelineno-38-22"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">fila</span><span class="p">.</span><span class="na">peekFirst</span><span class="p">();</span>
+<a id="__codelineno-38-23" name="__codelineno-38-23" href="#__codelineno-38-23"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-38-24" name="__codelineno-38-24" href="#__codelineno-38-24"></a>
+<a id="__codelineno-38-25" name="__codelineno-38-25" href="#__codelineno-38-25"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-26" name="__codelineno-38-26" href="#__codelineno-38-26"></a><span class="w">        </span><span class="n">Atendimento</span><span class="w"> </span><span class="n">atendimento</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Atendimento</span><span class="p">();</span>
+<a id="__codelineno-38-27" name="__codelineno-38-27" href="#__codelineno-38-27"></a><span class="w">        </span><span class="n">atendimento</span><span class="p">.</span><span class="na">chegar</span><span class="p">(</span><span class="s">&quot;Ana&quot;</span><span class="p">);</span>
+<a id="__codelineno-38-28" name="__codelineno-38-28" href="#__codelineno-38-28"></a><span class="w">        </span><span class="n">atendimento</span><span class="p">.</span><span class="na">chegar</span><span class="p">(</span><span class="s">&quot;Bruno&quot;</span><span class="p">);</span>
+<a id="__codelineno-38-29" name="__codelineno-38-29" href="#__codelineno-38-29"></a>
+<a id="__codelineno-38-30" name="__codelineno-38-30" href="#__codelineno-38-30"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">atendimento</span><span class="p">.</span><span class="na">proximo</span><span class="p">());</span><span class="w"> </span><span class="c1">// Ana</span>
+<a id="__codelineno-38-31" name="__codelineno-38-31" href="#__codelineno-38-31"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">atendimento</span><span class="p">.</span><span class="na">atender</span><span class="p">());</span><span class="w"> </span><span class="c1">// Ana</span>
+<a id="__codelineno-38-32" name="__codelineno-38-32" href="#__codelineno-38-32"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">atendimento</span><span class="p">.</span><span class="na">atender</span><span class="p">());</span><span class="w"> </span><span class="c1">// Bruno</span>
+<a id="__codelineno-38-33" name="__codelineno-38-33" href="#__codelineno-38-33"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-38-34" name="__codelineno-38-34" href="#__codelineno-38-34"></a><span class="p">}</span>
+</code></pre></div>
+<p>Esse código preserva a ordem de chegada. Se usássemos <code>ArrayList</code> e <code>remove(0)</code> muitas vezes, cada atendimento poderia deslocar toda a lista. Com <code>ArrayDeque</code>, as operações nas extremidades são apropriadas para esse padrão.</p>
+<h2 id="quando-usar-pilha-ou-fila">Quando usar pilha ou fila<a class="headerlink" href="#quando-usar-pilha-ou-fila" title="Permanent link">&para;</a></h2>
+<p>Use pilha quando o problema depende do último elemento aberto, visitado ou adicionado. Exemplos: desfazer ações, validar delimitadores, simular chamadas recursivas, explorar caminhos.</p>
+<p>Use fila quando o problema depende de ordem de chegada ou camadas. Exemplos: atendimento, processamento de tarefas em ordem, simulações de eventos.</p>
+<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<p>As operações principais de <code>ArrayDeque</code> nas extremidades têm custo eficiente no uso esperado:</p>
+<ul>
+<li>empilhar e desempilhar: custo constante;</li>
+<li>inserir no fim e remover do começo: custo constante;</li>
+<li>consultar topo ou frente: custo constante;</li>
+<li>procurar um valor específico: custo linear, porque exige percorrer.</li>
+</ul>
+<p>O ponto mais importante é escolher a operação dominante. Se o problema pede "sempre o último pendente", pense em pilha. Se pede "sempre o primeiro aguardando", pense em fila.</p>
+<h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Usar <code>pop()</code> sem verificar se a pilha está vazia.</li>
+<li>Usar operações de pilha quando o problema pede fila.</li>
+<li>Misturar <code>addFirst</code>, <code>addLast</code>, <code>removeFirst</code> e <code>removeLast</code> sem definir uma convenção.</li>
+<li>Usar <code>ArrayList.remove(0)</code> repetidamente para simular fila.</li>
+<li>Usar a classe antiga <code>Stack</code> sem necessidade.</li>
+<li>Esquecer que <code>ArrayDeque</code> não aceita <code>null</code>.</li>
+</ul>
+<!-- ## Exercícios de fixação
+
+1. Simule manualmente uma pilha após as operações: `push(3)`, `push(8)`, `pop()`, `push(5)`, `peek()`.
+2. Simule manualmente uma fila após: chega Ana, chega Bruno, atende, chega Carla, atende.
+3. Modifique o validador de parênteses para aceitar também `[` e `]`.
+4. Implemente uma fila de impressão com `adicionarDocumento` e `imprimirProximo`.
+5. Explique por que uma pilha não é adequada para atendimento por ordem de chegada.
+6. Explique por que uma fila não resolve diretamente validação de parênteses.
+
+## Exercício integrador
+
+Implemente `ValidadorDelimitadores` para aceitar `()`, `[]` e `{}`. O método deve retornar `true` apenas quando todo fechamento corresponde ao último delimitador aberto.
+
+Casos de teste obrigatórios:
+
+- `"([{}])"` deve ser válido;
+- `"([)]"` deve ser inválido;
+- `"(()"` deve ser inválido;
+- `""` deve ser válido. -->
+
+<h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar LIFO e FIFO.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei usar <code>ArrayDeque</code> como pilha.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei usar <code>ArrayDeque</code> como fila.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei escolher entre pilha, fila e lista.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei evitar remoções em estrutura vazia.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei estimar o custo das operações principais.</li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../handouts/aula-02-arraylist-tad-custos.pdf"
+               class="ah-prev"
+               title="Handout">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+          
+            <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf"
+               class="ah-next"
+               title="Handout">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

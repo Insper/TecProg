@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Exercícios — Aula 07 — Fundamentos de recursão - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li></li>
+            </ul>
+            <h1>Exercícios — Aula 07 — Fundamentos de recursão</h1>
+            <h2>Técnicas de Programação</h2>
+          </div>
+          
+            <section class="progress-section show">
+<h2 id="instrucoes">Instruções<a class="headerlink" href="#instrucoes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Leia o pseudocódigo antes de executar mentalmente.</li>
+<li>Em simulações recursivas, registre chamadas, casos base e retornos.</li>
+<li>Para cada algoritmo, procure responder: qual é o caso base, qual é o passo recursivo e qual é o progresso?</li>
+</ul>
+<h2 id="exercicio-1-simulacao-da-pilha-de-chamadas">Exercício 1 — Simulação da pilha de chamadas<a class="headerlink" href="#exercicio-1-simulacao-da-pilha-de-chamadas" title="Permanent link">&para;</a></h2>
+<p>Simule o algoritmo para <code>n = 4</code>.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{SOMA-ATE}.}
+\Input{int n}
+\Output{int}
+\BlankLine
+\BlankLine
+\If{$n = 0$}{
+    \Return{0}\;
+\BlankLine
+}
+$resposta \gets n + \texttt{SOMA-ATE}(n - 1)$\;
+\Return{resposta}\;
+\caption{SomaAte}
+\end{algorithm}</p>
+<p>Preencha a tabela de chamadas.</p>
+<table>
+<thead>
+<tr>
+<th>chamada</th>
+<th>ainda precisa calcular</th>
+<th>próxima chamada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SOMA-ATE(4)</code></td>
+<td><code>4 + SOMA-ATE(3)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SOMA-ATE(3)</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SOMA-ATE(2)</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SOMA-ATE(1)</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SOMA-ATE(0)</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Agora preencha a tabela de retornos.</p>
+<table>
+<thead>
+<tr>
+<th>retorno de</th>
+<th style="text-align: right;">valor retornado</th>
+<th>cálculo que volta para a chamada anterior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SOMA-ATE(0)</code></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SOMA-ATE(1)</code></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SOMA-ATE(2)</code></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SOMA-ATE(3)</code></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SOMA-ATE(4)</code></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Qual é o resultado final?</p>
+<p>[break]</p>
+<h2 id="exercicio-2-caso-base-passo-recursivo-e-progresso">Exercício 2 — Caso base, passo recursivo e progresso<a class="headerlink" href="#exercicio-2-caso-base-passo-recursivo-e-progresso" title="Permanent link">&para;</a></h2>
+<p>Para cada algoritmo, identifique caso base, passo recursivo e progresso.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{CONTAGEM}.}
+\Input{int n}
+\Output{none}
+\BlankLine
+\BlankLine
+\If{$n = 0$}{
+    $\texttt{IMPRIMIR}("fim")$\;
+    \Return{}\;
+\BlankLine
+}
+$\texttt{IMPRIMIR}(n)$\;
+$\texttt{CONTAGEM}(n - 1)$\;
+\caption{Contagem}
+\end{algorithm}</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{FATORIAL}.}
+\Input{int n}
+\Output{int}
+\BlankLine
+\BlankLine
+\If{$n = 0$}{
+    \Return{1}\;
+\BlankLine
+}
+\Return{n * \texttt{FATORIAL}(n - 1)}\;
+\caption{Fatorial}
+\end{algorithm}</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{DOBROS}.}
+\Input{int n}
+\Output{int}
+\BlankLine
+\BlankLine
+\If{$n = 0$}{
+    \Return{1}\;
+\BlankLine
+}
+\Return{2 * \texttt{DOBROS}(n - 1)}\;
+\caption{Dobros}
+\end{algorithm}</p>
+<table>
+<thead>
+<tr>
+<th>Algoritmo</th>
+<th>Caso base</th>
+<th>Passo recursivo</th>
+<th>Progresso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CONTAGEM</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>FATORIAL</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DOBROS</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Para quais entradas esses algoritmos terminam?</p>
+<p>[break]</p>
+<h2 id="exercicio-3-recursao-sem-progresso">Exercício 3 — Recursão sem progresso<a class="headerlink" href="#exercicio-3-recursao-sem-progresso" title="Permanent link">&para;</a></h2>
+<p>O algoritmo abaixo tenta somar de <code>1</code> até <code>n</code>, mas está incorreto.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{SOMA-ATE-COM-ERRO}.}
+\Input{int n}
+\Output{int}
+\BlankLine
+\BlankLine
+\If{$n = 0$}{
+    \Return{0}\;
+\BlankLine
+}
+\Return{n + \texttt{SOMA-ATE-COM-ERRO}(n)}\;
+\caption{SomaAteComErro}
+\end{algorithm}</p>
+<ol>
+<li>Qual é o caso base?</li>
+<li>Para <code>n = 3</code>, qual chamada é feita depois da primeira?</li>
+<li>Por que essa chamada não aproxima o algoritmo do caso base?</li>
+<li>Reescreva o algoritmo corrigido.</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-4-potencia-recursiva">Exercício 4 — Potência recursiva<a class="headerlink" href="#exercicio-4-potencia-recursiva" title="Permanent link">&para;</a></h2>
+<p>Escreva pseudocódigo para <code>POTENCIA(base, expoente)</code>.</p>
+<p>Contrato:</p>
+<ul>
+<li>entrada: número <code>base</code>, inteiro <code>expoente</code>;</li>
+<li>o expoente sempre é maior ou igual a <code>0</code>;</li>
+<li>saída: <code>base</code> elevado a <code>expoente</code>.</li>
+</ul>
+<p>Exemplos esperados:</p>
+<ul>
+<li><code>POTENCIA(2, 0)</code> retorna <code>1</code>;</li>
+<li><code>POTENCIA(2, 3)</code> retorna <code>8</code>;</li>
+<li><code>POTENCIA(5, 2)</code> retorna <code>25</code>.</li>
+</ul>
+<p>Depois de escrever, identifique:</p>
+<ol>
+<li>caso base;</li>
+<li>passo recursivo;</li>
+<li>progresso;</li>
+<li>número de chamadas para <code>POTENCIA(2, 4)</code>.</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-5-laco-e-recursao">Exercício 5 — Laço e recursão<a class="headerlink" href="#exercicio-5-laco-e-recursao" title="Permanent link">&para;</a></h2>
+<p>Os dois algoritmos abaixo calculam a mesma soma.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{SOMA-ITERATIVA}.}
+\Input{int n}
+\Output{int}
+\BlankLine
+\BlankLine
+$soma \gets 0$\;
+\BlankLine
+\For{$i \gets 1 \textbf{ to } n$}{
+    $soma \gets soma + i$\;
+\BlankLine
+}
+\Return{soma}\;
+\caption{SomaIterativa}
+\end{algorithm}</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{SOMA-RECURSIVA}.}
+\Input{int n}
+\Output{int}
+\BlankLine
+\BlankLine
+\If{$n = 0$}{
+    \Return{0}\;
+\BlankLine
+}
+\Return{n + \texttt{SOMA-RECURSIVA}(n - 1)}\;
+\caption{SomaRecursiva}
+\end{algorithm}</p>
+<p>Para <code>n = 5</code>, responda:</p>
+<ol>
+<li>Quantas iterações o algoritmo iterativo faz?</li>
+<li>Quantas chamadas o algoritmo recursivo faz, contando a chamada com <code>n = 0</code>?</li>
+<li>Qual deles deixa chamadas pendentes na pilha?</li>
+<li>O crescimento do tempo é constante, linear ou quadrático?</li>
+<li>O crescimento da pilha na versão recursiva é constante, linear ou quadrático?</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-6-contando-chamadas">Exercício 6 — Contando chamadas<a class="headerlink" href="#exercicio-6-contando-chamadas" title="Permanent link">&para;</a></h2>
+<p>Para cada algoritmo, determine quantas chamadas acontecem em função de <code>n</code>.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{CONTA-UM}.}
+\Input{int n}
+\Output{int}
+\BlankLine
+\BlankLine
+\If{$n = 0$}{
+    \Return{0}\;
+\BlankLine
+}
+\Return{1 + \texttt{CONTA-UM}(n - 1)}\;
+\caption{ContaUm}
+\end{algorithm}</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{CONTA-DOIS}.}
+\Input{int n}
+\Output{int}
+\BlankLine
+\BlankLine
+\If{$n \le  0$}{
+    \Return{0}\;
+\BlankLine
+}
+\Return{1 + \texttt{CONTA-DOIS}(n - 2)}\;
+\caption{ContaDois}
+\end{algorithm}</p>
+<p>Complete a tabela.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">chamadas de <code>CONTA-UM</code></th>
+<th style="text-align: right;">chamadas de <code>CONTA-DOIS</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Depois, classifique o custo de cada algoritmo em Big-O.</p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

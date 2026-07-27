@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Exercícios — Aula 13 — Comparação de buscas e ordenações - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li></li>
+            </ul>
+            <h1>Exercícios — Aula 13 — Comparação de buscas e ordenações</h1>
+            <h2>Técnicas de Programação</h2>
+          </div>
+          
+            <section class="progress-section show">
+<h2 id="instrucoes">Instruções<a class="headerlink" href="#instrucoes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Para cada escolha de técnica, declare pré-condições, custo e motivo.</li>
+<li>Não basta dizer que uma técnica é “mais rápida”: explique em que cenário.</li>
+<li>Nos exercícios de simulação, conte operações conceituais, não tempo em segundos.</li>
+</ul>
+<h2 id="exercicio-1-duas-estrategias-de-consulta">Exercício 1 — Duas estratégias de consulta<a class="headerlink" href="#exercicio-1-duas-estrategias-de-consulta" title="Permanent link">&para;</a></h2>
+<p>Um catálogo tem os códigos:</p>
+<p><code>codigos = [42, 17, 93, 58, 21, 70]</code></p>
+<p>Vamos comparar duas estratégias para responder às consultas <code>[93, 10, 70]</code>.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{CONSULTAS-LINEARES}.}
+\Input{list codigos, list consultas}
+\Output{respostas e quantidade de comparações}
+\BlankLine
+\BlankLine
+$comparacoes \gets 0$\;
+\BlankLine
+\For{$c \gets 0 \textbf{ to } \texttt{TAMANHO}(consultas) - 1$}{
+    $alvo \gets consultas[c]$\;
+    $achou \gets \textbf{false}$\;
+\BlankLine
+    \For{$i \gets 0 \textbf{ to } \texttt{TAMANHO}(codigos) - 1$}{
+        $comparacoes \gets comparacoes + 1$\;
+        \If{$codigos[i] = alvo$}{
+            $achou \gets \textbf{true}$\;
+            \textbf{break}\;
+\BlankLine
+        }
+    }
+    $\texttt{IMPRIMIR}(alvo, achou)$\;
+\BlankLine
+}
+$\texttt{IMPRIMIR}(comparacoes)$\;
+\caption{ConsultasLineares}
+\end{algorithm}</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{CONSULTAS-COM-MAPA}.}
+\Input{list codigos, list consultas}
+\Output{respostas e quantidade de consultas ao mapa}
+\BlankLine
+\BlankLine
+$M \gets \texttt{MAPA-VAZIO}()$\;
+\BlankLine
+\For{$i \gets 0 \textbf{ to } \texttt{TAMANHO}(codigos) - 1$}{
+    $\texttt{COLOCAR}(M, codigos[i], \textbf{true})$\;
+\BlankLine
+}
+$consultas_mapa \gets 0$\;
+\BlankLine
+\For{$c \gets 0 \textbf{ to } \texttt{TAMANHO}(consultas) - 1$}{
+    $consultas_mapa \gets consultas_mapa + 1$\;
+    $\texttt{IMPRIMIR}(consultas[c], \texttt{CONTEM-CHAVE}(M, consultas[c]))$\;
+\BlankLine
+}
+$\texttt{IMPRIMIR}(consultas_mapa)$\;
+\caption{ConsultasComMapa}
+\end{algorithm}</p>
+<ol>
+<li>Simule a estratégia linear e conte comparações.</li>
+<li>Simule a estratégia com mapa e conte consultas ao mapa.</li>
+<li>Qual estratégia tem custo extra antes das consultas?</li>
+<li>Em que cenário esse custo extra vale a pena?</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-2-escolha-de-tecnica-por-cenario">Exercício 2 — Escolha de técnica por cenário<a class="headerlink" href="#exercicio-2-escolha-de-tecnica-por-cenario" title="Permanent link">&para;</a></h2>
+<p>Escolha uma técnica para cada caso: busca linear, busca binária, conjunto/mapa, insertion sort, mergesort ou quicksort.</p>
+<table>
+<thead>
+<tr>
+<th>Cenário</th>
+<th>Técnica escolhida</th>
+<th>Pré-condição ou cuidado</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20 nomes e uma única consulta</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1 milhão de códigos já ordenados e muitas consultas</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Verificar presença de matrículas muitas vezes, sem precisar de ordem</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ordenar array pequeno quase ordenado</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ordenar grande volume com garantia de pior caso na versão estudada</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ordenar no próprio array e aceitar risco de pivô ruim</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Em quais linhas a técnica escolhida exige preparar uma estrutura ou ordenar antes?</p>
+<p>[break]</p>
+<h2 id="exercicio-3-tabela-de-custos">Exercício 3 — Tabela de custos<a class="headerlink" href="#exercicio-3-tabela-de-custos" title="Permanent link">&para;</a></h2>
+<p>Complete a tabela com Big-O no pior caso ou custo esperado, quando indicado.</p>
+<table>
+<thead>
+<tr>
+<th>Técnica</th>
+<th>Pré-condição</th>
+<th>Consulta/ordenação</th>
+<th>Memória extra</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Busca linear</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Busca binária</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Consulta em conjunto</td>
+<td></td>
+<td></td>
+<td></td>
+<td>custo esperado</td>
+</tr>
+<tr>
+<td>Insertion sort</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Mergesort</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Quicksort</td>
+<td></td>
+<td></td>
+<td></td>
+<td>pior caso depende do pivô</td>
+</tr>
+</tbody>
+</table>
+<p>Depois, escolha duas técnicas da tabela e explique por que não faz sentido compará-las sem dizer o problema.</p>
+<p>[break]</p>
+<h2 id="exercicio-4-projetando-testes-para-ordenacao">Exercício 4 — Projetando testes para ordenação<a class="headerlink" href="#exercicio-4-projetando-testes-para-ordenacao" title="Permanent link">&para;</a></h2>
+<p>Você precisa testar um algoritmo de ordenação que recebe um array de números.</p>
+<p>Monte um conjunto de testes cobrindo:</p>
+<ol>
+<li>array vazio;</li>
+<li>um elemento;</li>
+<li>já ordenado;</li>
+<li>ordem inversa;</li>
+<li>repetidos;</li>
+<li>números negativos;</li>
+<li>array pequeno aleatório.</li>
+</ol>
+<p>Para cada teste, escreva a entrada e a saída esperada.</p>
+<p>Depois, responda: qual desses testes ajuda a revelar o pior caso da versão de quicksort com pivô final?</p>
+<p>[break]</p>
+<h2 id="exercicio-5-memoria-versus-tempo">Exercício 5 — Memória versus tempo<a class="headerlink" href="#exercicio-5-memoria-versus-tempo" title="Permanent link">&para;</a></h2>
+<p>Compare mergesort e quicksort na versão estudada.</p>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Mergesort</th>
+<th>Quicksort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trabalho principal</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Memória auxiliar</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Pior caso</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Estabilidade na versão estudada</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Sensibilidade à escolha do pivô</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Agora escreva um parágrafo curto respondendo:</p>
+<p>Quando pode valer a pena usar mais memória para ter uma garantia melhor de pior caso?</p>
+<p>[break]</p>
+<h2 id="exercicio-6-mini-checkpoint-integrador">Exercício 6 — Mini checkpoint integrador<a class="headerlink" href="#exercicio-6-mini-checkpoint-integrador" title="Permanent link">&para;</a></h2>
+<p>Resolva os itens abaixo.</p>
+<ol>
+<li>Um array <code>v</code> está ordenado. Escreva a pré-condição e a pós-condição de uma busca binária.</li>
+<li>Dado <code>v = [5, 1, 4, 2]</code>, simule a primeira iteração de insertion sort.</li>
+<li>Em mergesort, explique por que o merge só funciona quando as duas metades já estão ordenadas.</li>
+<li>Em quicksort, explique por que o pivô não deve entrar nas chamadas recursivas depois da partição.</li>
+<li>Um sistema tem muitas consultas por código e também precisa imprimir relatório ordenado uma vez por dia. Proponha uma estratégia combinando estruturas ou algoritmos estudados.</li>
+</ol>
+<h2 id="creditos-e-reaproveitamento">Créditos e reaproveitamento<a class="headerlink" href="#creditos-e-reaproveitamento" title="Permanent link">&para;</a></h2>
+<p>Exercícios adaptados de comparação de desempenho, busca binária, ordenações por simulação e análise de custo dos handouts antigos devem indicar:</p>
+<blockquote>
+<p>Adaptado de material de Igor Montagner para a disciplina Técnicas de Programação.</p>
+</blockquote>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

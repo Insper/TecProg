@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Exercícios — Aula 20 — Problema aplicado e escolha da técnica - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li></li>
+            </ul>
+            <h1>Exercícios — Aula 20 — Problema aplicado e escolha da técnica</h1>
+            <h2>Técnicas de Programação</h2>
+          </div>
+          
+            <section class="progress-section show">
+<h2 id="instrucoes">Instruções<a class="headerlink" href="#instrucoes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Antes de escolher uma técnica, identifique a operação dominante.</li>
+<li>Justifique pré-condições, custo, memória e riscos de erro.</li>
+<li>Quando houver pseudocódigo pronto, simule primeiro e só depois proponha melhoria.</li>
+</ul>
+<h2 id="exercicio-1-solucao-ingenua-e-gargalo">Exercício 1 — Solução ingênua e gargalo<a class="headerlink" href="#exercicio-1-solucao-ingenua-e-gargalo" title="Permanent link">&para;</a></h2>
+<p>Um catálogo guarda produtos como pares <code>(codigo, preco)</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>produtos = [(42, 10), (17, 8), (93, 25), (58, 12), (21, 7)]
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>consultas = [93, 10, 42, 21]
+</code></pre></div>
+<p>Simule a solução ingênua abaixo.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{CONSULTAR-PRODUTOS-INGENUO}.}
+\Input{list produtos, list consultas}
+\Output{respostas e quantidade de comparações}
+\BlankLine
+\BlankLine
+$comparacoes \gets 0$\;
+\BlankLine
+\For{$c \gets 0 \textbf{ to } \texttt{TAMANHO}(consultas) - 1$}{
+    $alvo \gets consultas[c]$\;
+    $encontrado \gets \textbf{false}$\;
+    $preco \gets -1$\;
+\BlankLine
+    \For{$i \gets 0 \textbf{ to } \texttt{TAMANHO}(produtos) - 1$}{
+        $comparacoes \gets comparacoes + 1$\;
+\BlankLine
+        \If{$produtos[i].codigo = alvo$}{
+            $encontrado \gets \textbf{true}$\;
+            $preco \gets produtos[i].preco$\;
+            \textbf{break}\;
+\BlankLine
+        }
+    }
+    $\texttt{IMPRIMIR}(alvo, encontrado, preco)$\;
+\BlankLine
+}
+$\texttt{IMPRIMIR}("comparacoes", comparacoes)$\;
+\caption{ConsultarProdutosIngenuo}
+\end{algorithm}</p>
+<p>Preencha a tabela.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">consulta</th>
+<th>índices visitados</th>
+<th>encontrado?</th>
+<th style="text-align: right;">preço</th>
+<th style="text-align: right;">comparações acumuladas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">93</td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">42</td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">21</td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Depois responda:</p>
+<ol>
+<li>Qual é o gargalo da solução?</li>
+<li>Se houvesse milhares de consultas, qual estrutura estudada seria melhor?</li>
+<li>Qual custo extra aparece antes das consultas nessa solução melhor?</li>
+<li>Se também fosse necessário imprimir produtos ordenados por código, que etapa adicional poderia ser útil?</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-2-estrutura-de-dados-para-consultas">Exercício 2 — Estrutura de dados para consultas<a class="headerlink" href="#exercicio-2-estrutura-de-dados-para-consultas" title="Permanent link">&para;</a></h2>
+<p>Escolha a estrutura ou estratégia mais adequada em cada cenário.</p>
+<table>
+<thead>
+<tr>
+<th>Cenário</th>
+<th>Técnica escolhida</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Poucos produtos e uma consulta eventual</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Muitas consultas de presença por código</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Muitas consultas que precisam devolver preço por código</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Relatório ordenado por código uma vez por dia</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Inserções frequentes e consultas simples em turma pequena</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Verificar rapidamente se uma matrícula já apareceu</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Para cada linha, diga se a técnica exige alguma preparação antes das consultas.</p>
+<p>[break]</p>
+<h2 id="exercicio-3-busca-e-ordenacao-em-um-catalogo">Exercício 3 — Busca e ordenação em um catálogo<a class="headerlink" href="#exercicio-3-busca-e-ordenacao-em-um-catalogo" title="Permanent link">&para;</a></h2>
+<p>Uma loja recebe diariamente um catálogo novo. Ela precisa:</p>
+<ul>
+<li>responder a muitas consultas por código;</li>
+<li>gerar um relatório ordenado por preço;</li>
+<li>detectar códigos repetidos;</li>
+<li>aceitar que o catálogo do dia anterior seja descartado.</li>
+</ul>
+<p>Monte uma solução em etapas. Para cada etapa, escolha uma técnica estudada.</p>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>Técnica</th>
+<th>Custo esperado ou pior caso</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detectar repetidos</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Preparar consultas por código</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Responder consultas</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Gerar relatório ordenado</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Testar corretude</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Depois escreva uma explicação curta dizendo por que ordenar a cada consulta seria uma má escolha.</p>
+<p>[break]</p>
+<h2 id="exercicio-4-dfs-ou-bfs-em-matriz">Exercício 4 — DFS ou BFS em matriz<a class="headerlink" href="#exercicio-4-dfs-ou-bfs-em-matriz" title="Permanent link">&para;</a></h2>
+<p>Para cada problema em matriz, escolha DFS, BFS ou ambos.</p>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Técnica</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Saber se existe caminho entre <code>S</code> e <code>D</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Encontrar menor número de passos até <code>D</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Contar regiões livres separadas</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Pintar uma região inteira com uma nova cor</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Listar todos os caminhos simples entre origem e destino</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Verificar se todas as células livres são alcançáveis a partir de <code>S</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Agora crie uma matriz pequena em que DFS encontra um caminho, mas não necessariamente o menor.</p>
+<p>[break]</p>
+<h2 id="exercicio-5-quando-escolher-backtracking">Exercício 5 — Quando escolher backtracking?<a class="headerlink" href="#exercicio-5-quando-escolher-backtracking" title="Permanent link">&para;</a></h2>
+<p>Para cada enunciado, diga se backtracking é uma boa técnica inicial.</p>
+<table>
+<thead>
+<tr>
+<th>Enunciado</th>
+<th>Backtracking?</th>
+<th>Estado parcial</th>
+<th>Restrição ou poda possível</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Existe subconjunto com soma igual a <code>T</code>?</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Gerar todas as permutações de uma lista pequena</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Consultar preço de produto por código</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Escolher itens de maior valor sem passar da capacidade</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Encontrar menor caminho em grafo sem pesos</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Gerar combinações de tamanho <code>k</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Explique por que backtracking não deve ser usado apenas porque o problema “parece difícil”.</p>
+<p>[break]</p>
+<h2 id="exercicio-6-justificativa-tecnica-completa">Exercício 6 — Justificativa técnica completa<a class="headerlink" href="#exercicio-6-justificativa-tecnica-completa" title="Permanent link">&para;</a></h2>
+<p>Leia o cenário.</p>
+<p>Uma feira de projetos precisa de um sistema que:</p>
+<ul>
+<li>receba inscrições de equipes;</li>
+<li>consulte rapidamente uma equipe pelo código;</li>
+<li>gere uma lista ordenada por nota final;</li>
+<li>calcule o menor caminho entre salas do evento em uma matriz sem pesos;</li>
+<li>escolha, entre até 20 oficinas, um subconjunto que caiba em um limite de horas e maximize interesse.</li>
+</ul>
+<p>Preencha a tabela.</p>
+<table>
+<thead>
+<tr>
+<th>Parte do sistema</th>
+<th>Técnica escolhida</th>
+<th>Pré-condição</th>
+<th>Custo esperado/pior caso</th>
+<th>Risco principal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consulta por código</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Lista ordenada por nota</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Menor caminho entre salas</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Escolha de oficinas</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Testes de borda</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Finalize com um parágrafo defendendo suas escolhas. O parágrafo deve mencionar pelo menos uma pré-condição, um custo e uma alternativa rejeitada.</p>
+<h2 id="creditos-e-reaproveitamento">Créditos e reaproveitamento<a class="headerlink" href="#creditos-e-reaproveitamento" title="Permanent link">&para;</a></h2>
+<p>Exercícios adaptados de comparação de desempenho, ordenação, labirintos, heurísticas e backtracking dos handouts antigos devem indicar:</p>
+<blockquote>
+<p>Adaptado de material de Igor Montagner para a disciplina Técnicas de Programação.</p>
+</blockquote>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

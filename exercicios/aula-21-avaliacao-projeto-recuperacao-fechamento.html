@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Exercícios — Aula 21 — Avaliação, projeto, recuperação ou fechamento - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/index.html">Visão geral</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/index.html">Índice de handouts</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../aulas/aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li></li>
+            </ul>
+            <h1>Exercícios — Aula 21 — Avaliação, projeto, recuperação ou fechamento</h1>
+            <h2>Técnicas de Programação</h2>
+          </div>
+          
+            <section class="progress-section show">
+<h2 id="instrucoes">Instruções<a class="headerlink" href="#instrucoes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Esta aula funciona como fechamento: diagnostique, escolha técnica e justifique.</li>
+<li>Em cada resposta, declare pré-condições e casos de borda.</li>
+<li>Use pseudocódigo quando precisar descrever um algoritmo.</li>
+</ul>
+<h2 id="exercicio-1-diagnostico-de-tecnica-incorreta">Exercício 1 — Diagnóstico de técnica incorreta<a class="headerlink" href="#exercicio-1-diagnostico-de-tecnica-incorreta" title="Permanent link">&para;</a></h2>
+<p>O algoritmo abaixo tenta procurar um código usando busca binária, mas a entrada não garante ordenação.</p>
+<p>Simule para <code>v = [40, 10, 30, 20]</code> e <code>alvo = 10</code>.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{BUSCA-BINARIA-SEM-PRECONDICAO}.}
+\Input{array v, value alvo}
+\Output{índice ou -1}
+\BlankLine
+\BlankLine
+$inicio \gets 0$\;
+$fim \gets \texttt{TAMANHO}(v) - 1$\;
+\BlankLine
+\While{$inicio \le  fim$}{
+    $meio \gets inicio + \texttt{INTEIRO}((fim - inicio) / 2)$\;
+\BlankLine
+    \If{$v[meio] = alvo$}{
+        \Return{meio}\;
+\BlankLine
+    }
+    \If{$v[meio] &lt; alvo$}{
+        $inicio \gets meio + 1$\;
+    } \Else{
+        $fim \gets meio - 1$\;
+\BlankLine
+    }
+}
+\Return{-1}\;
+\caption{BuscaBinariaSemPrecondicao}
+\end{algorithm}</p>
+<p>Preencha a tabela.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">passo</th>
+<th style="text-align: right;">inicio</th>
+<th style="text-align: right;">fim</th>
+<th style="text-align: right;">meio</th>
+<th style="text-align: right;">v[meio]</th>
+<th>decisão</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: right;">fim</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Depois responda:</p>
+<ol>
+<li>Qual retorno o algoritmo produz?</li>
+<li>O alvo realmente está no array?</li>
+<li>Qual pré-condição foi violada?</li>
+<li>Quais são duas correções possíveis?</li>
+<li>Em que cenário cada correção faria mais sentido?</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-2-busca-e-estrutura-de-dados">Exercício 2 — Busca e estrutura de dados<a class="headerlink" href="#exercicio-2-busca-e-estrutura-de-dados" title="Permanent link">&para;</a></h2>
+<p>Escolha a técnica mais adequada para cada situação.</p>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Técnica</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uma consulta em 15 elementos não ordenados</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Dez mil consultas em dados já ordenados</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Consulta por matrícula com nota associada</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Verificar presença de códigos bloqueados</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Encontrar primeira ocorrência em lista com repetidos</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Consultas frequentes e relatório ordenado ocasional</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Agora escreva um pseudocódigo curto para a situação “consulta por matrícula com nota associada”, usando TAD Mapa.</p>
+<p>[break]</p>
+<h2 id="exercicio-3-ordenacao-e-analise">Exercício 3 — Ordenação e análise<a class="headerlink" href="#exercicio-3-ordenacao-e-analise" title="Permanent link">&para;</a></h2>
+<p>Considere três algoritmos estudados: insertion sort, mergesort e quicksort.</p>
+<p>Preencha a tabela.</p>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Insertion sort</th>
+<th>Mergesort</th>
+<th>Quicksort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Melhor caso</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Pior caso</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Memória extra na versão estudada</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Estável na versão estudada?</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Bom para dados pequenos/quase ordenados?</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Sensível à escolha de pivô?</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Depois responda:</p>
+<ol>
+<li>Qual algoritmo você escolheria para ordenar uma lista pequena quase ordenada?</li>
+<li>Qual escolheria se precisa de garantia de pior caso <code>O(n log n)</code> na versão estudada?</li>
+<li>Qual cuidado deve existir ao testar quicksort?</li>
+<li>Crie três testes de borda para qualquer algoritmo de ordenação.</li>
+</ol>
+<p>[break]</p>
+<h2 id="exercicio-4-grafos-matrizes-e-caminhos">Exercício 4 — Grafos, matrizes e caminhos<a class="headerlink" href="#exercicio-4-grafos-matrizes-e-caminhos" title="Permanent link">&para;</a></h2>
+<p>Leia os problemas e escolha DFS, BFS ou backtracking.</p>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Técnica</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Existe caminho entre duas salas?</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Menor número de passos em labirinto sem pesos</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Contar componentes conectadas</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Listar todos os caminhos simples sem repetir célula</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Pintar região conectada</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Escolher subconjunto ótimo de itens</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Para o problema de menor caminho, escreva o esqueleto do pseudocódigo usando fila e matriz <code>dist</code>.</p>
+<p>\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\KwResult{Executa \texttt{MENOR-CAMINHO-FECHAMENTO}.}
+\Input{matrix lab, origem, destino}
+\Output{menor distância ou -1}
+\BlankLine
+\BlankLine
+$...$\;
+\caption{MenorCaminhoFechamento}
+\end{algorithm}</p>
+<p>[break]</p>
+<h2 id="exercicio-5-backtracking-com-restricao">Exercício 5 — Backtracking com restrição<a class="headerlink" href="#exercicio-5-backtracking-com-restricao" title="Permanent link">&para;</a></h2>
+<p>Considere <code>valores = [3, 4, 6, 8]</code> e <code>alvo = 10</code>.</p>
+<ol>
+<li>Desenhe a árvore de incluir/não incluir até encontrar uma solução ou esgotar possibilidades.</li>
+<li>Marque ramos podados por <code>soma &gt; alvo</code>.</li>
+<li>Explique por que essa poda é válida para valores positivos.</li>
+<li>Diga o que mudaria se houvesse valores negativos.</li>
+<li>Escreva pseudocódigo para a função <code>EXISTE-SOMA</code> usando essa poda.</li>
+</ol>
+<p>Agora responda: esse problema é melhor modelado com busca linear, BFS ou backtracking? Justifique.</p>
+<p>[break]</p>
+<h2 id="exercicio-6-roteiro-alternativo-de-projeto-final">Exercício 6 — Roteiro alternativo de projeto final<a class="headerlink" href="#exercicio-6-roteiro-alternativo-de-projeto-final" title="Permanent link">&para;</a></h2>
+<p>Escolha um dos temas abaixo ou proponha um equivalente.</p>
+<ul>
+<li>Catálogo de produtos com consultas, ordenação e relatórios.</li>
+<li>Analisador de labirintos com DFS, BFS e contagem de regiões.</li>
+<li>Planejador de oficinas com combinações, restrições e mochila.</li>
+</ul>
+<p>Monte um roteiro de projeto com cinco partes.</p>
+<table>
+<thead>
+<tr>
+<th>Parte</th>
+<th>Entrega esperada</th>
+<th>Técnica principal</th>
+<th>Testes obrigatórios</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Modelagem da entrada</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Operação principal simples</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Operação eficiente ou algoritmo central</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Casos de borda e validação</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Relatório de análise</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>O relatório deve conter:</p>
+<ul>
+<li>pré-condições;</li>
+<li>custo esperado ou pior caso;</li>
+<li>justificativa da técnica escolhida;</li>
+<li>uma alternativa rejeitada;</li>
+<li>principal bug evitado.</li>
+</ul>
+<h2 id="creditos-e-reaproveitamento">Créditos e reaproveitamento<a class="headerlink" href="#creditos-e-reaproveitamento" title="Permanent link">&para;</a></h2>
+<p>Exercícios adaptados de busca e desempenho, ordenação, caminhos e mochila/backtracking dos handouts antigos devem indicar:</p>
+<blockquote>
+<p>Adaptado de material de Igor Montagner para a disciplina Técnicas de Programação.</p>
+</blockquote>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>
