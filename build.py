@@ -1,90 +1,110 @@
-import subprocess
-import pathlib
-import os.path as osp
-import functools
 import argparse
-
-DEBUG=True
-
-sh = functools.partial(subprocess.run, check=True, shell=True, capture_output=not DEBUG)
-DATE_CMD = 'date +\"%d/%m/%Y %H:%M\"'
-PANDOC_HANDOUT = 'pandoc -f markdown+pipe_tables+backtick_code_blocks+fenced_divs+raw_html --lua-filter=filters/message.lua --lua-filter=filters/spacer.lua --lua-filter=filters/graphviz.lua --lua-filter=filters/side-by-side.lua  -s --template templates/tufte-handout.tex '
-PANDOC_PAGE = 'pandoc -f markdown+pipe_tables+backtick_code_blocks+fenced_divs+raw_html --toc --toc-depth=1 -s --template templates/template-index.html '
-PANDOC_VARS = f'-V date="$({DATE_CMD})" -V versao="2026/01"'
-MARP_CMD = 'npx @marp-team/marp-cli  --theme templates/slides.css  --allow-local-files --html '
+import datetime as dt
+import os
+import pathlib
+import subprocess
+import sys
 
 
-src = pathlib.Path('src')
+CONTENT_ROOT = pathlib.Path(__file__).resolve().parent
+ROOT = CONTENT_ROOT.parent
+BUILD_ROOT = ROOT / "disciplina-tecprog-main"
+
+INPUT_DIR = CONTENT_ROOT / "exercicios"
+OUTPUT_DIR = CONTENT_ROOT / "handouts"
+
+PANDOC = "pandoc"
+PANDOC_FROM = "markdown+pipe_tables+backtick_code_blocks+fenced_divs+raw_html"
+TEMPLATE = BUILD_ROOT / "templates" / "tufte-handout.tex"
+FILTERS = [
+    BUILD_ROOT / "filters" / "message.lua",
+    BUILD_ROOT / "filters" / "spacer.lua",
+    BUILD_ROOT / "filters" / "graphviz.lua",
+    BUILD_ROOT / "filters" / "side-by-side.lua",
+]
+VERSION = "2026/02"
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(description='Build material from src/ into docs/.')
-    parser.add_argument(
-        'files',
-        nargs='*',
-        help='Specific files/directories to build (default: everything under src/).',
+def handout_inputs(selected_files):
+    if selected_files:
+        return [pathlib.Path(f).resolve() for f in selected_files]
+    return sorted(INPUT_DIR.glob("*.md"))
+
+
+def output_path_for(source):
+    return OUTPUT_DIR / source.with_suffix(".pdf").name
+
+
+def pandoc_command(source, target):
+    today = dt.datetime.now().strftime("%d/%m/%Y %H:%M")
+    cmd = [
+        PANDOC,
+        "-f",
+        PANDOC_FROM,
+        "-s",
+        "--pdf-engine=xelatex",
+        "--template",
+        str(TEMPLATE),
+        "-V",
+        f"date={today}",
+        "-V",
+        f"versao={VERSION}",
+        "--resource-path",
+        os.pathsep.join([str(source.parent), str(BUILD_ROOT)]),
+    ]
+
+    for lua_filter in FILTERS:
+        cmd.extend(["--lua-filter", str(lua_filter)])
+
+    cmd.extend([str(source), "-o", str(target)])
+    return cmd
+
+
+def build_pdf(source, dry_run=False):
+    target = output_path_for(source)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    cmd = pandoc_command(source, target)
+
+    if dry_run:
+        print(target)
+        return
+
+    print(f"Handout {source.relative_to(ROOT)} -> {target.relative_to(ROOT)}", flush=True)
+    subprocess.run(cmd, check=True, cwd=BUILD_ROOT)
+
+
+def main(argv):
+    parser = argparse.ArgumentParser(
+        description="Gera PDFs dos handouts em content-novo/handouts."
     )
     parser.add_argument(
-        '--only',
-        choices=['all', 'page', 'handout', 'slides', 'assets'],
-        default='all',
-        help='Restrict build output kind (default: all).',
+        "files",
+        nargs="*",
+        help="Arquivos markdown específicos. Se omitido, gera todos de content-novo/exercicios.",
     )
-    return parser.parse_args()
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Mostra os PDFs que seriam gerados, sem executar pandoc.",
+    )
+    args = parser.parse_args(argv)
+
+    sources = handout_inputs(args.files)
+    if not sources:
+        print(f"Nenhum handout encontrado em {INPUT_DIR}", file=sys.stderr)
+        return 1
+
+    for source in sources:
+        if not source.exists():
+            print(f"Arquivo não encontrado: {source}", file=sys.stderr)
+            return 1
+        if source.suffix != ".md":
+            print(f"Esperado arquivo .md, recebido: {source}", file=sys.stderr)
+            return 1
+        build_pdf(source, dry_run=args.dry_run)
+
+    return 0
 
 
-def should_build(kind, only):
-    return only == 'all' or only == kind
-
-args = parse_args()
-
-if args.files:
-    all_files = [pathlib.Path(f) for f in args.files]
-    show_file_list = True
-else:
-    all_files = src.rglob('*')
-    show_file_list = False
-sh('mkdir -p temp')
-
-for f in all_files:
-    dir, fname = osp.split(f)
-    without_src = "docs" / f.relative_to('src')
-    
-
-    if osp.isdir(f):
-        if not show_file_list:
-            print('Creating dir', without_src)
-        sh(f'mkdir -p {without_src}')
-    elif fname.endswith('.md') and 'handout' in fname and should_build('handout', args.only):
-        resname = without_src.parent / fname.replace('.md', '.pdf')
-        if show_file_list:
-            print(resname)
-        else:
-            print('Handout', f)
-        sh(f'{PANDOC_HANDOUT} {PANDOC_VARS} --resource-path {dir} {f} -o {resname}')
-    elif fname.endswith('.md') and 'slide' in fname and should_build('slides', args.only):
-        resname = without_src.parent / fname.replace('.md', '.pdf')
-        if show_file_list:
-            print(resname)
-        else:
-             print('Slides', f)
-        sh(f'{MARP_CMD} -o {resname} {f}')
-    elif (
-        fname.endswith('.md')
-        and 'handout' not in fname
-        and 'slide' not in fname
-        and should_build('page', args.only)
-    ):
-        resname = without_src.parent / fname.replace('.md', '.html')
-        if show_file_list:
-            print(resname)
-        else:
-            print('Page', f)
-        sh(f'{PANDOC_PAGE} {PANDOC_VARS} --resource-path {dir} {f} -o {resname}')
-    elif should_build('assets', args.only):
-        
-        if show_file_list:
-            print(f)
-        else:
-            print('copy', f)
-        sh(f'cp {f} {without_src}')
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))

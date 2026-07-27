@@ -1,0 +1,18 @@
+{
+  "course": "",
+  "exercises": {
+    "aulas/aula-00-primeiros-passos.html": {
+      "leiturajava": {
+        "tags": [
+          "long-text",
+          "text-exercise"
+        ],
+        "slug": "aulas/aula-00-primeiros-passos.html/leiturajava"
+      }
+    }
+  },
+  "tags": {
+    "long-text": "long-text",
+    "text-exercise": "text-exercise"
+  }
+}
