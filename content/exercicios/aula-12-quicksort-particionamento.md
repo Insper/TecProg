@@ -39,12 +39,12 @@ $\texttt{TROCAR}(v, menores, fim)$\;
 \end{algorithm}
 
 | atual | v[atual] | menores antes | ação | array após ação | menores depois |
-| ----: | -------: | -------------: | --- | --- | --------------: |
+| ----: | -------: | --- | --- | -------: | --- |
 | 0 | | | | | |
 | 1 | | | | | |
 | 2 | | | | | |
 | 3 | | | | | |
-| fim | pivô | | troca final | | |
+| 4 | | | | | |
 
 Qual é a posição final do pivô? O que fica garantido à esquerda e à direita dele?
 
@@ -52,7 +52,7 @@ Qual é a posição final do pivô? O que fica garantido à esquerda e à direit
 
 ## Exercício 2 — Simulação de quicksort
 
-Use o particionamento do exercício anterior para simular `QUICKSORT(v, 0, 4)` em `v = [8, 3, 7, 2, 5]`.
+Use o particionamento do exercício anterior para simular `QUICKSORT(v, 0, 4)` em `v = [10, 2, 8, 1, 3]`.
 
 \begin{algorithm}[H]
 \DontPrintSemicolon
@@ -73,7 +73,7 @@ $\texttt{QUICKSORT}(v, p + 1, fim)$\;
 \caption{Quicksort}
 \end{algorithm}
 
-Preencha a árvore de chamadas.
+Construa também a árvore de chamadas. Exemplo:
 
 ```text
 QUICKSORT(v, 0, 4)
@@ -158,18 +158,10 @@ Compare os dois algoritmos nos cenários abaixo.
 
 | Cenário | Melhor escolha | Justificativa |
 | --- | --- | --- |
-| Preciso de garantia de pior caso `O(n log n)` na versão estudada | | |
+| Preciso de garantia de pior caso `O(n log n)` na solução | | |
 | Quero usar pouca memória auxiliar além da pilha | | |
 | O array pode já estar ordenado e o pivô é sempre o último | | |
-| Preciso de estabilidade na versão estudada | | |
+| Preciso de estabilidade na solução | | |
 | Quero entender ordenação por particionamento | | |
 
 Depois, escreva uma frase explicando por que quicksort não tem etapa de merge final.
-
-## Créditos e reaproveitamento
-
-Exercícios adaptados de simulações de particionamento e formalização de quicksort dos handouts antigos devem indicar:
-
-> Adaptado de material de Igor Montagner para a disciplina Técnicas de Programação.
-
-Fonte externa opcional para variações conceituais: Princeton Quicksort, <https://algs4.cs.princeton.edu/23quicksort/>.

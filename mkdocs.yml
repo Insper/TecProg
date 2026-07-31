@@ -16,7 +16,7 @@ extra:
 
 nav:
   - Início: index.md
-#   - Materiais por aula: materiais.md
+  - Materiais por aula: materiais.md
   - Aulas:
       - Visão geral: aulas/index.md
       - Índice de handouts: handouts/index.md
@@ -65,61 +65,38 @@ nav:
           - Material: aulas/aula-11-mergesort.md
           - Handout: handouts/aula-11-mergesort.pdf
           - Exercícios de código: https://leetcode.com/problem-list/merge-sort/
-    #   - Aula 12 — Quicksort e particionamento:
-    #       - Material: aulas/aula-12-quicksort-particionamento.md
-    #       - Handout: handouts/aula-12-quicksort-particionamento.pdf
-    #   - Aula 13 — Comparação de buscas e ordenações:
-    #       - Material: aulas/aula-13-comparacao-buscas-ordenacoes-exercicios.md
-    #       - Handout: handouts/aula-13-comparacao-buscas-ordenacoes.pdf
-    #   - Aula 14 — Grafos simples e DFS:
-    #       - Material: aulas/aula-14-grafos-simples-dfs.md
-    #       - Handout: handouts/aula-14-grafos-simples-dfs.pdf
-    #       - Exercícios de código: https://leetcode.com/problem-list/depth-first-search/
-    #   - Aula 15 — BFS e filas:
-    #       - Material: aulas/aula-15-bfs-filas.md
-    #       - Handout: handouts/aula-15-bfs-filas.pdf
-    #       - Exercícios de código: https://leetcode.com/problem-list/breadth-first-search/
-    #   - Aula 16 — Problemas com BFS e DFS:
-    #       - Material: aulas/aula-16-problemas-bfs-dfs.md
-    #       - Handout: handouts/aula-16-problemas-bfs-dfs.pdf
-    #   - Aula 17 — Introdução ao backtracking:
-    #       - Material: aulas/aula-17-introducao-backtracking.md
-    #       - Handout: handouts/aula-17-introducao-backtracking.pdf
-    #       - Exercícios de código: https://leetcode.com/problem-list/backtracking/
+      - Aula 12 — Quicksort e particionamento:
+          - Material: aulas/aula-12-quicksort-particionamento.md
+          - Handout: handouts/aula-12-quicksort-particionamento.pdf
+      - Guia Extra — Comparação de buscas e ordenações:
+          - Material: aulas/guia-13-comparacao-buscas-ordenacoes-exercicios.md
+          - Handout: handouts/guia-13-comparacao-buscas-ordenacoes.pdf
+      - Aula 13 — DFS em matrizes e exploração recursiva:
+          - Material: aulas/aula-13-dfs.md
+          - Handout: handouts/aula-13-dfs.pdf
+          - Exercícios de código (DFS): https://leetcode.com/problem-list/depth-first-search/
+      - Aula 14 — BFS em matrizes e uso de filas:
+          - Material: aulas/aula-14-bfs-filas.md
+          - Handout: handouts/aula-14-bfs-filas.pdf
+          - Exercícios de código (BFS): https://leetcode.com/problem-list/breadth-first-search/
+      - "Aula 15 — Introdução a grafos: representação, DFS e BFS":
+          - Material: aulas/aula-16-problemas-bfs-dfs.md
+          - Handout: handouts/aula-16-problemas-bfs-dfs.pdf
+      - Aula 16 — Introdução ao backtracking:
+          - Material: aulas/aula-16-introducao-backtracking.md
+          - Handout: handouts/aula-16-introducao-backtracking.pdf
+          - Exercícios de código: https://leetcode.com/problem-list/backtracking/
     #   - Aula 18 — Combinações, subconjuntos e permutações:
     #       - Material: aulas/aula-18-combinacoes-subconjuntos-permutacoes.md
     #       - Handout: handouts/aula-18-combinacoes-subconjuntos-permutacoes.pdf
-    #   - Aula 19 — Backtracking com restrições:
-    #       - Material: aulas/aula-19-backtracking-restricoes.md
-    #       - Handout: handouts/aula-19-backtracking-restricoes.pdf
+      - Aula 17 — Backtracking com restrições:
+          - Material: aulas/aula-17-backtracking-restricoes.md
+          - Handout: handouts/aula-17-backtracking-restricoes.pdf
     #   - Aula 20 — Problema aplicado envolvendo escolha da técnica:
     #       - Handout: handouts/aula-20-problema-aplicado-escolha-tecnica.pdf
     #   - Aula 21 — Avaliação, projeto, recuperação ou fechamento:
     #       - Handout: handouts/aula-21-avaliacao-projeto-recuperacao-fechamento.pdf
-  # - Exercícios:
-  #     - Visão geral: exercicios/index.md
-  #     - Aula 01: exercicios/aula-01-revisao-java-pseudocodigo-arrays-custo.md
-  #     - Aula 02: exercicios/aula-02-arraylist-tad-custos.md
-  #     - Aula 03: exercicios/aula-03-pilhas-filas-arraydeque.md
-  #     - Aula 04: exercicios/aula-04-hashmap-hashset.md
-  #     - Aula 05: exercicios/aula-05-busca-linear-big-o.md
-  #     - Aula 06: exercicios/aula-06-busca-binaria-iterativa.md
-  #     - Aula 07: exercicios/aula-07-fundamentos-recursao.md
-  #     - Aula 08: exercicios/aula-08-recursao-arrays-busca-binaria-recursiva.md
-  #     - Aula 09: exercicios/aula-09-insertion-sort-analise.md
-  #     - Aula 10: exercicios/aula-10-divisao-e-conquista.md
-  #     - Aula 11: exercicios/aula-11-mergesort.md
-  #     - Aula 12: exercicios/aula-12-quicksort-particionamento.md
-  #     - Aula 13: exercicios/aula-13-comparacao-buscas-ordenacoes.md
-  #     - Aula 14: exercicios/aula-14-grafos-simples-dfs.md
-  #     - Aula 15: exercicios/aula-15-bfs-filas.md
-  #     - Aula 16: exercicios/aula-16-problemas-bfs-dfs.md
-  #     - Aula 17: exercicios/aula-17-introducao-backtracking.md
-  #     - Aula 18: exercicios/aula-18-combinacoes-subconjuntos-permutacoes.md
-  #     - Aula 19: exercicios/aula-19-backtracking-restricoes.md
-  #     - Aula 20: exercicios/aula-20-problema-aplicado-escolha-tecnica.md
-  #     - Aula 21: exercicios/aula-21-avaliacao-projeto-recuperacao-fechamento.md
-
+  
 exclude_docs: |
   build.py
   mkdocs.yml

@@ -246,11 +246,3 @@ Depois responda:
 2. A poda garante que o pior caso deixa de ser exponencial?
 3. Em que tipo de entrada essa poda tende a ajudar mais?
 4. Qual hipótese precisa aparecer na justificativa?
-
-## Créditos e reaproveitamento
-
-Exercícios adaptados de heurísticas da mochila, mochila por backtracking, estado parcial, incluir/não incluir e atualização de melhor solução dos handouts antigos devem indicar:
-
-> Adaptado de material de Igor Montagner para a disciplina Técnicas de Programação.
-
-Definições conceituais externas opcionais: Knapsack, <https://en.wikipedia.org/wiki/Knapsack_problem>, e Subset Sum, <https://en.wikipedia.org/wiki/Subset_sum_problem>.

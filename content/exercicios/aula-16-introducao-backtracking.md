@@ -12,7 +12,7 @@ author: "Marcio F. Stabile Jr."
 
 ## Exercício 1 — Simulação de subconjuntos
 
-Simule o algoritmo para `v = [1, 2, 3]`.
+Simule o algoritmo para `v = [1, 2, 3, 4]`.
 
 \begin{algorithm}[H]
 \DontPrintSemicolon
@@ -53,7 +53,7 @@ $\texttt{REMOVER-ULTIMO}(atual)$\;
 \caption{Backtrack}
 \end{algorithm}
 
-Preencha a árvore de decisões. Use `N` para “não incluir” e `S` para “incluir”.
+Preencha a árvore de decisões. Use `N` para “não incluir” e `S` para “incluir”. Exemplo:
 
 ```text
 i=0, atual=[]
@@ -86,13 +86,13 @@ Depois responda:
 
 1. Por que cada elemento gera duas possibilidades?
 2. O algoritmo gera subconjuntos repetidos?
-3. A ordem dos subconjuntos registrados muda se a chamada “incluir” vier antes da chamada “não incluir”?
+3. A ordem dos subconjuntos registrados muda se a chamada para “incluir” vier antes da chamada para “não incluir”?
 
 [break]
 
-## Exercício 3 — Falta de desfazer
+## Exercício 3 — Problema de backtracking com erro
 
-O pseudocódigo abaixo esquece de desfazer a escolha.
+O pseudocódigo abaixo apresenta um problema.
 
 \begin{algorithm}[H]
 \DontPrintSemicolon
@@ -115,22 +115,22 @@ $\texttt{BACKTRACK-COM-ERRO}(v, i + 1, atual, respostas)$\;
 \caption{BacktrackComErro}
 \end{algorithm}
 
-1. Simule para `v = [1, 2]`.
+1. Simule para `v = [1, 2, 3]`.
 2. Quais respostas são registradas?
 3. Qual elemento fica indevidamente em `atual` ao voltar para outro ramo?
-4. Reescreva as últimas três linhas com o desfazer correto.
+4. Como corrigir o problema?
 
 [break]
 
 ## Exercício 4 — Falta de cópia
 
-O algoritmo abaixo registra `atual` diretamente em `respostas`.
+O pseudocódigo abaixo apresenta outro problema.
 
 \begin{algorithm}[H]
 \DontPrintSemicolon
 \SetAlgoLined
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
-\KwResult{Executa \texttt{BACKTRACK-SEM-COPIA}.}
+\KwResult{Executa \texttt{BACKTRACK}.}
 \Input{array v, int i, list atual, list respostas}
 \Output{none}
 \BlankLine
@@ -140,17 +140,17 @@ O algoritmo abaixo registra `atual` diretamente em `respostas`.
     \Return{}\;
 \BlankLine
 }
-$\texttt{BACKTRACK-SEM-COPIA}(v, i + 1, atual, respostas)$\;
+$\texttt{BACKTRACK}(v, i + 1, atual, respostas)$\;
 $\texttt{ADICIONAR}(atual, v[i])$\;
-$\texttt{BACKTRACK-SEM-COPIA}(v, i + 1, atual, respostas)$\;
+$\texttt{BACKTRACK}(v, i + 1, atual, respostas)$\;
 $\texttt{REMOVER-ULTIMO}(atual)$\;
 \caption{BacktrackSemCopia}
 \end{algorithm}
 
-Responda:
+Implemente o pseudocódigo acima em Java e responda:
 
-1. Por que `atual` continua mudando depois de ser adicionada a `respostas`?
-2. O que significa registrar uma “fotografia” da solução?
+1. Quais respostas são registradas?
+2. Por que `atual` continua mudando depois de ser adicionada a `respostas`?
 3. Qual linha deve ser trocada para evitar o problema?
 4. Escreva a versão corrigida do caso base.
 
@@ -166,7 +166,6 @@ Contrato:
 - saída: lista de subconjuntos com soma par;
 - use backtracking com decisões incluir/não incluir;
 - carregue `soma_atual` como parte do estado;
-- registre uma cópia de `atual` apenas se `soma_atual MOD 2 = 0`.
 
 Teste com:
 
@@ -178,7 +177,7 @@ Teste com:
 
 ## Exercício 6 — Número de folhas
 
-Complete a tabela para a geração de subconjuntos.
+Considere o algoritmo do Exercício 1. Complete a tabela para `n` elementos.
 
 | n | escolhas por elemento | número de folhas | número de subconjuntos |
 | -: | --------------------: | ----------------: | ---------------------: |
@@ -191,12 +190,6 @@ Complete a tabela para a geração de subconjuntos.
 
 Depois responda:
 
-1. Por que a quantidade de folhas é `2^n`?
+1. Qual a relação entre número de elementos e o número de subconjuntos?
+1. Qual a relação entre número de elementos e o número de folhas?
 2. Qual é a profundidade máxima da recursão?
-3. Por que gerar todas as respostas já custa tempo exponencial?
-
-## Créditos e reaproveitamento
-
-Exercícios adaptados de ideias dos handouts antigos de backtracking, árvore de decisões e mochila devem indicar:
-
-> Adaptado de material de Igor Montagner para a disciplina Técnicas de Programação.
