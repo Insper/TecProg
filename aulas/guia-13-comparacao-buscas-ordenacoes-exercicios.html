@@ -411,58 +411,14 @@
 
       
         
-  <li class="ah-togglable-item opened">
+  <li class="ah-togglable-item">
     <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
     <ul>
       
         
   
-
-    <li class="active ah-togglable-item opened">
-      <span class="ah-togglable-handle">Material</span>
-      <ul>
-        
-          
-            
-            
-              <li class="ah-toc-item">
-                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#problema-motivador">Problema motivador</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#o-padrao">O padrão</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#intervalo-aberto-no-fim">Intervalo aberto no fim</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#exemplo-guiado-maximo-por-divisao">Exemplo guiado: máximo por divisão</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#divisao-equilibrada-e-desequilibrada">Divisão equilibrada e desequilibrada</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#analise-informal-de-custo">Análise informal de custo</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#erros-comuns">Erros comuns</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
-              </li>
-            
-        
-      </ul>
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
     </li>
   
 
@@ -546,14 +502,62 @@
 
       
         
-  <li class="ah-togglable-item">
+  <li class="ah-togglable-item opened">
     <span class="ah-togglable-handle">Guia Extra — Comparação de buscas e ordenações</span>
     <ul>
       
         
   
-    <li>
-      <a href="guia-13-comparacao-buscas-ordenacoes-exercicios.html">Material</a>
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#tabela-comparativa-de-buscas">Tabela comparativa de buscas</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#tabela-comparativa-de-ordenacoes">Tabela comparativa de ordenações</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#como-escolher">Como escolher?</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#exemplo-aplicado-consultas-de-estoque">Exemplo aplicado: consultas de estoque</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#testes-de-corretude">Testes de corretude</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#erros-comuns">Erros comuns</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
     </li>
   
 
@@ -737,7 +741,7 @@
                   
                 
                   
-                    <li>Aula 10 — Divisão e conquista</li>
+                    <li>Guia Extra — Comparação de buscas e ordenações</li>
                   
                 
                 <li></li>
@@ -747,194 +751,226 @@
           </div>
           
             <section class="progress-section show">
-<h1 id="aula-10-divisao-e-conquista">Aula 10 — Divisão e conquista<a class="headerlink" href="#aula-10-divisao-e-conquista" title="Permanent link">&para;</a></h1>
+<h1 id="aula-13-comparacao-de-buscas-e-ordenacoes-exercicios-aplicados">Aula 13 — Comparação de buscas e ordenações; exercícios aplicados<a class="headerlink" href="#aula-13-comparacao-de-buscas-e-ordenacoes-exercicios-aplicados" title="Permanent link">&para;</a></h1>
 <h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
 <p>Ao final desta aula, você deve ser capaz de:</p>
 <ul>
-<li>reconhecer problemas que podem ser divididos em subproblemas;</li>
-<li>explicar o padrão dividir, resolver e combinar;</li>
-<li>implementar um exemplo simples por divisão e conquista;</li>
-<li>simular uma árvore de chamadas;</li>
-<li>comparar divisão equilibrada e desequilibrada;</li>
+<li>comparar busca linear, busca binária e busca com hash;</li>
+<li>comparar insertion sort, mergesort e quicksort;</li>
+<li>escolher técnica com base no cenário;</li>
+<li>justificar custo, pré-condições e memória;</li>
+<li>montar testes para algoritmos de busca e ordenação;</li>
+<li>resolver problemas aplicados que misturam escolha e implementação.</li>
 </ul>
-<!-- - preparar o raciocínio para mergesort e quicksort. -->
-
 <!-- ## Pré-requisitos
 
-Você deve conhecer recursão, arrays e análise informal de custo. Também deve ter visto busca binária recursiva, que já usa uma forma simples de divisão do espaço de busca. -->
+Você deve conhecer as aulas de busca, estruturas de hash, insertion sort, mergesort e quicksort. Esta aula é uma consolidação antes de grafos: o foco é decidir, não apenas executar um algoritmo já indicado no enunciado. -->
 
 <h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
-<p>Queremos encontrar o maior valor de um array. A solução linear tradicional percorre todos os elementos mantendo um máximo. Uma alternativa recursiva é dividir o array em duas metades, encontrar o maior valor de cada metade e combinar os resultados escolhendo o maior dos dois.</p>
-<p>Essa estratégia parece mais trabalhosa para máximo, mas ela revela um padrão poderoso usado em algoritmos como mergesort e quicksort.</p>
-<h2 id="o-padrao">O padrão<a class="headerlink" href="#o-padrao" title="Permanent link">&para;</a></h2>
-<p>Divisão e conquista costuma seguir três perguntas:</p>
-<ol>
-<li>Como dividir o problema?</li>
-<li>Como resolver os subproblemas?</li>
-<li>Como combinar as respostas?</li>
-</ol>
-<p>Também precisamos de um caso base. Sem caso base, a recursão não termina.</p>
-<p>Para encontrar o máximo:</p>
+<p>Uma loja mantém códigos de produtos. Dependendo do cenário, soluções diferentes fazem sentido:</p>
 <ul>
-<li>dividir: separar o intervalo em duas metades;</li>
-<li>resolver: encontrar o máximo de cada metade;</li>
-<li>combinar: retornar o maior entre os dois máximos;</li>
-<li>caso base: intervalo com um único elemento.</li>
+<li>poucos produtos e uma consulta eventual: busca linear pode bastar;</li>
+<li>produtos já ordenados e muitas consultas: busca binária é atraente;</li>
+<li>consulta frequente por código sem necessidade de ordem: <code>HashSet</code> ou <code>HashMap</code>;</li>
+<li>relatório ordenado por preço: ordenação entra na solução;</li>
+<li>dados pequenos quase ordenados: insertion sort pode ser suficiente;</li>
+<li>dados grandes: mergesort ou quicksort tendem a ser melhores.</li>
 </ul>
-<h2 id="intervalo-aberto-no-fim">Intervalo aberto no fim<a class="headerlink" href="#intervalo-aberto-no-fim" title="Permanent link">&para;</a></h2>
-<p>Nesta aula, vamos usar intervalo aberto no fim: <code>[inicio, fim)</code>. Isso significa que <code>inicio</code> está incluído e <code>fim</code> não está. O array inteiro é <code>[0, v.length)</code>.</p>
-<p>Essa convenção é comum em algoritmos de ordenação porque facilita calcular tamanhos:</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>tamanho = fim - inicio
-</code></pre></div>
-<p>Um intervalo com um único elemento tem <code>fim - inicio == 1</code>.</p>
-<h2 id="exemplo-guiado-maximo-por-divisao">Exemplo guiado: máximo por divisão<a class="headerlink" href="#exemplo-guiado-maximo-por-divisao" title="Permanent link">&para;</a></h2>
-<p>O contrato externo trata o array vazio. O procedimento auxiliar recebe sempre um intervalo não vazio <code>[inicio, fim)</code>, divide-o e confia que cada chamada devolve o máximo de sua própria metade.</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>MAXIMO(v)
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    IF TAMANHO(v) = 0 THEN
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        ERRO &quot;array vazio&quot;
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    RETURN MAXIMO-INTERVALO(v, 0, TAMANHO(v))
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>MAXIMO-INTERVALO(v, inicio, fim)
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    IF fim - inicio = 1 THEN
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        RETURN v[inicio]
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    meio &lt;- inicio + (fim - inicio) / 2
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    maxEsq &lt;- MAXIMO-INTERVALO(v, inicio, meio)
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    maxDir &lt;- MAXIMO-INTERVALO(v, meio, fim)
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    IF maxEsq &gt; maxDir THEN
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        RETURN maxEsq
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    RETURN maxDir
-</code></pre></div>
-<!-- ```java
-public class MaximoDivisaoConquista {
-    public static int maximo(int[] v) {
-        if (v.length == 0) {
-            throw new IllegalArgumentException("array vazio");
-        }
+<p>O bom programador não escolhe técnica por nome bonito. Ele lê as operações dominantes.</p>
+<h2 id="tabela-comparativa-de-buscas">Tabela comparativa de buscas<a class="headerlink" href="#tabela-comparativa-de-buscas" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Técnica</th>
+<th>Pré-condição</th>
+<th>Pior caso</th>
+<th>Quando usar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Busca linear</td>
+<td>nenhuma ordenação</td>
+<td><code>O(n)</code></td>
+<td>dados pequenos, uma consulta, solução simples</td>
+</tr>
+<tr>
+<td>Busca binária</td>
+<td>dados ordenados</td>
+<td><code>O(log n)</code></td>
+<td>muitas consultas em dados ordenados</td>
+</tr>
+<tr>
+<td><code>HashSet</code></td>
+<td>chave bem modelada</td>
+<td>esperado <code>O(1)</code> por consulta</td>
+<td>muitas consultas de presença</td>
+</tr>
+<tr>
+<td><code>HashMap</code></td>
+<td>chave bem modelada</td>
+<td>esperado <code>O(1)</code> por consulta</td>
+<td>consulta por chave com valor associado</td>
+</tr>
+</tbody>
+</table>
+<p>Busca binária é excelente, mas exige ordenação. Hash é excelente para consulta, mas não entrega dados em ordem e exige modelagem correta de chaves.</p>
+<h2 id="tabela-comparativa-de-ordenacoes">Tabela comparativa de ordenações<a class="headerlink" href="#tabela-comparativa-de-ordenacoes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Algoritmo</th>
+<th>Melhor caso</th>
+<th>Pior caso</th>
+<th>Memória extra</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insertion sort</td>
+<td><code>O(n)</code></td>
+<td><code>O(n²)</code></td>
+<td><code>O(1)</code></td>
+<td>bom para dados pequenos/quase ordenados</td>
+</tr>
+<tr>
+<td>Mergesort</td>
+<td><code>O(n log n)</code></td>
+<td><code>O(n log n)</code></td>
+<td><code>O(n)</code></td>
+<td>estável na versão estudada</td>
+</tr>
+<tr>
+<td>Quicksort</td>
+<td>médio <code>O(n log n)</code></td>
+<td><code>O(n²)</code></td>
+<td>baixo, fora pilha</td>
+<td>rápido na prática, sensível ao pivô</td>
+</tr>
+</tbody>
+</table>
+<p>Nenhum algoritmo vence sempre. A comparação depende de tamanho, ordem inicial, estabilidade, memória e simplicidade.</p>
+<h2 id="como-escolher">Como escolher?<a class="headerlink" href="#como-escolher" title="Permanent link">&para;</a></h2>
+<p>Pergunte primeiro:</p>
+<ol>
+<li>O dado precisa estar ordenado?</li>
+<li>A operação principal é consultar, inserir, remover ou ordenar?</li>
+<li>Quantas vezes a operação será repetida?</li>
+<li>Existe pré-condição de ordenação?</li>
+<li>Preciso preservar ordem de elementos empatados?</li>
+<li>A memória extra importa?</li>
+</ol>
+<p>Essas perguntas transformam análise em decisão técnica.</p>
+<!-- ```text
+ESCOLHER-TECNICA(dados, muitasConsultas, precisaOrdem, precisaOrdenar)
+    IF precisaOrdenar THEN
+        IF dados são pequenos OU quase ordenados THEN
+            RETURN INSERTION-SORT
+        IF precisa de estabilidade garantida THEN
+            RETURN MERGESORT
+        RETURN QUICKSORT
 
-        return maximo(v, 0, v.length);
-    }
+    IF muitasConsultas AND precisaOrdem THEN
+        ORDENAR dados UMA VEZ
+        RETURN BUSCA-BINARIA
+    IF muitasConsultas THEN
+        RETURN HASHSET ou HASHMAP
+    RETURN BUSCA-LINEAR
+```
 
-    private static int maximo(int[] v, int inicio, int fim) {
-        if (fim - inicio == 1) {
-            return v[inicio];
-        }
+O roteiro não substitui a análise: ele torna explícitas as perguntas que precisam ser respondidas antes de escolher uma técnica. -->
 
-        int meio = inicio + (fim - inicio) / 2;
-        int maxEsq = maximo(v, inicio, meio);
-        int maxDir = maximo(v, meio, fim);
-
-        if (maxEsq > maxDir) {
-            return maxEsq;
-        }
-        return maxDir;
-    }
-
-    public static void main(String[] args) {
-        int[] v = {8, 3, 12, 5, 9};
-        System.out.println(maximo(v)); // 12
-    }
-}
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>O método público valida o array e chama o método auxiliar com o intervalo inicial. --&gt;
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>## Simulação da árvore de chamadas
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Para `{8, 3, 12, 5}`:
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>```text
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>maximo(0, 4)
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>  maximo(0, 2)
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    maximo(0, 1) -&gt; 8
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    maximo(1, 2) -&gt; 3
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    combina -&gt; 8
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>  maximo(2, 4)
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    maximo(2, 3) -&gt; 12
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    maximo(3, 4) -&gt; 5
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    combina -&gt; 12
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>  combina -&gt; 12
-</code></pre></div>
-
-A árvore mostra que o array foi dividido até chegar a intervalos de um elemento. Depois, as respostas sobem pela árvore.
-
-## Soma por divisão
-
-O mesmo padrão serve para soma:
-
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>SOMA-INTERVALO(v, inicio, fim)
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    IF inicio = fim THEN
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        RETURN 0
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    IF fim - inicio = 1 THEN
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        RETURN v[inicio]
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    meio &lt;- inicio + (fim - inicio) / 2
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    RETURN SOMA-INTERVALO(v, inicio, meio)
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>           + SOMA-INTERVALO(v, meio, fim)
-</code></pre></div>
-<!-- 
-```java
-public static int soma(int[] v) {
-    return soma(v, 0, v.length);
-}
-
-private static int soma(int[] v, int inicio, int fim) {
-    if (inicio == fim) {
-        return 0;
-    }
-
-    if (fim - inicio == 1) {
-        return v[inicio];
-    }
-
-    int meio = inicio + (fim - inicio) / 2;
-    return soma(v, inicio, meio) + soma(v, meio, fim);
-}
-``` -->
-
-<p>Aqui, a combinação é a soma dos resultados.</p>
-<!-- Em mergesort, a combinação será intercalar duas metades ordenadas. Em quicksort, grande parte do trabalho acontece antes das chamadas, durante o particionamento. -->
-
-<h2 id="divisao-equilibrada-e-desequilibrada">Divisão equilibrada e desequilibrada<a class="headerlink" href="#divisao-equilibrada-e-desequilibrada" title="Permanent link">&para;</a></h2>
-<p>Quando dividimos em metades parecidas, a árvore de chamadas tende a ter altura pequena. Isso aparece em busca binária e mergesort.</p>
-<p>Quando a divisão é muito desequilibrada, por exemplo um lado com <code>n - 1</code> elementos e outro com <code>0</code>, a recursão pode se comportar mais como uma sequência longa. </p>
-<!-- Isso será importante em quicksort: escolhas ruins de pivô podem gerar divisões desequilibradas. -->
-
+<h2 id="exemplo-aplicado-consultas-de-estoque">Exemplo aplicado: consultas de estoque<a class="headerlink" href="#exemplo-aplicado-consultas-de-estoque" title="Permanent link">&para;</a></h2>
+<p>Se temos um array de códigos carregado uma vez e consultado milhares de vezes, há três estratégias:</p>
+<ol>
+<li>manter sem ordenação e usar busca linear;</li>
+<li>ordenar uma vez e usar busca binária;</li>
+<li>construir um <code>HashSet</code> e consultar presença.</li>
+</ol>
+<p>A estratégia 1 tem implementação simples, mas cada consulta custa <code>O(n)</code>. A estratégia 2 paga custo de ordenação antes, mas reduz cada consulta para <code>O(log n)</code>. A estratégia 3 paga custo de construção do conjunto e tende a consultar em tempo constante.</p>
+<p>Se também precisamos imprimir relatório em ordem, ordenar pode ter valor adicional.</p>
+<h2 id="testes-de-corretude">Testes de corretude<a class="headerlink" href="#testes-de-corretude" title="Permanent link">&para;</a></h2>
+<p>Para busca, teste:</p>
+<ul>
+<li>estrutura vazia;</li>
+<li>um elemento presente;</li>
+<li>um elemento ausente;</li>
+<li>alvo no início;</li>
+<li>alvo no fim;</li>
+<li>repetidos, quando o contrato fala de primeira ou última ocorrência.</li>
+</ul>
+<p>Para ordenação, teste:</p>
+<ul>
+<li>vazio;</li>
+<li>um elemento;</li>
+<li>já ordenado;</li>
+<li>ordem inversa;</li>
+<li>repetidos;</li>
+<li>números negativos;</li>
+<li>array aleatório pequeno comparando com resultado esperado.</li>
+</ul>
 <h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
-<p>No máximo por divisão e conquista, cada elemento vira caso base uma vez e cada combinação faz trabalho constante. O tempo total continua <code>O(n)</code>. A estratégia não melhora o custo do máximo em relação ao laço, mas ensina o padrão.</p>
-<!-- Em algoritmos como mergesort, cada nível da árvore faz trabalho linear e há aproximadamente `log n` níveis. Por isso aparecem custos `O(n log n)`. O detalhe será estudado nas próximas aulas. -->
-
+<p>Nesta aula, a análise é comparativa:</p>
+<ul>
+<li>busca linear cresce proporcionalmente ao número de elementos;</li>
+<li>busca binária cresce pelo número de divisões por dois;</li>
+<li>hash depende de boa modelagem de chave e tem custo esperado muito baixo por consulta;</li>
+<li>insertion sort pode ser linear em quase ordenado, mas quadrático no pior caso;</li>
+<li>mergesort tem garantia <code>O(n log n)</code> e usa memória extra;</li>
+<li>quicksort tem médio <code>O(n log n)</code>, mas pode cair para <code>O(n²)</code>.</li>
+</ul>
+<p>Justificativas devem sempre mencionar pré-condições. Dizer "use busca binária porque é rápida" é incompleto se os dados não estão ordenados.</p>
 <h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Não reduzir o tamanho do intervalo nas chamadas.</li>
-<li>Misturar intervalo fechado com aberto no fim.</li>
-<li>Esquecer caso de array vazio no método público.</li>
-<li>Calcular <code>meio</code> e chamar duas vezes o mesmo intervalo.</li>
-<li>Combinar respostas de forma incompatível com o problema.</li>
-<li>Achar que toda recursão é divisão e conquista.</li>
+<li>Usar busca binária em dados não ordenados.</li>
+<li>Ordenar a cada consulta, pagando custo desnecessário.</li>
+<li>Usar hash quando a saída precisa estar ordenada sem etapa extra.</li>
+<li>Comparar algoritmos sem dizer tamanho e padrão dos dados.</li>
+<li>Ignorar estabilidade quando elementos empatados têm informação associada.</li>
+<li>Medir desempenho uma única vez e tirar conclusão forte demais.</li>
 </ul>
 <!-- ## Exercícios de fixação
 
-1. Simule `maximo` em `{4, 10, 2, 7}`.
-2. Implemente `minimo` por divisão e conquista.
-3. Implemente `soma` por divisão e conquista.
-4. Explique a diferença entre caso base de intervalo vazio e de um elemento.
-5. Dê um exemplo de combinação para soma, máximo e ordenação.
-6. Explique por que busca binária pode ser vista como divisão do espaço de busca.
+1. Para cada cenário, escolha linear, binária, hash ou ordenação prévia.
+2. Monte uma tabela de custos para 10 consultas e para 10.000 consultas.
+3. Explique quando insertion sort é aceitável.
+4. Explique quando mergesort é preferível a quicksort.
+5. Explique quando quicksort pode ter pior caso quadrático.
+6. Crie um conjunto de testes para um método de ordenação.
 
 ## Exercício integrador
 
-Implemente uma classe `EstatisticasDivisaoConquista` com métodos recursivos para máximo, mínimo e soma usando intervalo `[inicio, fim)`. Inclua testes para arrays de tamanho `1`, tamanho par e tamanho ímpar.
+Implemente um mini sistema de catálogo com duas soluções:
 
-Depois, escreva uma explicação curta respondendo: em quais desses métodos a divisão e conquista melhora o custo? Em quais ela serve mais como preparação conceitual? -->
+- solução A: `ArrayList` + busca linear;
+- solução B: `HashMap<Integer, String>` para código e nome.
+
+Depois escreva uma análise curta comparando:
+
+- custo de consulta;
+- simplicidade;
+- memória;
+- facilidade de imprimir os produtos ordenados por código.
+
+## Checkpoint sugerido
+
+Resolva em sala ou como entrega curta:
+
+1. implementar busca binária;
+2. implementar insertion sort;
+3. explicar quando usar hash;
+4. comparar mergesort e quicksort;
+5. resolver um cenário em que a técnica não é dada no enunciado. -->
 
 <h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar dividir, resolver e combinar.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei usar intervalo aberto no fim.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei implementar máximo por divisão e conquista.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei desenhar uma árvore de chamadas simples.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei diferenciar divisão equilibrada e desequilibrada.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei conectar esta aula a mergesort e quicksort.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei comparar buscas.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei comparar ordenações.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei declarar pré-condições.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei escolher técnica por cenário.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei montar testes de borda.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei justificar custo e memória.</li>
 </ul>
 
 
@@ -945,7 +981,7 @@ Depois, escreva uma explicação curta respondendo: em quais desses métodos a d
       <footer class="ah-footer ah-typeset">
         <div class="ah-footer-nav">
           
-            <a href="../handouts/aula-09-insertion-sort-analise.pdf"
+            <a href="../handouts/aula-12-quicksort-particionamento.pdf"
                class="ah-prev"
                title="Handout">
               <span class="nav-label">Anterior</span>
@@ -953,7 +989,7 @@ Depois, escreva uma explicação curta respondendo: em quais desses métodos a d
             </a>
           
           
-            <a href="../handouts/aula-10-divisao-e-conquista.pdf"
+            <a href="../handouts/guia-13-comparacao-buscas-ordenacoes.pdf"
                class="ah-next"
                title="Handout">
               <span class="nav-label">Próximo</span>

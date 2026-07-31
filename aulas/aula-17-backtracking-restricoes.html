@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Material - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 12 — Quicksort e particionamento</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-12-quicksort-particionamento.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-12-quicksort-particionamento.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Guia Extra — Comparação de buscas e ordenações</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="guia-13-comparacao-buscas-ordenacoes-exercicios.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/guia-13-comparacao-buscas-ordenacoes.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 13 — DFS em matrizes e exploração recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-13-dfs.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-13-dfs.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/depth-first-search/">Exercícios de código (DFS)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 14 — BFS em matrizes e uso de filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-14-bfs-filas.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-14-bfs-filas.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/breadth-first-search/">Exercícios de código (BFS)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 15 — Introdução a grafos: representação, DFS e BFS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-15-problemas-bfs-dfs.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-15-problemas-bfs-dfs.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 16 — Introdução ao backtracking</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-16-introducao-backtracking.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-16-introducao-backtracking.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/backtracking/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aula 17 — Backtracking com restrições</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#restricao-e-poda">Restrição e poda</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#soma-alvo-com-poda">Soma-alvo com poda</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#mochila-01">Mochila 0/1</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#poda-por-limite-superior-simples">Poda por limite superior simples</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#heuristica-nao-e-garantia">Heurística não é garantia</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#como-justificar-uma-poda">Como justificar uma poda</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#medindo-efeito-da-poda">Medindo efeito da poda</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#erros-comuns">Erros comuns</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-17-backtracking-restricoes.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Aulas</li>
+                  
+                
+                  
+                    <li>Aula 17 — Backtracking com restrições</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="aula-19-backtracking-com-restricoes">Aula 19 — Backtracking com restrições<a class="headerlink" href="#aula-19-backtracking-com-restricoes" title="Permanent link">&para;</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<p>Ao final desta aula, você deve ser capaz de:</p>
+<ul>
+<li>modelar restrições em backtracking;</li>
+<li>identificar soluções parciais inviáveis;</li>
+<li>aplicar podas simples corretamente;</li>
+<li>resolver soma-alvo e mochila 0/1 em versão básica;</li>
+<li>diferenciar poda de heurística;</li>
+<li>justificar impacto da poda sem prometer mudança no pior caso.</li>
+</ul>
+<!-- ## Pré-requisitos
+
+Você deve conhecer geração de subconjuntos, combinações, permutações e custo exponencial. Agora vamos usar restrições para evitar explorar ramos que não podem levar a uma solução útil. -->
+
+<h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
+<p>Dado um conjunto de valores positivos, queremos saber se existe um subconjunto com soma igual a um alvo. Sem restrições, poderíamos gerar todos os subconjuntos. Mas, se a soma parcial já passou do alvo, continuar adicionando valores positivos não ajudará.</p>
+<p>Essa observação permite poda.</p>
+<h2 id="restricao-e-poda">Restrição e poda<a class="headerlink" href="#restricao-e-poda" title="Permanent link">&para;</a></h2>
+<p>Restrição é uma regra que define o que é permitido. Poda é quando deixamos de explorar um ramo porque sabemos que ele não pode gerar resposta válida ou melhor.</p>
+<p>Exemplo:</p>
+<p>Suponha que queremos saber se existe um subconjunto de <code>valores = {4, 7, 9}</code> que soma <code>alvo = 10</code>. </p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>valores = {4, 7, 9}
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>alvo = 10
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>soma parcial = 11
+</code></pre></div>
+<p>Se estamos em um ramo onde a soma parcial já é maior que o alvo (como no caso onde selecionamos <code>4</code> e <code>7</code>, resultando em <code>11</code>), e todos os valores restantes são positivos, essa soma parcial nunca voltará para <code>10</code>. Podemos então parar esse ramo.</p>
+<h2 id="soma-alvo-com-poda">Soma-alvo com poda<a class="headerlink" href="#soma-alvo-com-poda" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>EXISTE-SOMA(v, i, soma, alvo)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    IF soma = alvo THEN
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        RETURN TRUE
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    IF soma &gt; alvo THEN
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        RETURN FALSE
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    IF i = TAMANHO(v) THEN
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        RETURN FALSE
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    IF EXISTE-SOMA(v, i + 1, soma + v[i], alvo) THEN
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        RETURN TRUE
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    RETURN EXISTE-SOMA(v, i + 1, soma, alvo)
+</code></pre></div>
+<p>O estado parcial é a soma já escolhida. A poda <code>soma &gt; alvo</code> vem antes das novas escolhas e só é válida porque os valores restantes são positivos.</p>
+<!-- ```java
+public class SomaAlvo {
+    public static boolean existeSoma(int[] v, int alvo) {
+        return buscar(v, 0, 0, alvo);
+    }
+
+    private static boolean buscar(int[] v, int i, int soma, int alvo) {
+        if (soma == alvo) {
+            return true;
+        }
+
+        if (soma > alvo) {
+            return false;
+        }
+
+        if (i == v.length) {
+            return false;
+        }
+
+        if (buscar(v, i + 1, soma + v[i], alvo)) {
+            return true;
+        }
+
+        return buscar(v, i + 1, soma, alvo);
+    }
+}
+``` -->
+
+<p>A poda <code>soma &gt; alvo</code> só é correta porque estamos assumindo valores positivos. Se valores negativos fossem permitidos, passar do alvo não impediria voltar depois.</p>
+<h2 id="mochila-01">Mochila 0/1<a class="headerlink" href="#mochila-01" title="Permanent link">&para;</a></h2>
+<p>Um problema clássico de backtracking com restrições é a mochila 0/1. Nesse problema, cada item tem peso e valor. Queremos escolher um subconjunto com maior valor sem ultrapassar o peso máximo da mochila.</p>
+<p>Cada item gera duas decisões:</p>
+<ul>
+<li>incluir;</li>
+<li>não incluir.</li>
+</ul>
+<p>O estado precisa guardar índice, peso atual, valor atual e melhor valor encontrado.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>MOCHILA(pesos, valores, capacidade, i, pesoAtual, valorAtual)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    IF pesoAtual &gt; capacidade THEN
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        RETURN
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    IF i = TAMANHO(pesos) THEN
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        melhor &lt;- MAXIMO(melhor, valorAtual)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        RETURN
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    MOCHILA incluindo item i
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    MOCHILA sem incluir item i
+</code></pre></div>
+<p>As duas chamadas representam todos os subconjuntos de itens. A restrição de capacidade corta cedo o ramo que já não pode ser uma solução válida.</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MochilaBacktracking</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">melhor</span><span class="p">;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">resolver</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">pesos</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">valores</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">capacidade</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="n">melhor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">        </span><span class="n">buscar</span><span class="p">(</span><span class="n">pesos</span><span class="p">,</span><span class="w"> </span><span class="n">valores</span><span class="p">,</span><span class="w"> </span><span class="n">capacidade</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">melhor</span><span class="p">;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">buscar</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">pesos</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">valores</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">capacidade</span><span class="p">,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">pesoAtual</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">valorAtual</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pesoAtual</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">capacidade</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">pesos</span><span class="p">.</span><span class="na">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">valorAtual</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">melhor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">                </span><span class="n">melhor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valorAtual</span><span class="p">;</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">        </span><span class="n">buscar</span><span class="p">(</span><span class="n">pesos</span><span class="p">,</span><span class="w"> </span><span class="n">valores</span><span class="p">,</span><span class="w"> </span><span class="n">capacidade</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">                </span><span class="n">pesoAtual</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pesos</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">valorAtual</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">valores</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">        </span><span class="n">buscar</span><span class="p">(</span><span class="n">pesos</span><span class="p">,</span><span class="w"> </span><span class="n">valores</span><span class="p">,</span><span class="w"> </span><span class="n">capacidade</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">                </span><span class="n">pesoAtual</span><span class="p">,</span><span class="w"> </span><span class="n">valorAtual</span><span class="p">);</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="p">}</span>
+</code></pre></div>
+<p>A poda por capacidade impede continuar com uma solução parcial inválida.</p>
+<h2 id="poda-por-limite-superior-simples">Poda por limite superior simples<a class="headerlink" href="#poda-por-limite-superior-simples" title="Permanent link">&para;</a></h2>
+<p>Podemos podar também quando nem o melhor cenário restante supera a melhor solução atual. Suponha que calculamos a soma dos valores restantes. Se:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>valorAtual + somaValoresRestantes &lt;= melhor
+</code></pre></div>
+<p>então mesmo pegando todos os itens restantes não superamos a melhor resposta. Esse ramo pode ser cortado.</p>
+<p>Essa poda exige cuidado: o limite precisa ser otimista. Ele pode superestimar o que ainda é possível, mas não pode subestimar, ou poderíamos cortar uma solução ótima.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>IF valorAtual + somaValoresRestantes &lt;= melhor THEN
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    RETURN
+</code></pre></div>
+<p>Nesse caso, nenhum ramo abaixo consegue melhorar a melhor resposta conhecida.</p>
+<h2 id="heuristica-nao-e-garantia">Heurística não é garantia<a class="headerlink" href="#heuristica-nao-e-garantia" title="Permanent link">&para;</a></h2>
+<p>Uma heurística escolhe uma estratégia que parece boa, como pegar itens por maior valor ou maior razão valor/peso. Ela pode encontrar uma solução boa rapidamente, mas não garante ótimo em geral.</p>
+<p>Backtracking com poda ainda explora possibilidades suficientes para preservar corretude. A poda só é válida quando temos uma justificativa lógica para descartar o ramo.</p>
+<h2 id="como-justificar-uma-poda">Como justificar uma poda<a class="headerlink" href="#como-justificar-uma-poda" title="Permanent link">&para;</a></h2>
+<p>Uma boa justificativa de poda deve dizer qual hipótese ela usa. Por exemplo:</p>
+<ul>
+<li>"Posso cortar quando <code>soma &gt; alvo</code> porque todos os valores restantes são positivos."</li>
+<li>"Posso cortar quando <code>pesoAtual &gt; capacidade</code> porque adicionar mais itens nunca reduz o peso."</li>
+<li>"Posso cortar quando <code>valorAtual + somaRestante &lt;= melhor</code> porque mesmo no cenário mais otimista não supero a melhor solução."</li>
+</ul>
+<p>Sem essa hipótese, a poda pode estar errada. Em backtracking, uma poda errada é pior que um algoritmo lento: ela pode remover exatamente a solução correta.</p>
+<h2 id="medindo-efeito-da-poda">Medindo efeito da poda<a class="headerlink" href="#medindo-efeito-da-poda" title="Permanent link">&para;</a></h2>
+<p>Uma prática útil é contar chamadas recursivas. Comece com uma versão sem poda, depois acrescente uma poda e compare:</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">chamadas</span><span class="p">;</span>
+</code></pre></div>
+<p>Incrementar <code>chamadas</code> no início do método recursivo ajuda a observar o efeito. A análise teórica continua importante, mas a medição mostra em quais entradas a poda realmente economiza trabalho.</p>
+<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<p>Sem poda, mochila e soma-alvo exploram até <code>2^n</code> subconjuntos. Podas podem reduzir muito o número de ramos na prática, mas o pior caso ainda pode ser exponencial.</p>
+<p>Por isso, ao analisar, diga:</p>
+<ul>
+<li>árvore completa tem tamanho exponencial;</li>
+<li>poda reduz ramos inviáveis;</li>
+<li>a corretude depende da justificativa da poda.</li>
+</ul>
+<h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Podar <code>soma &gt; alvo</code> quando há números negativos.</li>
+<li>Tratar heurística como garantia de ótimo.</li>
+<li>Atualizar melhor solução sem verificar restrição.</li>
+<li>Esquecer de explorar o ramo "não incluir".</li>
+<li>Usar variável global sem reinicializar.</li>
+<li>Cortar ramo com limite superior calculado errado.</li>
+</ul>
+<!-- ## Exercícios de fixação
+
+1. Implemente soma-alvo com valores positivos.
+2. Mostre um caso em que a poda `soma > alvo` seria incorreta com negativos.
+3. Implemente mochila básica.
+4. Conte quantos nós foram visitados com e sem poda por capacidade.
+5. Explique a diferença entre poda e heurística.
+6. Proponha um limite superior simples para mochila.
+
+## Exercício integrador
+
+Implemente mochila 0/1 retornando o melhor valor e a lista de itens escolhidos. Inclua uma contagem de chamadas recursivas e compare duas versões: sem poda por limite superior e com uma poda simples baseada nos valores restantes. -->
+
+<h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei modelar restrições.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei aplicar poda por inviabilidade.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei resolver soma-alvo.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei resolver mochila básica.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei diferenciar poda e heurística.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar que o pior caso pode continuar exponencial.</li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../handouts/aula-16-introducao-backtracking.pdf"
+               class="ah-prev"
+               title="Handout">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+          
+            <a href="../handouts/aula-17-backtracking-restricoes.pdf"
+               class="ah-next"
+               title="Handout">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

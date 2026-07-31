@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Material - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 12 — Quicksort e particionamento</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-12-quicksort-particionamento.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-12-quicksort-particionamento.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Guia Extra — Comparação de buscas e ordenações</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="guia-13-comparacao-buscas-ordenacoes-exercicios.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/guia-13-comparacao-buscas-ordenacoes.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 13 — DFS em matrizes e exploração recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-13-dfs.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-13-dfs.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/depth-first-search/">Exercícios de código (DFS)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 14 — BFS em matrizes e uso de filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-14-bfs-filas.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-14-bfs-filas.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/breadth-first-search/">Exercícios de código (BFS)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aula 15 — Introdução a grafos: representação, DFS e BFS</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#lista-de-adjacencia">Lista de adjacência</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#dfs-em-lista-de-adjacencia">DFS em lista de adjacência</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#componentes-conectadas">Componentes conectadas</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#bfs-em-lista-de-adjacencia">BFS em lista de adjacência</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#matrizes-e-grafos-a-mesma-abstracao">Matrizes e grafos: a mesma abstração</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#erros-comuns">Erros comuns</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-15-problemas-bfs-dfs.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 16 — Introdução ao backtracking</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-16-introducao-backtracking.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-16-introducao-backtracking.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/backtracking/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 17 — Backtracking com restrições</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-17-backtracking-restricoes.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-17-backtracking-restricoes.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Aulas</li>
+                  
+                
+                  
+                    <li>Aula 15 — Introdução a grafos: representação, DFS e BFS</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="aula-16-introducao-a-grafos-representacao-dfs-e-bfs">Aula 16 — Introdução a grafos: representação, DFS e BFS<a class="headerlink" href="#aula-16-introducao-a-grafos-representacao-dfs-e-bfs" title="Permanent link">&para;</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<p>Ao final desta aula, você deve ser capaz de:</p>
+<ul>
+<li>explicar vértices, arestas, vizinhos, caminhos e componentes;</li>
+<li>representar um grafo por lista de adjacência;</li>
+<li>distinguir grafos direcionados e não direcionados;</li>
+<li>aplicar DFS para alcance e componentes conectadas;</li>
+<li>aplicar BFS para distâncias mínimas em grafo sem pesos;</li>
+<li>relacionar listas de adjacência com as matrizes das aulas anteriores.</li>
+</ul>
+<h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
+<p>Nas aulas anteriores, exploramos posições de um labirinto. Agora imagine salas conectadas por portas, pessoas ligadas por amizades ou tarefas ligadas por dependências. Em todos esses casos há itens e conexões entre itens.</p>
+<p>Um <strong>grafo</strong> é uma forma de modelar esse tipo de situação:</p>
+<ul>
+<li>cada item é um <strong>vértice</strong>;</li>
+<li>cada conexão é uma <strong>aresta</strong>;</li>
+<li>os itens diretamente conectados são <strong>vizinhos</strong>;</li>
+<li>uma sequência de conexões forma um <strong>caminho</strong>.</li>
+</ul>
+<p>As estratégias DFS e BFS não mudam. A mudança é como obtemos os vizinhos: no labirinto, calculávamos quatro coordenadas; agora vamos consultar uma lista pronta.</p>
+<h2 id="lista-de-adjacencia">Lista de adjacência<a class="headerlink" href="#lista-de-adjacencia" title="Permanent link">&para;</a></h2>
+<p>Uma lista de adjacência guarda, para cada vértice, a lista de seus vizinhos. O grafo não direcionado abaixo possui uma aresta entre <code>0</code> e <code>1</code>, outra entre <code>0</code> e <code>2</code> e assim por diante.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>0: [1, 2]
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>1: [0, 3]
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>2: [0, 3]
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>3: [1, 2, 4]
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>4: [3]
+</code></pre></div>
+<p>Em um grafo não direcionado, uma conexão <code>a - b</code> aparece nas duas listas. Em um grafo direcionado, uma conexão <code>a -&gt; b</code> aparece apenas em <code>adj[a]</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>CRIAR-GRAFO(n)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    adj &lt;- lista com n listas vazias
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    RETURN adj
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>ADICIONAR-ARESTA-NAO-DIRECIONADA(adj, a, b)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    ADICIONAR adj[a], b
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    ADICIONAR adj[b], a
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>ADICIONAR-ARESTA-DIRECIONADA(adj, a, b)
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    ADICIONAR adj[a], b
+</code></pre></div>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Grafo</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Grafo</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="n">adj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">            </span><span class="n">adj</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">adicionarAresta</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">a</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">        </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">b</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">vizinhosDe</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="dfs-em-lista-de-adjacencia">DFS em lista de adjacência<a class="headerlink" href="#dfs-em-lista-de-adjacencia" title="Permanent link">&para;</a></h2>
+<p>Para saber se há caminho entre dois vértices, DFS recebe o vértice atual, o destino e o vetor <code>visitado</code>. A marcação evita voltar indefinidamente por uma aresta já usada no sentido contrário.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>EXISTE-CAMINHO(adj, atual, destino, visitado)
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    IF atual = destino THEN
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        RETURN TRUE
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    visitado[atual] &lt;- TRUE
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    FOR CADA vizinho EM adj[atual]
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        IF NOT visitado[vizinho] THEN
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>            IF EXISTE-CAMINHO(adj, vizinho, destino, visitado) THEN
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>                RETURN TRUE
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    RETURN FALSE
+</code></pre></div>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">existeCaminho</span><span class="p">(</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">atual</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">destino</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">visitado</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">atual</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">destino</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="n">visitado</span><span class="o">[</span><span class="n">atual</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">vizinho</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">atual</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">visitado</span><span class="o">[</span><span class="n">vizinho</span><span class="o">]</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">                </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">existeCaminho</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">vizinho</span><span class="p">,</span><span class="w"> </span><span class="n">destino</span><span class="p">,</span><span class="w"> </span><span class="n">visitado</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="componentes-conectadas">Componentes conectadas<a class="headerlink" href="#componentes-conectadas" title="Permanent link">&para;</a></h2>
+<p>Uma componente conectada é um grupo de vértices entre os quais há caminhos. Para contá-las, percorremos todos os vértices. Sempre que encontramos um ainda não visitado, uma DFS marca toda a sua componente e o contador aumenta uma vez.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>CONTAR-COMPONENTES(adj)
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    visitado &lt;- vetor de FALSE
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    componentes &lt;- 0
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    FOR v &lt;- 0 TO TAMANHO(adj) - 1
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        IF NOT visitado[v] THEN
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>            MARCAR-COMPONENTE(adj, v, visitado)
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>            componentes &lt;- componentes + 1
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    RETURN componentes
+</code></pre></div>
+<h2 id="bfs-em-lista-de-adjacencia">BFS em lista de adjacência<a class="headerlink" href="#bfs-em-lista-de-adjacencia" title="Permanent link">&para;</a></h2>
+<p>BFS também funciona sem mudança de ideia. A fila guarda vértices em vez de coordenadas; <code>dist[v]</code> registra a menor quantidade de arestas da origem até <code>v</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>DISTANCIAS-BFS(adj, origem)
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    dist &lt;- vetor preenchido com -1
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    fila &lt;- FILA-VAZIA()
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    dist[origem] &lt;- 0
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    ENFILEIRAR(fila, origem)
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    WHILE NOT VAZIA(fila) DO
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        atual &lt;- DESENFILEIRAR(fila)
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        FOR CADA vizinho EM adj[atual]
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>            IF dist[vizinho] = -1 THEN
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>                dist[vizinho] &lt;- dist[atual] + 1
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>                ENFILEIRAR(fila, vizinho)
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    RETURN dist
+</code></pre></div>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayDeque</span><span class="p">;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Arrays</span><span class="p">;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Deque</span><span class="p">;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="nf">distanciasBfs</span><span class="p">(</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">origem</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">adj</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="n">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">fila</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="n">dist</span><span class="o">[</span><span class="n">origem</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="n">fila</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="n">origem</span><span class="p">);</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">fila</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">atual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fila</span><span class="p">.</span><span class="na">removeFirst</span><span class="p">();</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">vizinho</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">atual</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">vizinho</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">                </span><span class="n">dist</span><span class="o">[</span><span class="n">vizinho</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">atual</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">                </span><span class="n">fila</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="n">vizinho</span><span class="p">);</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="p">}</span>
+</code></pre></div>
+<p>Em um grafo sem pesos, a primeira distância registrada para um vértice é mínima pelo mesmo motivo que no labirinto: a fila processa uma camada inteira antes da próxima.</p>
+<h2 id="matrizes-e-grafos-a-mesma-abstracao">Matrizes e grafos: a mesma abstração<a class="headerlink" href="#matrizes-e-grafos-a-mesma-abstracao" title="Permanent link">&para;</a></h2>
+<p>Agora podemos nomear o que já fazíamos:</p>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Vértice</th>
+<th>Como obter vizinhos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Labirinto</td>
+<td>uma célula livre</td>
+<td>quatro coordenadas adjacentes válidas</td>
+</tr>
+<tr>
+<td>Mapa de salas</td>
+<td>uma sala</td>
+<td>lista de portas da sala</td>
+</tr>
+<tr>
+<td>Rede de pessoas</td>
+<td>uma pessoa</td>
+<td>lista de conexões da pessoa</td>
+</tr>
+</tbody>
+</table>
+<p>No labirinto, as conexões são calculadas quando necessárias; por isso dizemos que a representação é implícita. Na lista de adjacência, as conexões já estão guardadas de forma explícita.</p>
+<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<p>Com lista de adjacência, DFS e BFS visitam cada vértice no máximo uma vez e examinam as conexões presentes nas listas. O custo é <code>O(V + E)</code>, em que <code>V</code> é o número de vértices e <code>E</code> o número de arestas.</p>
+<p>A memória adicional inclui <code>visitado</code> ou <code>dist</code> e a fila da BFS, todos proporcionais ao número de vértices.</p>
+<h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Em grafo não direcionado, adicionar a conexão em apenas uma das listas.</li>
+<li>Esquecer <code>visitado</code> na DFS.</li>
+<li>Marcar um vértice depois de enfileirá-lo, permitindo duplicatas na BFS.</li>
+<li>Confundir identificador de vértice com um valor guardado nele.</li>
+<li>Esperar que DFS encontre o menor caminho.</li>
+<li>Usar BFS simples quando as arestas têm custos diferentes.</li>
+</ul>
+<!-- ## Exercícios de fixação
+
+1. Simule DFS em uma lista de adjacência.
+2. Monte listas para grafos direcionados e não direcionados.
+3. Escreva alcance com DFS.
+4. Conte componentes.
+5. Simule BFS e distâncias.
+6. Compare lista explícita e matriz implícita.
+
+## Exercício integrador
+
+Implemente uma classe de grafo com alcance, componentes e distâncias BFS. -->
+
+<h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar vértices, arestas e vizinhos.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei montar uma lista de adjacência.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei diferenciar grafo direcionado e não direcionado.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei aplicar DFS para alcance e componentes.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei aplicar BFS para distâncias mínimas sem pesos.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei relacionar matriz e lista de adjacência.</li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../handouts/aula-14-bfs-filas.pdf"
+               class="ah-prev"
+               title="Handout">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+          
+            <a href="../handouts/aula-15-problemas-bfs-dfs.pdf"
+               class="ah-next"
+               title="Handout">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

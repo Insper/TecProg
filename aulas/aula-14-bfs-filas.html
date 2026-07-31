@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Material - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 12 — Quicksort e particionamento</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-12-quicksort-particionamento.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-12-quicksort-particionamento.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Guia Extra — Comparação de buscas e ordenações</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="guia-13-comparacao-buscas-ordenacoes-exercicios.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/guia-13-comparacao-buscas-ordenacoes.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 13 — DFS em matrizes e exploração recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-13-dfs.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-13-dfs.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/depth-first-search/">Exercícios de código (DFS)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aula 14 — BFS em matrizes e uso de filas</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#dfs-com-pilha">DFS com pilha</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#a-fila-organiza-as-camadas">A fila organiza as camadas</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#simulacao-da-fila">Simulação da fila</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#implementacao-em-java">Implementação em Java</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#reconstrucao-de-caminho">Reconstrução de caminho</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#dfs-ou-bfs-em-uma-matriz">DFS ou BFS em uma matriz?</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#erros-comuns">Erros comuns</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-14-bfs-filas.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/breadth-first-search/">Exercícios de código (BFS)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 15 — Introdução a grafos: representação, DFS e BFS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-15-problemas-bfs-dfs.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-15-problemas-bfs-dfs.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 16 — Introdução ao backtracking</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-16-introducao-backtracking.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-16-introducao-backtracking.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/backtracking/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 17 — Backtracking com restrições</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-17-backtracking-restricoes.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-17-backtracking-restricoes.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Aulas</li>
+                  
+                
+                  
+                    <li>Aula 14 — BFS em matrizes e uso de filas</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="aula-15-bfs-em-matrizes-e-uso-de-filas">Aula 15 — BFS em matrizes e uso de filas<a class="headerlink" href="#aula-15-bfs-em-matrizes-e-uso-de-filas" title="Permanent link">&para;</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<p>Ao final desta aula, você deve ser capaz de:</p>
+<ul>
+<li>explicar BFS como exploração por camadas em uma matriz;</li>
+<li>usar <code>ArrayDeque</code> como fila de coordenadas;</li>
+<li>calcular o menor número de movimentos em um labirinto sem pesos;</li>
+<li>marcar uma posição quando ela entra na fila;</li>
+<li>reconstruir um caminho usando predecessores;</li>
+<li>comparar DFS e BFS em problemas de matriz.</li>
+</ul>
+<h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
+<p>No labirinto abaixo, queremos ir de <code>S</code> até <code>D</code> usando o menor número possível de movimentos para cima, baixo, esquerda ou direita.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>S . . #
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a># # . #
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>. . . D
+</code></pre></div>
+<p>DFS pode encontrar um caminho, mas pode seguir primeiro uma rota longa. BFS, <em>breadth-first search</em> ou busca em largura, examina primeiro todas as posições a um movimento da origem, depois todas as posições a dois movimentos e assim por diante. Por isso é a técnica adequada para menor número de passos quando todos os movimentos têm o mesmo custo.</p>
+<h2 id="dfs-com-pilha">DFS com pilha<a class="headerlink" href="#dfs-com-pilha" title="Permanent link">&para;</a></h2>
+<p>Podemos implementar DFS com uma pilha de coordenadas ao invés de recursão. A cada passo, retiramos a posição do topo da pilha e empilhamos as posições vizinhas ainda não visitadas.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>DFS(lab, origem, destino)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    pilha &lt;- PILHA-VAZIA()
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    MARCAR(origem)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    EMPILHAR(pilha, origem)
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    WHILE NOT VAZIA(pilha) DO
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        atual &lt;- DESEMPILHAR(pilha)
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        IF atual = destino THEN
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>            RETURN
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        PARA CADA vizinho nas quatro direções DE atual
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>            IF vizinho é válido, livre e não visitado THEN
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>                MARCAR(vizinho)
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>                EMPILHAR(pilha, vizinho)
+</code></pre></div>
+<h2 id="a-fila-organiza-as-camadas">A fila organiza as camadas<a class="headerlink" href="#a-fila-organiza-as-camadas" title="Permanent link">&para;</a></h2>
+<p>E se usássemos uma fila em vez de uma pilha? A cada passo, retiramos a posição da frente da fila e enfileiramos as posições vizinhas ainda não visitadas.</p>
+<p>A fila sempre remove a posição descoberta há mais tempo e adiciona novas posições no final. Assim, posições da distância <code>0</code> são processadas antes das de distância <code>1</code>, que são processadas antes das de distância <code>2</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>MENOR-DISTANCIA(lab, origem, destino)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    dist &lt;- matriz preenchida com -1
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    fila &lt;- FILA-VAZIA()
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    dist[origem] &lt;- 0
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    ENFILEIRAR(fila, origem)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    WHILE NOT VAZIA(fila) DO
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        atual &lt;- DESENFILEIRAR(fila)
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        IF atual = destino THEN
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>            RETURN dist[atual]
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        PARA CADA vizinho nas quatro direções DE atual
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>            IF vizinho é válido, livre e dist[vizinho] = -1 THEN
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>                dist[vizinho] &lt;- dist[atual] + 1
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>                ENFILEIRAR(fila, vizinho)
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    RETURN -1
+</code></pre></div>
+<p>A primeira atribuição em <code>dist[vizinho]</code> é também a marcação de visitado. Ela ocorre antes de enfileirar a posição; desse modo, outro caminho da mesma camada não a coloca na fila novamente.</p>
+<h2 id="simulacao-da-fila">Simulação da fila<a class="headerlink" href="#simulacao-da-fila" title="Permanent link">&para;</a></h2>
+<p>Com origem em <code>(0, 0)</code>, uma execução possível começa assim:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>fila: [(0, 0)]                    dist(0, 0) = 0
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>remove (0, 0), entra (0, 1)       fila: [(0, 1)]
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>remove (0, 1), entra (0, 2)       fila: [(0, 2)]
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>remove (0, 2), entra (1, 2)       fila: [(1, 2)]
+</code></pre></div>
+<p>As paredes e posições já descobertas não entram na fila. A ordem dos quatro movimentos pode mudar o caminho reconstruído quando há empates, mas não muda a distância mínima encontrada.</p>
+<h2 id="implementacao-em-java">Implementação em Java<a class="headerlink" href="#implementacao-em-java" title="Permanent link">&para;</a></h2>
+<p>O exemplo usa uma matriz de distâncias. Cada elemento da fila guarda uma coordenada <code>int[]</code> com linha e coluna.</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayDeque</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Arrays</span><span class="p">;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Deque</span><span class="p">;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LabirintoBFS</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">menorDistancia</span><span class="p">(</span><span class="kt">char</span><span class="o">[][]</span><span class="w"> </span><span class="n">lab</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">li</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ci</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lf</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cf</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lab</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">lab</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">lab</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">linhas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lab</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">colunas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lab</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">livre</span><span class="p">(</span><span class="n">lab</span><span class="p">,</span><span class="w"> </span><span class="n">li</span><span class="p">,</span><span class="w"> </span><span class="n">ci</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">livre</span><span class="p">(</span><span class="n">lab</span><span class="p">,</span><span class="w"> </span><span class="n">lf</span><span class="p">,</span><span class="w"> </span><span class="n">cf</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">linhas</span><span class="o">][</span><span class="n">colunas</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">linha</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">dist</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">            </span><span class="n">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">linha</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">dl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">dc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">};</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">        </span><span class="n">Deque</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">fila</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">        </span><span class="n">dist</span><span class="o">[</span><span class="n">li</span><span class="o">][</span><span class="n">ci</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">        </span><span class="n">fila</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="n">li</span><span class="p">,</span><span class="w"> </span><span class="n">ci</span><span class="p">});</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">fila</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">            </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">atual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fila</span><span class="p">.</span><span class="na">removeFirst</span><span class="p">();</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atual</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atual</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">lf</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">cf</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">l</span><span class="o">][</span><span class="n">c</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">nl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dl</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dc</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">livre</span><span class="p">(</span><span class="n">lab</span><span class="p">,</span><span class="w"> </span><span class="n">nl</span><span class="p">,</span><span class="w"> </span><span class="n">nc</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">nl</span><span class="o">][</span><span class="n">nc</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="w">                    </span><span class="n">dist</span><span class="o">[</span><span class="n">nl</span><span class="o">][</span><span class="n">nc</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">l</span><span class="o">][</span><span class="n">c</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="w">                    </span><span class="n">fila</span><span class="p">.</span><span class="na">addLast</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="n">nl</span><span class="p">,</span><span class="w"> </span><span class="n">nc</span><span class="p">});</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="w">                </span><span class="p">}</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a>
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">livre</span><span class="p">(</span><span class="kt">char</span><span class="o">[][]</span><span class="w"> </span><span class="n">lab</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">lab</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">lab</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">.</span><span class="na">length</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="w">            </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">lab</span><span class="o">[</span><span class="n">l</span><span class="o">][</span><span class="n">c</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;#&#39;</span><span class="p">;</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="reconstrucao-de-caminho">Reconstrução de caminho<a class="headerlink" href="#reconstrucao-de-caminho" title="Permanent link">&para;</a></h2>
+<p>Além da distância, podemos guardar de onde cada posição foi descoberta. Uma matriz <code>predL</code> guarda a linha anterior e <code>predC</code> guarda a coluna anterior. Quando descobrimos <code>(nl, nc)</code> a partir de <code>(l, c)</code>, registramos:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>predL[nl][nc] &lt;- l
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>predC[nl][nc] &lt;- c
+</code></pre></div>
+<p>Depois de chegar ao destino, começamos nele e seguimos os predecessores até a origem:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>(2, 3) &lt;- (2, 2) &lt;- (1, 2) &lt;- (0, 2) &lt;- (0, 1) &lt;- (0, 0)
+</code></pre></div>
+<p>Esse trajeto está de trás para frente. Para apresentá-lo ao usuário, guardamos as coordenadas em uma lista ou pilha e invertemos a ordem no final.</p>
+<h2 id="dfs-ou-bfs-em-uma-matriz">DFS ou BFS em uma matriz?<a class="headerlink" href="#dfs-ou-bfs-em-uma-matriz" title="Permanent link">&para;</a></h2>
+<p>Use DFS quando a pergunta pede explorar uma região, encontrar algum caminho ou preencher posições conectadas. Use BFS quando a pergunta pede a menor quantidade de movimentos e todos os movimentos têm o mesmo custo.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Existe um caminho?                 DFS ou BFS
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Pintar a região conectada?         DFS ou BFS
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Contar regiões livres?             DFS ou BFS
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Menor número de movimentos?        BFS
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Movimentos com custos diferentes?  BFS simples não basta
+</code></pre></div>
+<p>O ponto central não é que DFS seja incorreta para caminhos: ela só não oferece a garantia de encontrar primeiro o caminho mais curto.</p>
+<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<p>Cada célula livre entra na fila no máximo uma vez e, quando é removida, examinamos no máximo quatro direções. Em uma matriz de <code>linhas</code> por <code>colunas</code>, o tempo é <code>O(linhas * colunas)</code>.</p>
+<p>As matrizes <code>dist</code> e de predecessores, além da fila, podem ocupar <code>O(linhas * colunas)</code>.</p>
+<h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Usar pilha no lugar de fila.</li>
+<li>Marcar <code>dist</code> apenas ao remover da fila, permitindo duplicatas.</li>
+<li>Esquecer de validar origem, destino e limites.</li>
+<li>Tratar parede como posição navegável.</li>
+<li>Reconstruir caminho quando o destino tem distância <code>-1</code>.</li>
+<li>Usar BFS simples quando movimentos têm custos diferentes.</li>
+</ul>
+<!-- ## Exercícios de fixação
+
+1. Simule a fila em um labirinto.
+2. Complete uma matriz de distâncias.
+3. Reconstrua um caminho por predecessores.
+4. Escreva BFS para menor distância.
+5. Explique a garantia de menor caminho.
+6. Identifique limitações de BFS simples.
+
+## Exercício integrador
+
+Implemente um analisador de labirintos com menor distância e reconstrução de caminho. -->
+
+<h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei usar uma fila de coordenadas.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei marcar uma posição ao enfileirá-la.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei preencher distâncias por camadas.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei justificar menor número de movimentos.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei reconstruir caminho com predecessores.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei escolher DFS ou BFS em uma matriz.</li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../handouts/aula-13-dfs.pdf"
+               class="ah-prev"
+               title="Handout">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+          
+            <a href="../handouts/aula-14-bfs-filas.pdf"
+               class="ah-next"
+               title="Handout">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

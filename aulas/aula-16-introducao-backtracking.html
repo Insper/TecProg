@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Material - Técnicas de Programação</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../index.html"
+           title="Técnicas de Programação"
+           class="ah-logo"
+           aria-label="Técnicas de Programação">
+          Técnicas de Programação
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../index.html">Início</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aulas</span>
+    <ul>
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 00 - Primeiros passos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-00-primeiros-passos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 01 — Revisão, pseudocódigo, arrays e custo</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 02 — ArrayList, TAD e custos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-02-arraylist-tad-custos.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/array/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 03 — Pilhas e filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-03-pilhas-filas-arraydeque.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/stack/">Exercícios de pilha</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/queue/">Exercícios de fila</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 04 — Mapas e conjuntos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-04-hashmap-hashset.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-04-hashmap-hashset.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/hash-table/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 05 — Busca linear e Big-O</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-05-busca-linear-big-o.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 06 — Busca binária iterativa</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-06-busca-binaria-iterativa.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/binary-search/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 07 — Fundamentos de recursão</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-07-fundamentos-recursao.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/recursion/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 08 — Recursão em arrays e busca binária recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 09 — Insertion sort e análise</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-09-insertion-sort-analise.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-09-insertion-sort-analise.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/sorting/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-10-divisao-e-conquista.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/divide-and-conquer/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 11 — Mergesort</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-11-mergesort.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-11-mergesort.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/merge-sort/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 12 — Quicksort e particionamento</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-12-quicksort-particionamento.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-12-quicksort-particionamento.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Guia Extra — Comparação de buscas e ordenações</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="guia-13-comparacao-buscas-ordenacoes-exercicios.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/guia-13-comparacao-buscas-ordenacoes.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 13 — DFS em matrizes e exploração recursiva</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-13-dfs.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-13-dfs.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/depth-first-search/">Exercícios de código (DFS)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 14 — BFS em matrizes e uso de filas</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-14-bfs-filas.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-14-bfs-filas.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/breadth-first-search/">Exercícios de código (BFS)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 15 — Introdução a grafos: representação, DFS e BFS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-15-problemas-bfs-dfs.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-15-problemas-bfs-dfs.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Aula 16 — Introdução ao backtracking</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#componentes-do-backtracking">Componentes do backtracking</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#exemplo-subconjuntos">Exemplo: subconjuntos</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#simulacao-da-arvore">Simulação da árvore</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#escolher-avancar-desfazer">Escolher, avançar, desfazer</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#backtracking-e-dfs">Backtracking e DFS</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#perguntas-de-modelagem">Perguntas de modelagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#encontrar-uma-solucao-ou-todas">Encontrar uma solução ou todas?</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#erros-comuns">Erros comuns</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-16-introducao-backtracking.pdf">Handout</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://leetcode.com/problem-list/backtracking/">Exercícios de código</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Aula 17 — Backtracking com restrições</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="aula-17-backtracking-restricoes.html">Material</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../handouts/aula-17-backtracking-restricoes.pdf">Handout</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Aulas</li>
+                  
+                
+                  
+                    <li>Aula 16 — Introdução ao backtracking</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="aula-17-introducao-ao-backtracking">Aula 17 — Introdução ao backtracking<a class="headerlink" href="#aula-17-introducao-ao-backtracking" title="Permanent link">&para;</a></h1>
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<p>Ao final desta aula, você deve ser capaz de:</p>
+<ul>
+<li>explicar backtracking como exploração de árvore de decisões;</li>
+<li>identificar estado parcial, candidatos, caso base e resposta;</li>
+<li>implementar geração de subconjuntos;</li>
+<li>usar o padrão escolher, avançar e desfazer;</li>
+<li>diferenciar backtracking de DFS em grafos;</li>
+<li>justificar custo exponencial em exemplos simples.</li>
+</ul>
+<!-- ## Pré-requisitos
+
+Você deve conhecer recursão, listas, arrays e DFS. Backtracking se parece com DFS porque explora profundamente, mas o grafo agora é uma árvore de escolhas construída pelo próprio algoritmo. -->
+
+<h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
+<p>Dado o vetor <code>{1, 2, 3}</code>, queremos gerar todos os subconjuntos:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>{}
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>{1}
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>{2}
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>{3}
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>{1, 2}
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>{1, 3}
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>{2, 3}
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>{1, 2, 3}
+</code></pre></div>
+<p>Para cada elemento, há duas decisões: incluir ou não incluir. O algoritmo percorre essa árvore de decisões e registra cada solução completa.</p>
+<h2 id="componentes-do-backtracking">Componentes do backtracking<a class="headerlink" href="#componentes-do-backtracking" title="Permanent link">&para;</a></h2>
+<p>Um algoritmo de backtracking normalmente tem:</p>
+<ul>
+<li>estado parcial: escolhas feitas até agora;</li>
+<li>posição ou etapa: qual decisão está sendo tomada;</li>
+<li>candidatos: escolhas possíveis neste ponto;</li>
+<li>caso base: quando a solução está completa;</li>
+<li>resposta: onde armazenar ou contar soluções;</li>
+<li>desfazer: remover a escolha antes de tentar outra.</li>
+</ul>
+<p>O desfazer é o detalhe que mais causa bugs. Ele garante que uma escolha feita em um ramo não vaze para o próximo.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>BUSCAR(estado)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    IF estado é uma solução completa THEN
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        REGISTRAR uma cópia da solução
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        RETURN
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    FOR CADA candidato válido DO
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        FAZER a escolha no estado
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        BUSCAR(estado)
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        DESFAZER a escolha no estado
+</code></pre></div>
+<p>O estado é compartilhado entre chamadas de um mesmo caminho. Por isso registrar a resposta e desfazer a escolha são etapas diferentes: a resposta precisa ser uma cópia; o estado parcial continua mutável.</p>
+<h2 id="exemplo-subconjuntos">Exemplo: subconjuntos<a class="headerlink" href="#exemplo-subconjuntos" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>GERAR-SUBCONJUNTOS(v, i, atual, respostas)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    IF i = TAMANHO(v) THEN
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        ADICIONAR-COPIA(respostas, atual)
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        RETURN
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    GERAR-SUBCONJUNTOS(v, i + 1, atual, respostas)
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    ADICIONAR(atual, v[i])
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    GERAR-SUBCONJUNTOS(v, i + 1, atual, respostas)
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    REMOVER-ULTIMO(atual)
+</code></pre></div>
+<p>O primeiro ramo decide não incluir <code>v[i]</code>; o segundo inclui. Apenas o segundo precisa desfazer uma alteração, pois o primeiro não modificou <code>atual</code>.</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Subconjuntos</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nf">gerar</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">respostas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="n">gerar</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">respostas</span><span class="p">);</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">respostas</span><span class="p">;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">gerar</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">atual</span><span class="p">,</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">            </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">respostas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="na">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">            </span><span class="n">respostas</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">atual</span><span class="p">));</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">        </span><span class="n">gerar</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">atual</span><span class="p">,</span><span class="w"> </span><span class="n">respostas</span><span class="p">);</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">        </span><span class="n">atual</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">v</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">        </span><span class="n">gerar</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">atual</span><span class="p">,</span><span class="w"> </span><span class="n">respostas</span><span class="p">);</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">        </span><span class="n">atual</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="n">atual</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">gerar</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">}));</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="p">}</span>
+</code></pre></div>
+<p>No caso base, usamos <code>new ArrayList&lt;&gt;(atual)</code>. Isso cria uma cópia da solução. Se adicionássemos <code>atual</code> diretamente, todas as respostas apontariam para a mesma lista mutável.</p>
+<h2 id="simulacao-da-arvore">Simulação da árvore<a class="headerlink" href="#simulacao-da-arvore" title="Permanent link">&para;</a></h2>
+<p>Para cada índice, temos duas escolhas:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>i = 0: não incluir 1 / incluir 1
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>i = 1: não incluir 2 / incluir 2
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>i = 2: não incluir 3 / incluir 3
+</code></pre></div>
+<p>Com três elementos, existem <code>2 * 2 * 2 = 8</code> folhas. Cada folha corresponde a um subconjunto.</p>
+<h2 id="escolher-avancar-desfazer">Escolher, avançar, desfazer<a class="headerlink" href="#escolher-avancar-desfazer" title="Permanent link">&para;</a></h2>
+<p>O padrão aparece nesta parte:</p>
+<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">atual</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">v</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">gerar</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">atual</span><span class="p">,</span><span class="w"> </span><span class="n">respostas</span><span class="p">);</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">atual</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="n">atual</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div>
+<p>Em uma execução para <code>{1, 2}</code>, o estado muda e volta assim:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>[] -&gt; escolhe 1 -&gt; [1] -&gt; escolhe 2 -&gt; [1, 2]
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>[] &lt;- desfaz 1   &lt;- [1]  &lt;- desfaz 2
+</code></pre></div>
+<p>A escolha é adicionar <code>v[i]</code>. Avançar é chamar a recursão para <code>i + 1</code>. Desfazer é remover o último elemento. Sem essa remoção, o próximo ramo começaria com elementos indevidos.</p>
+<h2 id="backtracking-e-dfs">Backtracking e DFS<a class="headerlink" href="#backtracking-e-dfs" title="Permanent link">&para;</a></h2>
+<p>DFS em grafos percorre estados já definidos: vértices e arestas existem antes do algoritmo. Backtracking gera estados a partir de decisões. O estado parcial pode ser uma lista, um vetor booleano, uma soma acumulada, uma configuração de tabuleiro ou qualquer estrutura que represente escolhas feitas.</p>
+<p>Ambos usam exploração profunda, mas backtracking costuma estar associado a problemas combinatórios: subconjuntos, permutações, combinações, escalas, caminhos simples e escolhas sob restrições.</p>
+<h2 id="perguntas-de-modelagem">Perguntas de modelagem<a class="headerlink" href="#perguntas-de-modelagem" title="Permanent link">&para;</a></h2>
+<p>Antes de programar, responda:</p>
+<ol>
+<li>Qual é a unidade de decisão?</li>
+<li>O que representa uma solução parcial?</li>
+<li>Quando a solução está completa?</li>
+<li>Quais escolhas são possíveis em cada etapa?</li>
+<li>Preciso guardar todas as soluções ou apenas contar/encontrar uma?</li>
+<li>Há restrições que posso verificar antes de continuar?</li>
+</ol>
+<p>No exemplo de subconjuntos, a unidade de decisão é o elemento na posição <code>i</code>. A solução parcial é a lista <code>atual</code>. A solução está completa quando todos os elementos foram considerados. As escolhas são incluir ou não incluir.</p>
+<p>Em problemas futuros, essas respostas mudam. Em permutações, a unidade de decisão é a próxima posição da resposta. Em mochila, a unidade é decidir se um item entra ou não, mas existe uma restrição de capacidade.</p>
+<h2 id="encontrar-uma-solucao-ou-todas">Encontrar uma solução ou todas?<a class="headerlink" href="#encontrar-uma-solucao-ou-todas" title="Permanent link">&para;</a></h2>
+<p>O código de subconjuntos guarda todas as respostas. Mas nem todo problema precisa disso. Se o enunciado pede "existe uma solução?", o método pode retornar <code>boolean</code> e parar quando encontra a primeira solução válida. Se pede "qual é a melhor?", talvez seja necessário manter uma melhor resposta global ou retornada pelas chamadas.</p>
+<p>Essa decisão afeta custo e implementação. Gerar todas as soluções pode ser inevitavelmente caro. Parar cedo pode economizar muito em algumas entradas, embora o pior caso ainda possa ser grande.</p>
+<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<p>Para subconjuntos de <code>n</code> elementos, cada elemento gera duas escolhas. O número de soluções é <code>2^n</code>. Só imprimir todas as soluções já custa exponencial. Portanto, o tempo é pelo menos proporcional ao número de soluções geradas.</p>
+<p>A profundidade da recursão é <code>n</code>, e a lista parcial pode ter até <code>n</code> elementos.</p>
+<h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Esquecer de desfazer a escolha.</li>
+<li>Guardar a lista parcial sem copiar.</li>
+<li>Confundir índice atual com valor do elemento.</li>
+<li>Criar caso base que registra solução cedo demais.</li>
+<li>Usar backtracking para problema que BFS ou hash resolveria melhor.</li>
+<li>Não perceber crescimento exponencial.</li>
+</ul>
+<!-- ## Exercícios de fixação
+
+1. Simule a árvore de subconjuntos para `{4, 5}`.
+2. Modifique o código para imprimir em vez de retornar lista.
+3. Gere apenas subconjuntos não vazios.
+4. Conte quantos subconjuntos foram gerados.
+5. Explique por que a cópia da lista é necessária.
+6. Identifique o estado parcial e o caso base do exemplo.
+
+## Exercício integrador
+
+Implemente um método que gera todos os subconjuntos de um vetor e retorna apenas aqueles cuja soma é par. Primeiro gere todos e filtre no caso base; depois explique que tipo de poda poderia evitar parte do trabalho. -->
+
+<h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar árvore de decisões.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei implementar subconjuntos.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei aplicar escolher, avançar e desfazer.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei copiar soluções mutáveis.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei diferenciar DFS e backtracking.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei reconhecer custo exponencial.</li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../handouts/aula-15-problemas-bfs-dfs.pdf"
+               class="ah-prev"
+               title="Handout">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+          
+            <a href="../handouts/aula-16-introducao-backtracking.pdf"
+               class="ah-next"
+               title="Handout">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Handout</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+    
+  </body>
+</html>

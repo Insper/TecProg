@@ -411,58 +411,14 @@
 
       
         
-  <li class="ah-togglable-item opened">
+  <li class="ah-togglable-item">
     <span class="ah-togglable-handle">Aula 10 — Divisão e conquista</span>
     <ul>
       
         
   
-
-    <li class="active ah-togglable-item opened">
-      <span class="ah-togglable-handle">Material</span>
-      <ul>
-        
-          
-            
-            
-              <li class="ah-toc-item">
-                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#problema-motivador">Problema motivador</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#o-padrao">O padrão</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#intervalo-aberto-no-fim">Intervalo aberto no fim</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#exemplo-guiado-maximo-por-divisao">Exemplo guiado: máximo por divisão</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#divisao-equilibrada-e-desequilibrada">Divisão equilibrada e desequilibrada</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#analise-informal-de-custo">Análise informal de custo</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#erros-comuns">Erros comuns</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
-              </li>
-            
-        
-      </ul>
+    <li>
+      <a href="aula-10-divisao-e-conquista.html">Material</a>
     </li>
   
 
@@ -521,14 +477,38 @@
 
       
         
-  <li class="ah-togglable-item">
+  <li class="ah-togglable-item opened">
     <span class="ah-togglable-handle">Aula 12 — Quicksort e particionamento</span>
     <ul>
       
         
   
-    <li>
-      <a href="aula-12-quicksort-particionamento.html">Material</a>
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Material</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#problema-motivador">Problema motivador</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#particao-como-centro-do-algoritmo">Partição como centro do algoritmo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
+              </li>
+            
+        
+      </ul>
     </li>
   
 
@@ -737,7 +717,7 @@
                   
                 
                   
-                    <li>Aula 10 — Divisão e conquista</li>
+                    <li>Aula 12 — Quicksort e particionamento</li>
                   
                 
                 <li></li>
@@ -747,194 +727,179 @@
           </div>
           
             <section class="progress-section show">
-<h1 id="aula-10-divisao-e-conquista">Aula 10 — Divisão e conquista<a class="headerlink" href="#aula-10-divisao-e-conquista" title="Permanent link">&para;</a></h1>
+<h1 id="aula-12-quicksort">Aula 12 — Quicksort<a class="headerlink" href="#aula-12-quicksort" title="Permanent link">&para;</a></h1>
 <h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem<a class="headerlink" href="#objetivos-de-aprendizagem" title="Permanent link">&para;</a></h2>
 <p>Ao final desta aula, você deve ser capaz de:</p>
 <ul>
-<li>reconhecer problemas que podem ser divididos em subproblemas;</li>
-<li>explicar o padrão dividir, resolver e combinar;</li>
-<li>implementar um exemplo simples por divisão e conquista;</li>
-<li>simular uma árvore de chamadas;</li>
-<li>comparar divisão equilibrada e desequilibrada;</li>
+<li>explicar quicksort como divisão e conquista;</li>
+<li>implementar uma função de particionamento;</li>
+<li>simular a posição final do pivô;</li>
+<li>implementar quicksort recursivo;</li>
+<li>comparar caso médio e pior caso;</li>
+<li>reconhecer cuidados com valores repetidos e escolha de pivô.</li>
 </ul>
-<!-- - preparar o raciocínio para mergesort e quicksort. -->
-
 <!-- ## Pré-requisitos
 
-Você deve conhecer recursão, arrays e análise informal de custo. Também deve ter visto busca binária recursiva, que já usa uma forma simples de divisão do espaço de busca. -->
+Você deve conhecer recursão, divisão e conquista, arrays e ordenação por mergesort. No quicksort, a combinação é diferente: em vez de intercalar depois, reorganizamos o array antes das chamadas recursivas. -->
 
 <h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
-<p>Queremos encontrar o maior valor de um array. A solução linear tradicional percorre todos os elementos mantendo um máximo. Uma alternativa recursiva é dividir o array em duas metades, encontrar o maior valor de cada metade e combinar os resultados escolhendo o maior dos dois.</p>
-<p>Essa estratégia parece mais trabalhosa para máximo, mas ela revela um padrão poderoso usado em algoritmos como mergesort e quicksort.</p>
-<h2 id="o-padrao">O padrão<a class="headerlink" href="#o-padrao" title="Permanent link">&para;</a></h2>
-<p>Divisão e conquista costuma seguir três perguntas:</p>
-<ol>
-<li>Como dividir o problema?</li>
-<li>Como resolver os subproblemas?</li>
-<li>Como combinar as respostas?</li>
-</ol>
-<p>Também precisamos de um caso base. Sem caso base, a recursão não termina.</p>
-<p>Para encontrar o máximo:</p>
+<p>Queremos ordenar um array, mas sem usar vetor auxiliar grande como no mergesort. Uma ideia é escolher um elemento como pivô e reorganizar o array para que:</p>
 <ul>
-<li>dividir: separar o intervalo em duas metades;</li>
-<li>resolver: encontrar o máximo de cada metade;</li>
-<li>combinar: retornar o maior entre os dois máximos;</li>
-<li>caso base: intervalo com um único elemento.</li>
+<li>todos os elementos menores ou iguais ao pivô fiquem antes dele;</li>
+<li>todos os elementos maiores fiquem depois dele;</li>
+<li>o pivô fique em sua posição final.</li>
 </ul>
-<h2 id="intervalo-aberto-no-fim">Intervalo aberto no fim<a class="headerlink" href="#intervalo-aberto-no-fim" title="Permanent link">&para;</a></h2>
-<p>Nesta aula, vamos usar intervalo aberto no fim: <code>[inicio, fim)</code>. Isso significa que <code>inicio</code> está incluído e <code>fim</code> não está. O array inteiro é <code>[0, v.length)</code>.</p>
-<p>Essa convenção é comum em algoritmos de ordenação porque facilita calcular tamanhos:</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>tamanho = fim - inicio
+<p>Depois disso, basta ordenar recursivamente os dois lados.</p>
+<h2 id="particao-como-centro-do-algoritmo">Partição como centro do algoritmo<a class="headerlink" href="#particao-como-centro-do-algoritmo" title="Permanent link">&para;</a></h2>
+<p>Nesta aula, usaremos o último elemento do intervalo como pivô. O método <code>particionar</code> recebe um intervalo fechado <code>[inicio, fim]</code> e retorna a posição final do pivô.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>QUICKSORT(v, inicio, fim)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    IF inicio &gt;= fim THEN
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        RETURN
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    p &lt;- PARTICIONAR(v, inicio, fim)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    QUICKSORT(v, inicio, p - 1)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    QUICKSORT(v, p + 1, fim)
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>PARTICIONAR(v, inicio, fim)
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    pivo &lt;- v[fim]
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    menores &lt;- inicio
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    FOR atual &lt;- inicio TO fim - 1
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        IF v[atual] &lt;= pivo THEN
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>            TROCAR(v, menores, atual)
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>            menores &lt;- menores + 1
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    TROCAR(v, menores, fim)
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    RETURN menores
 </code></pre></div>
-<p>Um intervalo com um único elemento tem <code>fim - inicio == 1</code>.</p>
-<h2 id="exemplo-guiado-maximo-por-divisao">Exemplo guiado: máximo por divisão<a class="headerlink" href="#exemplo-guiado-maximo-por-divisao" title="Permanent link">&para;</a></h2>
-<p>O contrato externo trata o array vazio. O procedimento auxiliar recebe sempre um intervalo não vazio <code>[inicio, fim)</code>, divide-o e confia que cada chamada devolve o máximo de sua própria metade.</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>MAXIMO(v)
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    IF TAMANHO(v) = 0 THEN
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        ERRO &quot;array vazio&quot;
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    RETURN MAXIMO-INTERVALO(v, 0, TAMANHO(v))
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>MAXIMO-INTERVALO(v, inicio, fim)
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    IF fim - inicio = 1 THEN
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        RETURN v[inicio]
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    meio &lt;- inicio + (fim - inicio) / 2
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    maxEsq &lt;- MAXIMO-INTERVALO(v, inicio, meio)
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    maxDir &lt;- MAXIMO-INTERVALO(v, meio, fim)
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    IF maxEsq &gt; maxDir THEN
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        RETURN maxEsq
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    RETURN maxDir
-</code></pre></div>
+<p>Antes de cada iteração, <code>v[inicio..menores)</code> contém valores menores ou iguais ao pivô, e <code>v[menores..atual)</code> contém valores maiores. Esse é o invariante que explica a posição final do pivô.</p>
 <!-- ```java
-public class MaximoDivisaoConquista {
-    public static int maximo(int[] v) {
-        if (v.length == 0) {
-            throw new IllegalArgumentException("array vazio");
-        }
-
-        return maximo(v, 0, v.length);
+public class QuickSort {
+    public static void ordenar(int[] v) {
+        quicksort(v, 0, v.length - 1);
     }
 
-    private static int maximo(int[] v, int inicio, int fim) {
-        if (fim - inicio == 1) {
-            return v[inicio];
+    private static void quicksort(int[] v, int inicio, int fim) {
+        if (inicio >= fim) {
+            return;
         }
 
-        int meio = inicio + (fim - inicio) / 2;
-        int maxEsq = maximo(v, inicio, meio);
-        int maxDir = maximo(v, meio, fim);
-
-        if (maxEsq > maxDir) {
-            return maxEsq;
-        }
-        return maxDir;
+        int p = particionar(v, inicio, fim);
+        quicksort(v, inicio, p - 1);
+        quicksort(v, p + 1, fim);
     }
 
-    public static void main(String[] args) {
-        int[] v = {8, 3, 12, 5, 9};
-        System.out.println(maximo(v)); // 12
+    private static int particionar(int[] v, int inicio, int fim) {
+        int pivo = v[fim];
+        int menores = inicio;
+
+        for (int atual = inicio; atual < fim; atual++) {
+            if (v[atual] <= pivo) {
+                trocar(v, menores, atual);
+                menores++;
+            }
+        }
+
+        trocar(v, menores, fim);
+        return menores;
+    }
+
+    private static void trocar(int[] v, int i, int j) {
+        int temp = v[i];
+        v[i] = v[j];
+        v[j] = temp;
     }
 }
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>O método público valida o array e chama o método auxiliar com o intervalo inicial. --&gt;
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>## Simulação da árvore de chamadas
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Para `{8, 3, 12, 5}`:
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>```text
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>maximo(0, 4)
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>  maximo(0, 2)
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    maximo(0, 1) -&gt; 8
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    maximo(1, 2) -&gt; 3
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    combina -&gt; 8
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>  maximo(2, 4)
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    maximo(2, 3) -&gt; 12
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    maximo(3, 4) -&gt; 5
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    combina -&gt; 12
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>  combina -&gt; 12
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>A variável `menores` indica a primeira posição livre depois dos elementos menores ou iguais ao pivô já encontrados. --&gt;
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>## Simulação da partição
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Para `v = {8, 3, 7, 2, 5}`, pivô `5`:
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>| atual | v[atual] | ação | array |
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>| ----: | -------: | ---- | ----- |
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>| 0 | 8 | não troca | `{8, 3, 7, 2, 5}` |
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>| 1 | 3 | troca com posição 0 | `{3, 8, 7, 2, 5}` |
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>| 2 | 7 | não troca | `{3, 8, 7, 2, 5}` |
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>| 3 | 2 | troca com posição 1 | `{3, 2, 7, 8, 5}` |
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>| fim | 5 | troca pivô com posição 2 | `{3, 2, 5, 8, 7}` |
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>O pivô `5` está na posição correta: nada à esquerda é maior que ele e nada à direita é menor ou igual a ele.
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>Você pode acompanhar a execução do algoritmo através do [visualizador de quick sort](https://coddy.tech/visualize/sorting/quick-sort)
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>## Quicksort depois da partição
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>Depois da partição, o pivô não precisa mais ser mexido. As chamadas recursivas ordenam apenas os lados:
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>```text
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>quicksort(esquerda)
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>pivo
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>quicksort(direita)
 </code></pre></div>
 
-A árvore mostra que o array foi dividido até chegar a intervalos de um elemento. Depois, as respostas sobem pela árvore.
+Não há merge final. Essa é uma diferença importante em relação ao mergesort.
 
-## Soma por divisão
+## Por que o pivô fica correto?
 
-O mesmo padrão serve para soma:
+Durante a partição, mantemos duas regiões:
 
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>SOMA-INTERVALO(v, inicio, fim)
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    IF inicio = fim THEN
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        RETURN 0
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    IF fim - inicio = 1 THEN
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        RETURN v[inicio]
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    meio &lt;- inicio + (fim - inicio) / 2
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    RETURN SOMA-INTERVALO(v, inicio, meio)
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>           + SOMA-INTERVALO(v, meio, fim)
-</code></pre></div>
-<!-- 
-```java
-public static int soma(int[] v) {
-    return soma(v, 0, v.length);
-}
+- antes de `menores`: elementos menores ou iguais ao pivô;
+- entre `menores` e `atual`: elementos maiores que o pivô;
+- depois de `atual`: elementos ainda não examinados.
 
-private static int soma(int[] v, int inicio, int fim) {
-    if (inicio == fim) {
-        return 0;
-    }
+Quando o laço termina, todos os elementos antes de `menores` são adequados para a esquerda, e todos entre `menores` e `fim - 1` são maiores que o pivô. Ao trocar o pivô com `menores`, ele entra entre as duas regiões.
 
-    if (fim - inicio == 1) {
-        return v[inicio];
-    }
+## Melhor, médio e pior caso
 
-    int meio = inicio + (fim - inicio) / 2;
-    return soma(v, inicio, meio) + soma(v, meio, fim);
-}
-``` -->
+Se o pivô divide o array em partes razoavelmente equilibradas, o comportamento se parece com outros algoritmos de divisão em metades: custo médio `O(n log n)`.
 
-<p>Aqui, a combinação é a soma dos resultados.</p>
-<!-- Em mergesort, a combinação será intercalar duas metades ordenadas. Em quicksort, grande parte do trabalho acontece antes das chamadas, durante o particionamento. -->
+Se o pivô é sempre o menor ou o maior elemento, uma chamada recebe quase todo o array e a outra recebe quase nada. Isso pode acontecer com esta versão em arrays já ordenados. Nesse caso, o pior caso é `O(n²)`.
 
-<h2 id="divisao-equilibrada-e-desequilibrada">Divisão equilibrada e desequilibrada<a class="headerlink" href="#divisao-equilibrada-e-desequilibrada" title="Permanent link">&para;</a></h2>
-<p>Quando dividimos em metades parecidas, a árvore de chamadas tende a ter altura pequena. Isso aparece em busca binária e mergesort.</p>
-<p>Quando a divisão é muito desequilibrada, por exemplo um lado com <code>n - 1</code> elementos e outro com <code>0</code>, a recursão pode se comportar mais como uma sequência longa. </p>
-<!-- Isso será importante em quicksort: escolhas ruins de pivô podem gerar divisões desequilibradas. -->
+## Valores repetidos
 
-<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
-<p>No máximo por divisão e conquista, cada elemento vira caso base uma vez e cada combinação faz trabalho constante. O tempo total continua <code>O(n)</code>. A estratégia não melhora o custo do máximo em relação ao laço, mas ensina o padrão.</p>
-<!-- Em algoritmos como mergesort, cada nível da árvore faz trabalho linear e há aproximadamente `log n` níveis. Por isso aparecem custos `O(n log n)`. O detalhe será estudado nas próximas aulas. -->
+Valores repetidos podem gerar divisões ruins dependendo da estratégia de partição. A versão desta aula é simples e didática, mas não é a única. Existem partições em três partes, separando menores, iguais e maiores que o pivô, que lidam melhor com muitos repetidos.
 
-<h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Não reduzir o tamanho do intervalo nas chamadas.</li>
-<li>Misturar intervalo fechado com aberto no fim.</li>
-<li>Esquecer caso de array vazio no método público.</li>
-<li>Calcular <code>meio</code> e chamar duas vezes o mesmo intervalo.</li>
-<li>Combinar respostas de forma incompatível com o problema.</li>
-<li>Achar que toda recursão é divisão e conquista.</li>
-</ul>
+Para a disciplina, o objetivo principal é entender o papel do particionamento e sua relação com as chamadas recursivas.
+
+## Análise informal de custo
+
+Cada chamada de partição percorre o intervalo uma vez. Se as divisões são equilibradas, temos cerca de `log n` níveis, cada um com trabalho total linear. Custo médio: `O(n log n)`.
+
+No pior caso, as divisões são extremamente desequilibradas e o trabalho soma algo como `n + (n - 1) + (n - 2) + ...`. Custo: `O(n²)`.
+
+A memória extra, além da pilha de chamadas, é pequena. A ordenação ocorre no próprio array.
+
+## Erros comuns
+
+- Incluir o pivô no laço de varredura.
+- Retornar a posição errada do pivô.
+- Chamar recursivamente incluindo o pivô de novo.
+- Não tratar caso base `inicio >= fim`.
+- Achar que quicksort sempre é `O(n log n)`.
+- Ignorar que a escolha do pivô influencia muito o desempenho.
+
 <!-- ## Exercícios de fixação
 
-1. Simule `maximo` em `{4, 10, 2, 7}`.
-2. Implemente `minimo` por divisão e conquista.
-3. Implemente `soma` por divisão e conquista.
-4. Explique a diferença entre caso base de intervalo vazio e de um elemento.
-5. Dê um exemplo de combinação para soma, máximo e ordenação.
-6. Explique por que busca binária pode ser vista como divisão do espaço de busca.
+1. Simule a partição de `{4, 9, 1, 7, 3}` com pivô `3`.
+2. Implemente `particionar` e teste isoladamente.
+3. Teste quicksort com array já ordenado, inverso e com repetidos.
+4. Explique por que o pivô não participa das chamadas recursivas.
+5. Compare quicksort e mergesort em memória extra.
+6. Explique um cenário em que esta escolha de pivô é ruim.
 
 ## Exercício integrador
 
-Implemente uma classe `EstatisticasDivisaoConquista` com métodos recursivos para máximo, mínimo e soma usando intervalo `[inicio, fim)`. Inclua testes para arrays de tamanho `1`, tamanho par e tamanho ímpar.
-
-Depois, escreva uma explicação curta respondendo: em quais desses métodos a divisão e conquista melhora o custo? Em quais ela serve mais como preparação conceitual? -->
+Implemente quicksort contando quantas chamadas recursivas e quantas partições foram feitas. Teste com arrays aleatórios, ordenados e em ordem inversa. Escreva uma conclusão curta sobre o efeito da escolha do pivô. -->
 
 <h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar dividir, resolver e combinar.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei usar intervalo aberto no fim.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei implementar máximo por divisão e conquista.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei desenhar uma árvore de chamadas simples.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei diferenciar divisão equilibrada e desequilibrada.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei conectar esta aula a mergesort e quicksort.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar o objetivo da partição.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei implementar quicksort simples.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei simular a posição final do pivô.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei comparar caso médio e pior caso.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar por que não há merge final.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei reconhecer problemas com pivô ruim.</li>
 </ul>
 
 
@@ -945,7 +910,7 @@ Depois, escreva uma explicação curta respondendo: em quais desses métodos a d
       <footer class="ah-footer ah-typeset">
         <div class="ah-footer-nav">
           
-            <a href="../handouts/aula-09-insertion-sort-analise.pdf"
+            <a href="../handouts/aula-11-mergesort.pdf"
                class="ah-prev"
                title="Handout">
               <span class="nav-label">Anterior</span>
@@ -953,7 +918,7 @@ Depois, escreva uma explicação curta respondendo: em quais desses métodos a d
             </a>
           
           
-            <a href="../handouts/aula-10-divisao-e-conquista.pdf"
+            <a href="../handouts/aula-12-quicksort-particionamento.pdf"
                class="ah-next"
                title="Handout">
               <span class="nav-label">Próximo</span>
