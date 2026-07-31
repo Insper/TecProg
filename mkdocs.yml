@@ -16,10 +16,10 @@ extra:
 
 nav:
   - Início: index.md
-  - Materiais por aula: materiais.md
+#   - Materiais por aula: materiais.md
   - Aulas:
-      - Visão geral: aulas/index.md
-      - Índice de handouts: handouts/index.md
+    #   - Visão geral: aulas/index.md
+    #   - Índice de handouts: handouts/index.md
       - Aula 00 - Primeiros passos: 
           - Material: aulas/aula-00-primeiros-passos.md
           - Cheatsheet: handouts/cheat1-handout.pdf
@@ -80,8 +80,8 @@ nav:
           - Handout: handouts/aula-14-bfs-filas.pdf
           - Exercícios de código (BFS): https://leetcode.com/problem-list/breadth-first-search/
       - "Aula 15 — Introdução a grafos: representação, DFS e BFS":
-          - Material: aulas/aula-16-problemas-bfs-dfs.md
-          - Handout: handouts/aula-16-problemas-bfs-dfs.pdf
+          - Material: aulas/aula-15-problemas-bfs-dfs.md
+          - Handout: handouts/aula-15-problemas-bfs-dfs.pdf
       - Aula 16 — Introdução ao backtracking:
           - Material: aulas/aula-16-introducao-backtracking.md
           - Handout: handouts/aula-16-introducao-backtracking.pdf

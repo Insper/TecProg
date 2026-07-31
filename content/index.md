@@ -33,7 +33,7 @@ subtitle: 2026.2
 
 Nossa disciplina tem um mascote: o **javaporco**. Ele foi escolhido em homenagem à qualidade do código Java desenvolvido nessa disciplina. (Créditos: [javaporco](https://flickr.com/photos/luizmrocha/4777371771), [lama](https://commons.wikimedia.org/wiki/File:Mud_closeup.jpg))
 
-![](javaporco.png)
+![](css/javaporco.png)
 
 # Avaliações
 
