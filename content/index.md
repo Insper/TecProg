@@ -39,18 +39,18 @@ Nossa disciplina tem um mascote: o **javaporco**. Ele foi escolhido em homenagem
 
 Teremos os seguinte itens de avaliação
 
-- $PL$ - média de todos os exercícios no PrairieLearn
-- $QG$ - média dos quizzes
-- $P1$ - prova intermediária 
-- $P2$ - prova final
+- $EX$ - Média de todos os exercícios
+- $MQ$ - Média dos quizzes
+- $AI$ - Avaliação Intermediária 
+- $AF$ - Avaliação Final
 
 A nota final $NF$ é calculada da seguinte maneira. 
 
 $$
-NF = 0.3 \times PL + P1 \times 0.2 + P2 \times 0.4 + QG \times 0.1
+NF = 0.1 \times EX + AI \times 0.3 + AF \times 0.4 + MQ \times 0.2
 $$
 
-Com a condição de que $(2 \times P1 + 4 \times P2)/6 \geq 4.5$. 
+Com a condição de que $(2 \times AI + 3 \times AF)/5 \geq 4.5$. 
 
 # Como usar o material
 

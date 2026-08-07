@@ -20,7 +20,7 @@ nav:
   - Aulas:
     #   - Visão geral: aulas/index.md
     #   - Índice de handouts: handouts/index.md
-      - Aula 00 - Primeiros passos: 
+      - Aula 00 — Primeiros passos: 
           - Material: aulas/aula-00-primeiros-passos.md
           - Cheatsheet: handouts/cheat1-handout.pdf
       - Aula 01 — Revisão, pseudocódigo, arrays e custo:

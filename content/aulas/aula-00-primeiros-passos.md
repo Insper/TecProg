@@ -115,18 +115,18 @@ Todo algoritmo é formado pelo seguinte "esqueleto":
 NOME_DO_ALGORITMO(I, S1)
 
 # Atribuições e operações matemáticas
-MAIS_UM := I + 1
+MAIS_UM <- I + 1
 
 # Saída de texto
 PRINT(MAIS_UM)
 
 # Entrada de dados
-NOVO_INT := LER_INTEIRO()
-NOVO_FLOAT := LER_FRACIONARIO()
-NOVO_TEXTO := LER_TEXTO()
+NOVO_INT <- LER_INTEIRO()
+NOVO_FLOAT <- LER_FRACIONARIO()
+NOVO_TEXTO <- LER_TEXTO()
 ```
 
 
 !!! warning "Atenção" 
-    Usamos `:=` para atribuição e `=` para comparações.
+    Usaremos `<-` para atribuição e `=` para comparações.
 
