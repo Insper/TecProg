@@ -58,16 +58,16 @@ Nossas aulas estão divididas em 3 materiais principais:
 
 1. **slides** usados nas partes expositivas das aulas. 
 2. **handouts** contendo atividades feitas em aula e explicações adicionais. Estão em formato PDF. É possível usar tanto impresso quanto anotando o PDF digitalmente.
-3. **exercícios práticos** no PrairieLearn específicos para cada aula.  
+3. **exercícios práticos** no LeetCode específicos para cada aula.
 
-Veja os vídeos abaixo para entender um pouco melhor a mudança para material impresso e também algumas dicas de como aproveitar melhor esse tipo de material. Temos tanto para uso em papel como digital via anotações no PDF. 
+Veja os vídeos abaixo para entender um pouco melhor a mudança para material impresso e também algumas dicas de como aproveitar melhor esse tipo de material. Temos tanto para uso em papel como digital via anotações no PDF.
 
 <a class="button" href="https://youtu.be/8eoDvbbxYhE">Uso do material em Papel</a> <!-- <a class="button" href="#">Uso do material em PDF</a> -->
 
-Além disso, também teremos exercícios de implementação gerais de cada assunto. Eles são listados no início de cada assunto.
+<!-- Além disso, também teremos exercícios de implementação gerais de cada assunto. Eles são listados no início de cada assunto.
 
 1. **implementação** dos algoritmos no PrairieLearn. Objetivo é traduzir os algoritmos vistos em sala para *Java*.
-2. **exercícios extras** em sites como LeetCode, hackerrank e etc. Úteis para praticar para prova e ter mais exemplos dos algoritmos e estruturas de dados sendo usados. 
+2. **exercícios extras** em sites como LeetCode, hackerrank e etc. Úteis para praticar para prova e ter mais exemplos dos algoritmos e estruturas de dados sendo usados.  -->
 
 
 <!-- **Cheat Sheets Java**: -->
