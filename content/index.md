@@ -9,8 +9,8 @@ subtitle: 2026.2
 
 **Links importantes**:
 
-- [Avisos (blackboard)](https://insper.blackboard.com/ultra/courses/_52842_1/announcements)
-- [Exercícios (prairie learn)](https://us.prairielearn.com/pl/course_instance/210064)
+- [Avisos (blackboard)](https://insper.blackboard.com/)
+- [Exercícios (prairie learn)](https://us.prairielearn.com/pl/course_instance/220855)
 <!-- - [Plano de aulas](./plano-de-aulas.xlsx)
 - [Grupos do quiz1](./grupos-quiz1.csv) -->
 
@@ -19,11 +19,13 @@ subtitle: 2026.2
 <div class="equipe" markdown="1">
 - ![Marcio](css/marcio.jpeg) **Marcio F. Stabile Jr.** (2026/2~)
 - ![Igor](css/igor.png) **Igor Montagner** (~2026/1)
+- ![Maciel](css/maciel.jpg) **Maciel Vidal** (2023/2) 
+- ![Leo](css/leo.jpeg) **Leo Montefusco Maximiano** (2026/2) 
+- ![Lucas](css/haro.jpeg) **Lucas Grohmann Haro** (2026/2) 
 - ![Cynthia](css/cynthia.jpeg) **Cynthia Naoko Yasutake** (2025/2)
 - ![Artur](css/artur.jpeg) **Artur Alvares Cruz Lopes** (2025/2)
 - ![Pertusi](css/pertusi.png) **Pedro Vaz Pertusi** (2025/1)
 - ![Luca](css/luca.jpg) **Luca Feltrin** (2025/1)
-- ![Maciel](css/maciel.jpg) **Maciel Vidal** (2023/2) 
 - ![Vaz](css/vaz.jpg) **Eduardo Vaz** (2024/1)
 - ![Ale](css/ale.jpeg)**Alexandre Magno** (2024/1)
 - ![Jlucas](css/jlucas.jpg) **João Lucas Cadorniga** (2024/2)
