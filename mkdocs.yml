@@ -25,77 +25,77 @@ nav:
           - Cheatsheet: handouts/cheat1-handout.pdf
       - Aula 01 — Revisão, pseudocódigo, arrays e custo:
           - Material: aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.md
-          - Handout: handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf
+          - Lista de Exercícios: handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf
       - Aula 02 — ArrayList, TAD e custos:
           - Material: aulas/aula-02-arraylist-tad-custos.md
-          - Handout: handouts/aula-02-arraylist-tad-custos.pdf
+          - Lista de Exercícios: handouts/aula-02-arraylist-tad-custos.pdf
           - Exercícios de código: https://leetcode.com/problem-list/array/
       - Aula 03 — Pilhas e filas:
           - Material: aulas/aula-03-pilhas-filas-arraydeque.md
-          - Handout: handouts/aula-03-pilhas-filas-arraydeque.pdf
+          - Lista de Exercícios: handouts/aula-03-pilhas-filas-arraydeque.pdf
           - Exercícios de pilha: https://leetcode.com/problem-list/stack/
           - Exercícios de fila: https://leetcode.com/problem-list/queue/
       - Aula 04 — Mapas e conjuntos:
           - Material: aulas/aula-04-hashmap-hashset.md
-          - Handout: handouts/aula-04-hashmap-hashset.pdf
+          - Lista de Exercícios: handouts/aula-04-hashmap-hashset.pdf
           - Exercícios de código: https://leetcode.com/problem-list/hash-table/
       - Aula 05 — Busca linear e Big-O:
           - Material: aulas/aula-05-busca-linear-big-o.md
-          - Handout: handouts/aula-05-busca-linear-big-o.pdf
+          - Lista de Exercícios: handouts/aula-05-busca-linear-big-o.pdf
       - Aula 06 — Busca binária iterativa:
           - Material: aulas/aula-06-busca-binaria-iterativa.md
-          - Handout: handouts/aula-06-busca-binaria-iterativa.pdf
+          - Lista de Exercícios: handouts/aula-06-busca-binaria-iterativa.pdf
           - Exercícios de código: https://leetcode.com/problem-list/binary-search/
       - Aula 07 — Fundamentos de recursão:
           - Material: aulas/aula-07-fundamentos-recursao.md
-          - Handout: handouts/aula-07-fundamentos-recursao.pdf
+          - Lista de Exercícios: handouts/aula-07-fundamentos-recursao.pdf
           - Exercícios de código: https://leetcode.com/problem-list/recursion/
       - Aula 08 — Recursão em arrays e busca binária recursiva:
           - Material: aulas/aula-08-recursao-arrays-busca-binaria-recursiva.md
-          - Handout: handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf
+          - Lista de Exercícios: handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf
       - Aula 09 — Insertion sort e análise:
           - Material: aulas/aula-09-insertion-sort-analise.md
-          - Handout: handouts/aula-09-insertion-sort-analise.pdf
+          - Lista de Exercícios: handouts/aula-09-insertion-sort-analise.pdf
           - Exercícios de código: https://leetcode.com/problem-list/sorting/
       - Aula 10 — Divisão e conquista:
           - Material: aulas/aula-10-divisao-e-conquista.md
-          - Handout: handouts/aula-10-divisao-e-conquista.pdf
+          - Lista de Exercícios: handouts/aula-10-divisao-e-conquista.pdf
           - Exercícios de código: https://leetcode.com/problem-list/divide-and-conquer/
       - Aula 11 — Mergesort:
           - Material: aulas/aula-11-mergesort.md
-          - Handout: handouts/aula-11-mergesort.pdf
+          - Lista de Exercícios: handouts/aula-11-mergesort.pdf
           - Exercícios de código: https://leetcode.com/problem-list/merge-sort/
       - Aula 12 — Quicksort e particionamento:
           - Material: aulas/aula-12-quicksort-particionamento.md
-          - Handout: handouts/aula-12-quicksort-particionamento.pdf
+          - Lista de Exercícios: handouts/aula-12-quicksort-particionamento.pdf
       - Guia Extra — Comparação de buscas e ordenações:
           - Material: aulas/guia-13-comparacao-buscas-ordenacoes-exercicios.md
-          - Handout: handouts/guia-13-comparacao-buscas-ordenacoes.pdf
+          - Lista de Exercícios: handouts/guia-13-comparacao-buscas-ordenacoes.pdf
       - Aula 13 — DFS em matrizes e exploração recursiva:
           - Material: aulas/aula-13-dfs.md
-          - Handout: handouts/aula-13-dfs.pdf
+          - Lista de Exercícios: handouts/aula-13-dfs.pdf
           - Exercícios de código (DFS): https://leetcode.com/problem-list/depth-first-search/
       - Aula 14 — BFS em matrizes e uso de filas:
           - Material: aulas/aula-14-bfs-filas.md
-          - Handout: handouts/aula-14-bfs-filas.pdf
+          - Lista de Exercícios: handouts/aula-14-bfs-filas.pdf
           - Exercícios de código (BFS): https://leetcode.com/problem-list/breadth-first-search/
       - "Aula 15 — Introdução a grafos: representação, DFS e BFS":
           - Material: aulas/aula-15-problemas-bfs-dfs.md
-          - Handout: handouts/aula-15-problemas-bfs-dfs.pdf
+          - Lista de Exercícios: handouts/aula-15-problemas-bfs-dfs.pdf
       - Aula 16 — Introdução ao backtracking:
           - Material: aulas/aula-16-introducao-backtracking.md
-          - Handout: handouts/aula-16-introducao-backtracking.pdf
+          - Lista de Exercícios: handouts/aula-16-introducao-backtracking.pdf
           - Exercícios de código: https://leetcode.com/problem-list/backtracking/
     #   - Aula 18 — Combinações, subconjuntos e permutações:
     #       - Material: aulas/aula-18-combinacoes-subconjuntos-permutacoes.md
-    #       - Handout: handouts/aula-18-combinacoes-subconjuntos-permutacoes.pdf
+    #       - Lista de Exercícios: handouts/aula-18-combinacoes-subconjuntos-permutacoes.pdf
       - Aula 17 — Backtracking com restrições:
           - Material: aulas/aula-17-backtracking-restricoes.md
-          - Handout: handouts/aula-17-backtracking-restricoes.pdf
+          - Lista de Exercícios: handouts/aula-17-backtracking-restricoes.pdf
     #   - Aula 20 — Problema aplicado envolvendo escolha da técnica:
-    #       - Handout: handouts/aula-20-problema-aplicado-escolha-tecnica.pdf
+    #       - Lista de Exercícios: handouts/aula-20-problema-aplicado-escolha-tecnica.pdf
     #   - Aula 21 — Avaliação, projeto, recuperação ou fechamento:
-    #       - Handout: handouts/aula-21-avaliacao-projeto-recuperacao-fechamento.pdf
+    #       - Lista de Exercícios: handouts/aula-21-avaliacao-projeto-recuperacao-fechamento.pdf
   
 exclude_docs: |
   build.py
