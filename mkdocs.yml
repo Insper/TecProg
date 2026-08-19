@@ -39,9 +39,9 @@ nav:
           - Material: aulas/aula-04-hashmap-hashset.md
           - Lista de Exercícios: handouts/aula-04-hashmap-hashset.pdf
           - Exercícios de código: https://leetcode.com/problem-list/hash-table/
-      - Aula 05 — Busca linear e Big-O:
+      - Guia Extra — Busca linear e Big-O:
           - Material: aulas/aula-05-busca-linear-big-o.md
-          - Lista de Exercícios: handouts/aula-05-busca-linear-big-o.pdf
+          - Lista de Exercícios opcional: handouts/aula-05-busca-linear-big-o.pdf
       - Aula 06 — Busca binária iterativa:
           - Material: aulas/aula-06-busca-binaria-iterativa.md
           - Lista de Exercícios: handouts/aula-06-busca-binaria-iterativa.pdf
@@ -70,7 +70,7 @@ nav:
           - Lista de Exercícios: handouts/aula-12-quicksort-particionamento.pdf
       - Guia Extra — Comparação de buscas e ordenações:
           - Material: aulas/guia-13-comparacao-buscas-ordenacoes-exercicios.md
-          - Lista de Exercícios: handouts/guia-13-comparacao-buscas-ordenacoes.pdf
+          - Lista de Exercícios opcional: handouts/guia-13-comparacao-buscas-ordenacoes.pdf
       - Aula 13 — DFS em matrizes e exploração recursiva:
           - Material: aulas/aula-13-dfs.md
           - Lista de Exercícios: handouts/aula-13-dfs.pdf
