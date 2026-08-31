@@ -1,4 +1,4 @@
-# Aula 09 — Ordenação quadrática: insertion sort e análise
+# Aula 10 — Ordenação quadrática: insertion sort e análise
 
 ## Objetivos de aprendizagem
 

@@ -53,14 +53,14 @@ nav:
       - Aula 08 — Recursão em arrays e busca binária recursiva:
           - Material: aulas/aula-08-recursao-arrays-busca-binaria-recursiva.md
           - Lista de Exercícios: handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf
-      - Aula 09 — Insertion sort e análise:
-          - Material: aulas/aula-09-insertion-sort-analise.md
-          - Lista de Exercícios: handouts/aula-09-insertion-sort-analise.pdf
-          - Exercícios de código: https://leetcode.com/problem-list/sorting/
-      - Aula 10 — Divisão e conquista:
-          - Material: aulas/aula-10-divisao-e-conquista.md
-          - Lista de Exercícios: handouts/aula-10-divisao-e-conquista.pdf
+      - Aula 09 — Divisão e conquista:
+          - Material: aulas/aula-09-divisao-e-conquista.md
+          - Lista de Exercícios: handouts/aula-09-divisao-e-conquista.pdf
           - Exercícios de código: https://leetcode.com/problem-list/divide-and-conquer/
+      - Aula 10 — Insertion sort e análise:
+          - Material: aulas/aula-10-insertion-sort-analise.md
+          - Lista de Exercícios: handouts/aula-10-insertion-sort-analise.pdf
+          - Exercícios de código: https://leetcode.com/problem-list/sorting/
       - Aula 11 — Mergesort:
           - Material: aulas/aula-11-mergesort.md
           - Lista de Exercícios: handouts/aula-11-mergesort.pdf

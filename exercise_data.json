@@ -4,15 +4,15 @@
     "aulas/aula-00-primeiros-passos.html": {
       "leiturajava": {
         "tags": [
-          "long-text",
-          "text-exercise"
+          "text-exercise",
+          "long-text"
         ],
         "slug": "aulas/aula-00-primeiros-passos.html/leiturajava"
       }
     }
   },
   "tags": {
-    "long-text": "long-text",
-    "text-exercise": "text-exercise"
+    "text-exercise": "text-exercise",
+    "long-text": "long-text"
   }
 }

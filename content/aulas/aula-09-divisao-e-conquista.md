@@ -1,4 +1,4 @@
-# Aula 10 — Divisão e conquista
+# Aula 09 — Divisão e conquista
 
 ## Objetivos de aprendizagem
 
