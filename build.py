@@ -6,9 +6,9 @@ import subprocess
 import sys
 
 
-CONTENT_ROOT = pathlib.Path(__file__).resolve().parent
+CONTENT_ROOT = pathlib.Path(__file__).resolve().parent / "content"
 ROOT = CONTENT_ROOT.parent
-BUILD_ROOT = ROOT / "disciplina-tecprog-main"
+BUILD_ROOT = ROOT
 
 INPUT_DIR = CONTENT_ROOT / "exercicios"
 OUTPUT_DIR = CONTENT_ROOT / "handouts"
@@ -75,12 +75,12 @@ def build_pdf(source, dry_run=False):
 
 def main(argv):
     parser = argparse.ArgumentParser(
-        description="Gera PDFs dos handouts em content-novo/handouts."
+        description="Gera PDFs dos handouts em content/handouts."
     )
     parser.add_argument(
         "files",
         nargs="*",
-        help="Arquivos markdown específicos. Se omitido, gera todos de content-novo/exercicios.",
+        help="Arquivos markdown específicos. Se omitido, gera todos de content/exercicios.",
     )
     parser.add_argument(
         "--dry-run",

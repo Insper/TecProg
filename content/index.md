@@ -77,7 +77,7 @@ Veja os vídeos abaixo para entender um pouco melhor a mudança para material im
 <!-- - [Parte 1][pseudo-cheatsheet1]: Variáveis e Controle de fluxo -->
 
 
-<!-- # Exercícios extras
+# Exercícios extras
 
 **Busca binária**:
 
@@ -85,15 +85,18 @@ Veja os vídeos abaixo para entender um pouco melhor a mudança para material im
 - [Smallest letter greater than target](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
 - [Find peak element](https://leetcode.com/problems/find-peak-element/description/)
 
+**Recursão**:
+
+- [Find unique string](https://leetcode.com/problems/find-unique-binary-string/description/)
+
+<!-- 
+
 **Ordenação**:
 
 - [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/description/)
 - [Missing Number](https://leetcode.com/problems/missing-number/description/)
 - [Majority Element](https://leetcode.com/problems/majority-element/description/)
 
-**Recursão**:
-
-- [Find unique string](https://leetcode.com/problems/find-unique-binary-string/description/)
 
 **Labirinto e caminhos**:
 
