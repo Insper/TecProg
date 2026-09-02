@@ -85,10 +85,6 @@ Veja os vídeos abaixo para entender um pouco melhor a mudança para material im
 - [Smallest letter greater than target](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
 - [Find peak element](https://leetcode.com/problems/find-peak-element/description/)
 
-**Recursão**:
-
-- [Find unique string](https://leetcode.com/problems/find-unique-binary-string/description/)
-
 <!-- 
 
 **Ordenação**:
@@ -103,6 +99,11 @@ Veja os vídeos abaixo para entender um pouco melhor a mudança para material im
 - https://leetcode.com/problems/number-of-islands/
 - https://leetcode.com/problems/surrounded-regions/
 - https://leetcode.com/problems/max-area-of-island/ -->
+
+<!-- **Backtracking**:
+
+- [Find unique string](https://leetcode.com/problems/find-unique-binary-string/description/) -->
+
 
 # Materiais antigos
 
