@@ -1,5 +1,5 @@
 ---
-title: "Exercícios — Aula 09 — Insertion sort e análise"
+title: "Exercícios — Aula 10 — Insertion sort e análise"
 subtitle: "Técnicas de Programação"
 author: "Marcio F. Stabile Jr."
 ...

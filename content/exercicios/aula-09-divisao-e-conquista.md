@@ -1,5 +1,5 @@
 ---
-title: "Exercícios — Aula 10 — Divisão e conquista"
+title: "Exercícios — Aula 09 — Divisão e conquista"
 subtitle: "Técnicas de Programação"
 author: "Marcio F. Stabile Jr."
 ...
