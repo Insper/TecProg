@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
       
-        <title>Exercícios — Aula 09 — Divisão e conquista - Técnicas de Programação</title>
+        <title>Exercícios sugeridos - Técnicas de Programação</title>
       
     
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <script>
       // SETUP GLOBAL CONSTANTS
-      var base_url = '..';
+      var base_url = '.';
       
       var telemetryEnabled = false;
       var backendUrl = "";
@@ -46,9 +46,9 @@
     <script src="https://unpkg.com/htmx.org@1.8.4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <script src="assets/js/main.js"></script>
     
-    <link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
     <div class="ah-main-container">
@@ -60,7 +60,7 @@
   <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
 </svg>
         </button>
-        <a href="../index.html"
+        <a href="index.html"
            title="Técnicas de Programação"
            class="ah-logo"
            aria-label="Técnicas de Programação">
@@ -94,15 +94,27 @@
               
   
     <li>
-      <a href="../index.html">Início</a>
+      <a href="index.html">Início</a>
     </li>
   
 
             
               
   
-    <li>
-      <a href="../exercicios.html">Exercícios sugeridos</a>
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Exercícios sugeridos</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#busca-binaria">Busca binária:</a>
+              </li>
+            
+        
+      </ul>
     </li>
   
 
@@ -120,7 +132,7 @@
         
   
     <li>
-      <a href="../aulas/aula-00-primeiros-passos.html">Material</a>
+      <a href="aulas/aula-00-primeiros-passos.html">Material</a>
     </li>
   
 
@@ -128,7 +140,7 @@
         
   
     <li>
-      <a href="../handouts/cheat1-handout.pdf">Cheatsheet</a>
+      <a href="handouts/cheat1-handout.pdf">Cheatsheet</a>
     </li>
   
 
@@ -145,7 +157,7 @@
         
   
     <li>
-      <a href="../aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
+      <a href="aulas/aula-01-revisao-java-pseudocodigo-arrays-custo.html">Material</a>
     </li>
   
 
@@ -153,7 +165,7 @@
         
   
     <li>
-      <a href="../handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-01-revisao-java-pseudocodigo-arrays-custo.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -170,7 +182,7 @@
         
   
     <li>
-      <a href="../aulas/aula-02-arraylist-tad-custos.html">Material</a>
+      <a href="aulas/aula-02-arraylist-tad-custos.html">Material</a>
     </li>
   
 
@@ -178,7 +190,7 @@
         
   
     <li>
-      <a href="../handouts/aula-02-arraylist-tad-custos.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-02-arraylist-tad-custos.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -203,7 +215,7 @@
         
   
     <li>
-      <a href="../aulas/aula-03-pilhas-filas-arraydeque.html">Material</a>
+      <a href="aulas/aula-03-pilhas-filas-arraydeque.html">Material</a>
     </li>
   
 
@@ -211,7 +223,7 @@
         
   
     <li>
-      <a href="../handouts/aula-03-pilhas-filas-arraydeque.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-03-pilhas-filas-arraydeque.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -244,7 +256,7 @@
         
   
     <li>
-      <a href="../aulas/aula-04-hashmap-hashset.html">Material</a>
+      <a href="aulas/aula-04-hashmap-hashset.html">Material</a>
     </li>
   
 
@@ -252,7 +264,7 @@
         
   
     <li>
-      <a href="../handouts/aula-04-hashmap-hashset.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-04-hashmap-hashset.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -277,7 +289,7 @@
         
   
     <li>
-      <a href="../aulas/aula-05-busca-linear-big-o.html">Material</a>
+      <a href="aulas/aula-05-busca-linear-big-o.html">Material</a>
     </li>
   
 
@@ -285,7 +297,7 @@
         
   
     <li>
-      <a href="../handouts/aula-05-busca-linear-big-o.pdf">Lista de Exercícios opcional</a>
+      <a href="handouts/aula-05-busca-linear-big-o.pdf">Lista de Exercícios opcional</a>
     </li>
   
 
@@ -302,7 +314,7 @@
         
   
     <li>
-      <a href="../aulas/aula-06-busca-binaria-iterativa.html">Material</a>
+      <a href="aulas/aula-06-busca-binaria-iterativa.html">Material</a>
     </li>
   
 
@@ -310,7 +322,7 @@
         
   
     <li>
-      <a href="../handouts/aula-06-busca-binaria-iterativa.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-06-busca-binaria-iterativa.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -335,7 +347,7 @@
         
   
     <li>
-      <a href="../aulas/aula-07-fundamentos-recursao.html">Material</a>
+      <a href="aulas/aula-07-fundamentos-recursao.html">Material</a>
     </li>
   
 
@@ -343,7 +355,7 @@
         
   
     <li>
-      <a href="../handouts/aula-07-fundamentos-recursao.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-07-fundamentos-recursao.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -368,7 +380,7 @@
         
   
     <li>
-      <a href="../aulas/aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
+      <a href="aulas/aula-08-recursao-arrays-busca-binaria-recursiva.html">Material</a>
     </li>
   
 
@@ -376,7 +388,7 @@
         
   
     <li>
-      <a href="../handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-08-recursao-arrays-busca-binaria-recursiva.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -393,7 +405,7 @@
         
   
     <li>
-      <a href="../aulas/aula-09-divisao-e-conquista.html">Material</a>
+      <a href="aulas/aula-09-divisao-e-conquista.html">Material</a>
     </li>
   
 
@@ -401,7 +413,7 @@
         
   
     <li>
-      <a href="../handouts/aula-09-divisao-e-conquista.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-09-divisao-e-conquista.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -426,7 +438,7 @@
         
   
     <li>
-      <a href="../aulas/aula-10-insertion-sort-analise.html">Material</a>
+      <a href="aulas/aula-10-insertion-sort-analise.html">Material</a>
     </li>
   
 
@@ -434,7 +446,7 @@
         
   
     <li>
-      <a href="../handouts/aula-10-insertion-sort-analise.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-10-insertion-sort-analise.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -459,7 +471,7 @@
         
   
     <li>
-      <a href="../aulas/aula-11-mergesort.html">Material</a>
+      <a href="aulas/aula-11-mergesort.html">Material</a>
     </li>
   
 
@@ -467,7 +479,7 @@
         
   
     <li>
-      <a href="../handouts/aula-11-mergesort.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-11-mergesort.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -492,7 +504,7 @@
         
   
     <li>
-      <a href="../aulas/aula-12-quicksort-particionamento.html">Material</a>
+      <a href="aulas/aula-12-quicksort-particionamento.html">Material</a>
     </li>
   
 
@@ -500,7 +512,7 @@
         
   
     <li>
-      <a href="../handouts/aula-12-quicksort-particionamento.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-12-quicksort-particionamento.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -517,7 +529,7 @@
         
   
     <li>
-      <a href="../aulas/guia-13-comparacao-buscas-ordenacoes-exercicios.html">Material</a>
+      <a href="aulas/guia-13-comparacao-buscas-ordenacoes-exercicios.html">Material</a>
     </li>
   
 
@@ -525,7 +537,7 @@
         
   
     <li>
-      <a href="../handouts/guia-13-comparacao-buscas-ordenacoes.pdf">Lista de Exercícios opcional</a>
+      <a href="handouts/guia-13-comparacao-buscas-ordenacoes.pdf">Lista de Exercícios opcional</a>
     </li>
   
 
@@ -542,7 +554,7 @@
         
   
     <li>
-      <a href="../aulas/aula-13-dfs.html">Material</a>
+      <a href="aulas/aula-13-dfs.html">Material</a>
     </li>
   
 
@@ -550,7 +562,7 @@
         
   
     <li>
-      <a href="../handouts/aula-13-dfs.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-13-dfs.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -575,7 +587,7 @@
         
   
     <li>
-      <a href="../aulas/aula-14-bfs-filas.html">Material</a>
+      <a href="aulas/aula-14-bfs-filas.html">Material</a>
     </li>
   
 
@@ -583,7 +595,7 @@
         
   
     <li>
-      <a href="../handouts/aula-14-bfs-filas.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-14-bfs-filas.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -608,7 +620,7 @@
         
   
     <li>
-      <a href="../aulas/aula-15-problemas-bfs-dfs.html">Material</a>
+      <a href="aulas/aula-15-problemas-bfs-dfs.html">Material</a>
     </li>
   
 
@@ -616,7 +628,7 @@
         
   
     <li>
-      <a href="../handouts/aula-15-problemas-bfs-dfs.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-15-problemas-bfs-dfs.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -633,7 +645,7 @@
         
   
     <li>
-      <a href="../aulas/aula-16-introducao-backtracking.html">Material</a>
+      <a href="aulas/aula-16-introducao-backtracking.html">Material</a>
     </li>
   
 
@@ -641,7 +653,7 @@
         
   
     <li>
-      <a href="../handouts/aula-16-introducao-backtracking.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-16-introducao-backtracking.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -666,7 +678,7 @@
         
   
     <li>
-      <a href="../aulas/aula-17-backtracking-restricoes.html">Material</a>
+      <a href="aulas/aula-17-backtracking-restricoes.html">Material</a>
     </li>
   
 
@@ -674,7 +686,7 @@
         
   
     <li>
-      <a href="../handouts/aula-17-backtracking-restricoes.pdf">Lista de Exercícios</a>
+      <a href="handouts/aula-17-backtracking-restricoes.pdf">Lista de Exercícios</a>
     </li>
   
 
@@ -698,119 +710,62 @@
                 
                 <li></li>
             </ul>
-            <h1>Exercícios — Aula 09 — Divisão e conquista</h1>
-            <h2>Técnicas de Programação</h2>
+            
+            
           </div>
           
             <section class="progress-section show">
-<h2 id="instrucoes">Instruções<a class="headerlink" href="#instrucoes" title="Permanent link">&para;</a></h2>
+<h1 id="lista-de-exercicios-sugeridos">Lista de exercícios sugeridos<a class="headerlink" href="#lista-de-exercicios-sugeridos" title="Permanent link">&para;</a></h1>
+<h2 id="busca-binaria">Busca binária:<a class="headerlink" href="#busca-binaria" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Em cada algoritmo, identifique as etapas: dividir, resolver e combinar.</li>
-<li>Use intervalos abertos no fim: <code>[inicio, fim)</code>.</li>
-<li>Em simulações, desenhe a árvore de chamadas e depois os retornos subindo pela árvore.</li>
+<li><a href="https://leetcode.com/problems/search-insert-position/description/">Insert position</a></li>
+<li><a href="https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/">Smallest letter greater than target</a></li>
+<li><a href="https://leetcode.com/problems/find-peak-element/description/">Find peak element</a></li>
+<li><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/description/">Search in Rotated Sorted Array</a></li>
+<li><a href="https://leetcode.com/problems/binary-search/description/">Binary Search</a></li>
+<li><a href="https://leetcode.com/problems/search-insert-position/description/">Search Insert Position</a></li>
+<li><a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/">Find First and Last Position of Element in Sorted Array</a></li>
+<li><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/">Find Minimum in Rotated Sorted Array</a></li>
 </ul>
-<h2 id="exercicio-1-maximo-por-divisao-e-conquista">Exercício 1 — Máximo por divisão e conquista<a class="headerlink" href="#exercicio-1-maximo-por-divisao-e-conquista" title="Permanent link">&para;</a></h2>
-<p>Simule o algoritmo para <code>v = [8, 3, 12, 5]</code>.</p>
-<p>\begin{algorithm}[H]
-\DontPrintSemicolon
-\SetAlgoLined
-\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
-\KwResult{Executa \texttt{MAXIMO}.}
-\Input{array v}
-\Output{maior value}
-\BlankLine
-\BlankLine
-\If{$\texttt{TAMANHO}(v) = 0$}{
-    \Return{"erro: array vazio"}\;
-\BlankLine
-}
-\Return{\texttt{MAXIMO-INTERVALO}(v, 0, \texttt{TAMANHO}(v))}\;
-\BlankLine
-\caption{Maximo}
-\end{algorithm}</p>
-<p>\begin{algorithm}[H]
-\DontPrintSemicolon
-\SetAlgoLined
-\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
-\KwResult{Executa \texttt{MAXIMO-INTERVALO}.}
-\Input{array v, int inicio, int fim}
-\Output{maior value em v[inicio..fim)}
-\BlankLine
-\BlankLine
-\If{$fim - inicio = 1$}{
-    \Return{v[inicio]}\;
-\BlankLine
-}
-$meio \gets inicio + \texttt{INTEIRO}((fim - inicio) / 2)$\;
-$maior_esq \gets \texttt{MAXIMO-INTERVALO}(v, inicio, meio)$\;
-$maior_dir \gets \texttt{MAXIMO-INTERVALO}(v, meio, fim)$\;
-\BlankLine
-\If{$maior_esq &gt; maior_dir$}{
-    \Return{maior_esq}\;
-} \Else{
-    \Return{maior_dir}\;
-}
-\caption{MaximoIntervalo}
-\end{algorithm}</p>
-<p>Complete a árvore de chamadas.</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>MAXIMO-INTERVALO(v, 0, 4)
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>|-- MAXIMO-INTERVALO(v, __, __)
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>|   |-- MAXIMO-INTERVALO(v, __, __) -&gt; __
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>|   `-- MAXIMO-INTERVALO(v, __, __) -&gt; __
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>`-- MAXIMO-INTERVALO(v, __, __)
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    |-- MAXIMO-INTERVALO(v, __, __) -&gt; __
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    `-- MAXIMO-INTERVALO(v, __, __) -&gt; __
-</code></pre></div>
-<p>Agora indique os valores combinados em cada nó interno e o retorno final.</p>
-<p>[break]</p>
-<h2 id="exercicio-2-dividir-resolver-e-combinar">Exercício 2 — Dividir, resolver e combinar<a class="headerlink" href="#exercicio-2-dividir-resolver-e-combinar" title="Permanent link">&para;</a></h2>
-<p>Para cada problema, descreva as três etapas (dividir, resolver e combinar).</p>
-<ol>
-<li>Encontrar máximo</li>
-<li>Somar elementos</li>
-<li>Verificar se todos são positivos</li>
-</ol>
-<p>Em qual problema a combinação é mais trabalhosa? Em qual problema o trabalho principal acontece antes das chamadas recursivas?</p>
-<p>[break]</p>
-<h2 id="exercicio-3-minimo-por-divisao-e-conquista">Exercício 3 — Mínimo por divisão e conquista<a class="headerlink" href="#exercicio-3-minimo-por-divisao-e-conquista" title="Permanent link">&para;</a></h2>
-<p>Escreva pseudocódigo para <code>MINIMO</code>.</p>
-<p>Contrato:</p>
+<h3 id="recursao-e-divisao-e-conquista">Recursão e Divisão e Conquista<a class="headerlink" href="#recursao-e-divisao-e-conquista" title="Permanent link">&para;</a></h3>
 <ul>
-<li>entrada: array não vazio <code>v</code>;</li>
-<li>saída: menor valor;</li>
-<li>use um auxiliar <code>MINIMO-INTERVALO(v, inicio, fim)</code>;</li>
-<li>use intervalo <code>[inicio, fim)</code>;</li>
-<li>caso base: intervalo com um único elemento.</li>
+<li><a href="https://leetcode.com/problems/merge-two-sorted-lists/description/"><strong>Merge Two Sorted Lists</strong></a></li>
+<li><a href="https://leetcode.com/problems/powx-n/description/">Pow(x, n)</a></li>
+<li><a href="https://leetcode.com/problems/maximum-subarray/description/">Maximum Subarray</a></li>
+<li><a href="https://leetcode.com/problems/reverse-string/description/">Reverse String</a></li>
 </ul>
-<p>Teste com:</p>
+<h3 id="pilha">Pilha<a class="headerlink" href="#pilha" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>v = [8, 3, 12, 5]</code>;</li>
-<li><code>v = [4]</code>;</li>
-<li><code>v = [-2, 9, -5, 1]</code>.</li>
+<li><a href="https://leetcode.com/problems/valid-parentheses/description/">Valid Parentheses</a></li>
+<li><a href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/description/">Remove All Adjacent Duplicates In String</a></li>
+<li><a href="https://leetcode.com/problems/daily-temperatures/description/"><strong>Daily Temperatures</strong></a></li>
 </ul>
-<p>[break]</p>
-<h2 id="exercicio-4-soma-por-divisao-e-conquista">Exercício 4 — Soma por divisão e conquista<a class="headerlink" href="#exercicio-4-soma-por-divisao-e-conquista" title="Permanent link">&para;</a></h2>
-<p>Escreva pseudocódigo para <code>SOMA-INTERVALO</code>.</p>
-<p>Contrato:</p>
+<h3 id="fila">Fila<a class="headerlink" href="#fila" title="Permanent link">&para;</a></h3>
 <ul>
-<li>entrada: array <code>v</code>, inteiros <code>inicio</code> e <code>fim</code>;</li>
-<li>saída: soma dos elementos em <code>v[inicio..fim)</code>;</li>
-<li>se <code>inicio = fim</code>, retorne <code>0</code>;</li>
-<li>se houver um elemento, retorne esse elemento;</li>
-<li>caso contrário, divida em duas metades e combine somando.</li>
+<li><a href="https://leetcode.com/problems/number-of-students-unable-to-eat-lunch/description/">Number of Students Unable to Eat Lunch</a></li>
 </ul>
-<p>Depois simule para <code>v = [4, 7, 2, 1]</code>.</p>
-<p>[break]</p>
-<h2 id="exercicio-5-divisao-equilibrada-e-desequilibrada">Exercício 5 — Divisão equilibrada e desequilibrada<a class="headerlink" href="#exercicio-5-divisao-equilibrada-e-desequilibrada" title="Permanent link">&para;</a></h2>
-<p>Compare duas formas de dividir um intervalo de tamanho <code>8</code>.</p>
-<p><strong>Estratégia A:</strong> dividir em duas metades de tamanho <code>4</code> e <code>4</code>.</p>
-<p><strong>Estratégia B:</strong> dividir em partes de tamanho <code>1</code> e <code>7</code>.</p>
-<p>Responda:</p>
-<ol>
-<li>Qual estratégia gera uma árvore mais baixa?</li>
-<li>Qual estratégia se parece mais com busca binária?</li>
-<li>Para uma entrada de tamanho <code>n</code>, por que divisões equilibradas tendem a produzir profundidade <code>O(log n)</code>?</li>
-</ol>
+<!-- [1]: https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/?utm_source=chatgpt.com "Find First and Last Position of Element in Sorted Array - LeetCode" -->
+
+<!-- 33. Search in Rotated Sorted Array - medium
+704. Binary Search - easy
+35. Search Insert Position - easy
+36. Find First and Last Position of Element in Sorted Array - medium
+153. Find Minimum in Rotated Sorted Array - medium
+
+## Recursão e Divisão e Conquista
+21. Merge Two Sorted Lists - medium - ja feito
+22. Pow(x, n) - medium
+23. Maximum  - medium (esse tem dinamic programming como tópico, mas é só utilizar o MAX pra comparar as variaveis)
+344. Reverse String - easy
+
+## Pilha
+20. Valid Parentheses - easy
+1047. Remove All Adjacent Duplicates In String - easy
+739. Daily Temperatures - medium - ja feito
+
+
+## Fila
+1700. Number of Students Unable to Eat Lunch - easy -->
 
 
 </section>
@@ -820,12 +775,26 @@ $maior_dir \gets \texttt{MAXIMO-INTERVALO}(v, meio, fim)$\;
       <footer class="ah-footer ah-typeset">
         <div class="ah-footer-nav">
           
+            <a href="index.html"
+               class="ah-prev"
+               title="Início">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Início</span>
+            </a>
+          
+          
+            <a href="aulas/aula-00-primeiros-passos.html"
+               class="ah-next"
+               title="Material">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Material</span>
+            </a>
           
         </div>
       </footer>
     </div>
     
-      <script src="../js/tabs.js"></script><script src="../search/main.js"></script>
+      <script src="js/tabs.js"></script><script src="search/main.js"></script>
     
   </body>
 </html>
