@@ -77,13 +77,13 @@ Veja os vídeos abaixo para entender um pouco melhor a mudança para material im
 <!-- - [Parte 1][pseudo-cheatsheet1]: Variáveis e Controle de fluxo -->
 
 
-# Exercícios extras
+<!-- # Exercícios extras
 
 **Busca binária**:
 
 - [Insert position](https://leetcode.com/problems/search-insert-position/description/)
 - [Smallest letter greater than target](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
-- [Find peak element](https://leetcode.com/problems/find-peak-element/description/)
+- [Find peak element](https://leetcode.com/problems/find-peak-element/description/) -->
 
 <!-- 
 

@@ -16,7 +16,7 @@ extra:
 
 nav:
   - Início: index.md
-#   - Materiais por aula: materiais.md
+  - Exercícios sugeridos: exercicios.md
   - Aulas:
     #   - Visão geral: aulas/index.md
     #   - Índice de handouts: handouts/index.md
