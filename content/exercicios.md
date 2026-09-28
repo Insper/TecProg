@@ -11,20 +11,20 @@
 * [Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/)
 * [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/)
 
-### Recursão e Divisão e Conquista
+## Recursão e Divisão e Conquista
 
 * [**Merge Two Sorted Lists**](https://leetcode.com/problems/merge-two-sorted-lists/description/)
 * [Pow(x, n)](https://leetcode.com/problems/powx-n/description/)
 * [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/description/)
 * [Reverse String](https://leetcode.com/problems/reverse-string/description/)
 
-### Pilha
+## Pilha
 
 * [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/description/)
 * [Remove All Adjacent Duplicates In String](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/description/)
 * [**Daily Temperatures**](https://leetcode.com/problems/daily-temperatures/description/)
 
-### Fila
+## Fila
 
 * [Number of Students Unable to Eat Lunch](https://leetcode.com/problems/number-of-students-unable-to-eat-lunch/description/)
 
