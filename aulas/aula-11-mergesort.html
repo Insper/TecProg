@@ -454,6 +454,26 @@
               </li>
             
               <li class="ah-toc-item">
+                <a href="#simulacao-passo-a-passo">Simulação passo a passo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#melhor-caso">Melhor caso</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#pior-caso">Pior caso</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#quando-insertion-sort-e-util">Quando insertion sort é útil?</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
                 <a href="#problema-motivador_1">Problema motivador</a>
               </li>
             
@@ -478,7 +498,7 @@
               </li>
             
               <li class="ah-toc-item">
-                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+                <a href="#analise-informal-de-custo_1">Análise informal de custo</a>
               </li>
             
               <li class="ah-toc-item">
@@ -801,102 +821,70 @@
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>{3, 8, 8, 2}  &lt;- desloca 8 para abrir espaço
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>{3, 5, 8, 2}  &lt;- coloca a chave em j + 1
 </code></pre></div>
-<!-- 
-<div class="language-java highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">InsertionSort</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ordenar</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">chave</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">v</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">chave</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">                </span><span class="n">v</span><span class="o">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">;</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">                </span><span class="n">j</span><span class="o">--</span><span class="p">;</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">            </span><span class="n">v</span><span class="o">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chave</span><span class="p">;</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
-<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">imprimir</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">valor</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">);</span>
-<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
-<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
-<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">};</span>
-<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="w">        </span><span class="n">ordenar</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
-<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">        </span><span class="n">imprimir</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"> </span><span class="c1">// 2 3 5 8</span>
-<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="p">}</span>
-<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="err">```</span><span class="w"> </span><span class="o">--&gt;</span>
-<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>
-<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="o">&lt;!--</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">variável</span><span class="w"> </span><span class="err">`</span><span class="n">chave</span><span class="err">`</span><span class="w"> </span><span class="n">guarda</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="n">que</span><span class="w"> </span><span class="n">será</span><span class="w"> </span><span class="n">inserido</span><span class="p">.</span><span class="w"> </span><span class="n">O</span><span class="w"> </span><span class="n">laço</span><span class="w"> </span><span class="err">`</span><span class="k">while</span><span class="err">`</span><span class="w"> </span><span class="n">desloca</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">direita</span><span class="w"> </span><span class="n">os</span><span class="w"> </span><span class="n">elementos</span><span class="w"> </span><span class="n">maiores</span><span class="w"> </span><span class="n">que</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">chave</span><span class="p">.</span><span class="w"> </span><span class="n">Quando</span><span class="w"> </span><span class="n">encontramos</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">posição</span><span class="w"> </span><span class="n">correta</span><span class="p">,</span><span class="w"> </span><span class="n">colocamos</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">chave</span><span class="w"> </span><span class="n">em</span><span class="w"> </span><span class="err">`</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="err">`</span><span class="p">.</span><span class="w"> </span><span class="o">--&gt;</span>
-<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>
-<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="err">##</span><span class="w"> </span><span class="n">Simulação</span><span class="w"> </span><span class="n">passo</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">passo</span>
-<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>
-<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a><span class="n">Para</span><span class="w"> </span><span class="err">`</span><span class="p">{</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="err">`</span><span class="p">:</span>
-<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>
-<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a><span class="o">|</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">chave</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">deslocamentos</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">resultado</span><span class="w"> </span><span class="n">parcial</span><span class="w"> </span><span class="o">|</span>
-<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a><span class="o">|</span><span class="w"> </span><span class="o">-</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">----</span><span class="p">:</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">------------</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">-----------------</span><span class="w"> </span><span class="o">|</span>
-<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="n">vai</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">direita</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="err">`</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="err">`</span><span class="w"> </span><span class="o">|</span>
-<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="n">vai</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">direita</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="err">`</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="err">`</span><span class="w"> </span><span class="o">|</span>
-<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">vão</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">direita</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="err">`</span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">}</span><span class="err">`</span><span class="w"> </span><span class="o">|</span>
-<a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>
-<a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a><span class="n">O</span><span class="w"> </span><span class="n">deslocamento</span><span class="w"> </span><span class="n">é</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">operação</span><span class="w"> </span><span class="n">que</span><span class="w"> </span><span class="n">domina</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">custo</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">pior</span><span class="w"> </span><span class="n">caso</span><span class="p">.</span>
-<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>
-<a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="n">Você</span><span class="w"> </span><span class="n">pode</span><span class="w"> </span><span class="n">acompanhar</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">execução</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">algoritmo</span><span class="w"> </span><span class="n">através</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">[</span><span class="n">visualizador</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">insertion</span><span class="w"> </span><span class="n">sort</span><span class="o">]</span><span class="p">(</span><span class="n">https</span><span class="p">:</span><span class="c1">//www.hackerearth.com/practice/algorithms/sorting/insertion-sort/visualize/)</span>
-<a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>
-<a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a><span class="err">##</span><span class="w"> </span><span class="n">Melhor</span><span class="w"> </span><span class="n">caso</span>
-<a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a>
-<a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a><span class="n">Se</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">já</span><span class="w"> </span><span class="n">está</span><span class="w"> </span><span class="n">ordenado</span><span class="p">:</span>
-<a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a>
-<a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a><span class="err">```</span><span class="n">text</span>
-<a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">}</span>
+<h2 id="simulacao-passo-a-passo">Simulação passo a passo<a class="headerlink" href="#simulacao-passo-a-passo" title="Permanent link">&para;</a></h2>
+<p>Para <code>{8, 3, 5, 2}</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">i</th>
+<th style="text-align: right;">chave</th>
+<th>deslocamentos</th>
+<th>resultado parcial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td>8 vai para a direita</td>
+<td><code>{3, 8, 5, 2}</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td>8 vai para a direita</td>
+<td><code>{3, 5, 8, 2}</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td>8, 5 e 3 vão para a direita</td>
+<td><code>{2, 3, 5, 8}</code></td>
+</tr>
+</tbody>
+</table>
+<p>O deslocamento é a operação que domina o custo no pior caso.</p>
+<p>Você pode acompanhar a execução do algoritmo através do <a href="https://opendsa-server.cs.vt.edu/OpenDSA/AV/Sorting/insertionsortAV.html">visualizador de insertion sort</a></p>
+<h2 id="melhor-caso">Melhor caso<a class="headerlink" href="#melhor-caso" title="Permanent link">&para;</a></h2>
+<p>Se o array já está ordenado:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>{2, 3, 5, 8}
 </code></pre></div>
-
-Para cada `i`, a condição `v[j] > chave` falha logo na primeira comparação. Não há deslocamentos. O algoritmo ainda percorre o array, mas faz pouco trabalho interno. O melhor caso é linear: `O(n)`.
-
-## Pior caso
-
-Se o array está em ordem inversa:
-
+<p>Para cada <code>i</code>, a condição <code>v[j] &gt; chave</code> falha logo na primeira comparação. Não há deslocamentos. O algoritmo ainda percorre o array, mas faz pouco trabalho interno. O melhor caso é linear: <code>O(n)</code>.</p>
+<h2 id="pior-caso">Pior caso<a class="headerlink" href="#pior-caso" title="Permanent link">&para;</a></h2>
+<p>Se o array está em ordem inversa:</p>
 <div class="language-text highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>{8, 5, 3, 2}
 </code></pre></div>
-
-Cada nova chave precisa atravessar todo o prefixo ordenado. Para `i = 1`, desloca um elemento. Para `i = 2`, desloca dois. Para `i = 3`, desloca três. Em geral, o total cresce como:
-
+<p>Cada nova chave precisa atravessar todo o prefixo ordenado. Para <code>i = 1</code>, desloca um elemento. Para <code>i = 2</code>, desloca dois. Para <code>i = 3</code>, desloca três. Em geral, o total cresce como:</p>
 <div class="language-text highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>1 + 2 + 3 + ... + (n - 1)
 </code></pre></div>
-
-Isso cresce proporcionalmente a `n²`. Portanto, o pior caso é `O(n²)`.
-
-## Quando insertion sort é útil?
-
-Insertion sort não é a melhor escolha para arrays muito grandes e desordenados. Mesmo assim, ele é didaticamente valioso e útil em alguns contextos:
-
-- arrays pequenos;
-- dados quase ordenados;
-- situações em que queremos entender deslocamentos;
-- como parte de algoritmos híbridos mais avançados.
-
-Além disso, ele reforça a relação entre ordenação, invariantes e custo.
-
-## Análise informal de custo
-
-O laço externo executa `n - 1` vezes. O laço interno pode executar poucas vezes, se o dado já está quase ordenado, ou muitas vezes, se cada chave precisa voltar até o início.
-
-- Melhor caso: `O(n)`.
-- Pior caso: `O(n²)`.
-- Memória extra: `O(1)`, pois ordena no próprio array.
-
-O algoritmo é estável se usamos `v[j] > chave`, e não `v[j] >= chave`, porque elementos iguais não são invertidos.
-
-<!-- ## Pré-requisitos
-
-Você deve conhecer recursão, intervalos em arrays, divisão e conquista e insertion sort. Mergesort é o primeiro algoritmo de ordenação eficiente da sequência: ele troca deslocamentos quadráticos por divisões equilibradas e intercalações lineares. -->
-
+<p>Isso cresce proporcionalmente a <code>n²</code>. Portanto, o pior caso é <code>O(n²)</code>.</p>
+<h2 id="quando-insertion-sort-e-util">Quando insertion sort é útil?<a class="headerlink" href="#quando-insertion-sort-e-util" title="Permanent link">&para;</a></h2>
+<p>Insertion sort não é a melhor escolha para arrays muito grandes e desordenados. Mesmo assim, ele é didaticamente valioso e útil em alguns contextos:</p>
+<ul>
+<li>arrays pequenos;</li>
+<li>dados quase ordenados;</li>
+<li>situações em que queremos entender deslocamentos;</li>
+<li>como parte de algoritmos híbridos mais avançados.</li>
+</ul>
+<p>Além disso, ele reforça a relação entre ordenação, invariantes e custo.</p>
+<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<p>O laço externo executa <code>n - 1</code> vezes. O laço interno pode executar poucas vezes, se o dado já está quase ordenado, ou muitas vezes, se cada chave precisa voltar até o início.</p>
+<ul>
+<li>Melhor caso: <code>O(n)</code>.</li>
+<li>Pior caso: <code>O(n²)</code>.</li>
+<li>Memória extra: <code>O(1)</code>, pois ordena no próprio array.</li>
+</ul>
+<p>O algoritmo é estável se usamos <code>v[j] &gt; chave</code>, e não <code>v[j] &gt;= chave</code>, porque elementos iguais não são invertidos.</p>
 <h2 id="problema-motivador_1">Problema motivador<a class="headerlink" href="#problema-motivador_1" title="Permanent link">&para;</a></h2>
 <p>Agora imagine duas pilhas de provas já ordenadas por nota. Para produzir uma única pilha ordenada, não precisamos reordenar tudo do zero. Basta olhar o primeiro elemento de cada pilha, retirar o menor e repetir. Essa operação é chamada de intercalação, ou merge.</p>
 <p>Mergesort usa essa ideia: divide o array até partes pequenas, ordena recursivamente e intercala as metades ordenadas.</p>
@@ -938,59 +926,6 @@ Você deve conhecer recursão, intervalos em arrays, divisão e conquista e inse
 <a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>        v[p] &lt;- aux[p]
 </code></pre></div>
 <p>Os três índices têm papéis fixos: <code>i</code> lê a metade esquerda, <code>j</code> lê a direita e <code>k</code> escreve no auxiliar. Nenhum deles precisa voltar durante uma intercalação.</p>
-<!-- ```java
-public class MergeSort {
-    public static void ordenar(int[] v) {
-        int[] aux = new int[v.length];
-        ordenar(v, aux, 0, v.length);
-    }
-
-    private static void ordenar(int[] v, int[] aux, int inicio, int fim) {
-        if (fim - inicio <= 1) {
-            return;
-        }
-
-        int meio = inicio + (fim - inicio) / 2;
-        ordenar(v, aux, inicio, meio);
-        ordenar(v, aux, meio, fim);
-        merge(v, aux, inicio, meio, fim);
-    }
-
-    private static void merge(int[] v, int[] aux, int inicio, int meio, int fim) {
-        int i = inicio;
-        int j = meio;
-        int k = inicio;
-
-        while (i < meio && j < fim) {
-            if (v[i] <= v[j]) {
-                aux[k] = v[i];
-                i++;
-            } else {
-                aux[k] = v[j];
-                j++;
-            }
-            k++;
-        }
-
-        while (i < meio) {
-            aux[k] = v[i];
-            i++;
-            k++;
-        }
-
-        while (j < fim) {
-            aux[k] = v[j];
-            j++;
-            k++;
-        }
-
-        for (int p = inicio; p < fim; p++) {
-            v[p] = aux[p];
-        }
-    }
-}
-``` -->
-
 <p>O vetor <code>aux</code> é criado uma vez e reutilizado. Isso evita criar vários arrays durante as chamadas.</p>
 <h2 id="simulacao-da-intercalacao">Simulação da intercalação<a class="headerlink" href="#simulacao-da-intercalacao" title="Permanent link">&para;</a></h2>
 <p>Considere <code>v = {2, 7, 9, 1, 5, 8}</code>, com <code>inicio = 0</code>, <code>meio = 3</code>, <code>fim = 6</code>.</p>
@@ -1043,6 +978,7 @@ public class MergeSort {
 </tbody>
 </table>
 <p>Depois copiamos <code>aux</code> de volta para <code>v</code>.</p>
+<p>Você pode acompanhar a execução do algoritmo através do <a href="https://opendsa-server.cs.vt.edu/embed/mergesortAV">visualizador de merge sort</a></p>
 <h2 id="por-que-e-estavel">Por que é estável?<a class="headerlink" href="#por-que-e-estavel" title="Permanent link">&para;</a></h2>
 <p>Uma ordenação é estável quando elementos empatados preservam a ordem relativa original. No merge acima, usamos <code>v[i] &lt;= v[j]</code>. Em caso de empate, escolhemos primeiro o elemento que veio da metade esquerda. Como a metade esquerda aparece antes no array original, essa escolha preserva estabilidade.</p>
 <p>Se trocássemos por <code>v[i] &lt; v[j]</code>, empates vindos da direita poderiam passar à frente.</p>
@@ -1055,7 +991,7 @@ public class MergeSort {
 <li>caso base: intervalo com zero ou um elemento.</li>
 </ul>
 <p>É importante notar que a intercalação só funciona corretamente porque as duas metades já estão ordenadas. Essa é a confiança recursiva do algoritmo.</p>
-<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<h2 id="analise-informal-de-custo_1">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo_1" title="Permanent link">&para;</a></h2>
 <p>Em cada nível da árvore de chamadas, todos os elementos participam de alguma intercalação. Portanto, cada nível custa <code>O(n)</code>. Como o array é dividido ao meio repetidamente, há cerca de <code>log n</code> níveis. O custo total é <code>O(n * log n)</code>.</p>
 <p>O custo de memória extra é <code>O(n)</code>, por causa do vetor auxiliar. Além disso, existe custo de pilha recursiva <code>O(log n)</code> em divisões equilibradas.</p>
 <h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
@@ -1067,19 +1003,6 @@ public class MergeSort {
 <li>Criar vetor auxiliar novo em toda chamada sem necessidade.</li>
 <li>Usar <code>&lt;</code> quando a estabilidade é desejada.</li>
 </ul>
-<!-- ## Exercícios de fixação
-
-1. Simule o merge de `[3, 6, 10]` com `[1, 4, 8]`.
-2. Implemente apenas o método `merge` e teste com duas metades já ordenadas.
-3. Teste mergesort com array vazio, um elemento, repetidos e já ordenado.
-4. Explique por que `fim - inicio <= 1` é caso base.
-5. Explique por que mergesort não é in-place nesta versão.
-6. Compare insertion sort e mergesort para arrays grandes.
-
-## Exercício integrador
-
-Implemente uma versão de mergesort que conta quantas vezes o método `merge` é chamado e quantos elementos são copiados de volta para o array original. Teste com arrays de tamanho `4`, `8` e `16` e relacione os resultados com a ideia de níveis. -->
-
 <h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar a intercalação.</li>
