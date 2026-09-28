@@ -60,11 +60,12 @@ nav:
       - Aula 11 — Insertion sort e Mergesort:
     #       - Material: aulas/aula-10-insertion-sort-analise.md
         #   - Lista de Exercícios: handouts/aula-10-insertion-sort-analise.pdf
-          - Exercícios de código: https://leetcode.com/problem-list/sorting/
+          
     #   - Aula 11 — Mergesort:
           - Material: aulas/aula-11-mergesort.md
           - Lista de Exercícios: handouts/aula-11-mergesort.pdf
-          - Exercícios de código: https://leetcode.com/problem-list/merge-sort/
+          - Exercícios de ordenação: https://leetcode.com/problem-list/sorting/
+          - Exercícios de Mergesort: https://leetcode.com/problem-list/merge-sort/
       - Aula 12 — Quicksort e particionamento:
           - Material: aulas/aula-12-quicksort-particionamento.md
           - Lista de Exercícios: handouts/aula-12-quicksort-particionamento.pdf
