@@ -11,9 +11,6 @@ Ao final desta aula, você deve ser capaz de:
 - comparar caso médio e pior caso;
 - reconhecer cuidados com valores repetidos e escolha de pivô.
 
-<!-- ## Pré-requisitos
-
-Você deve conhecer recursão, divisão e conquista, arrays e ordenação por mergesort. No quicksort, a combinação é diferente: em vez de intercalar depois, reorganizamos o array antes das chamadas recursivas. -->
 
 ## Problema motivador
 
@@ -53,46 +50,6 @@ PARTICIONAR(v, inicio, fim)
 
 Antes de cada iteração, `v[inicio..menores)` contém valores menores ou iguais ao pivô, e `v[menores..atual)` contém valores maiores. Esse é o invariante que explica a posição final do pivô.
 
-<!-- ```java
-public class QuickSort {
-    public static void ordenar(int[] v) {
-        quicksort(v, 0, v.length - 1);
-    }
-
-    private static void quicksort(int[] v, int inicio, int fim) {
-        if (inicio >= fim) {
-            return;
-        }
-
-        int p = particionar(v, inicio, fim);
-        quicksort(v, inicio, p - 1);
-        quicksort(v, p + 1, fim);
-    }
-
-    private static int particionar(int[] v, int inicio, int fim) {
-        int pivo = v[fim];
-        int menores = inicio;
-
-        for (int atual = inicio; atual < fim; atual++) {
-            if (v[atual] <= pivo) {
-                trocar(v, menores, atual);
-                menores++;
-            }
-        }
-
-        trocar(v, menores, fim);
-        return menores;
-    }
-
-    private static void trocar(int[] v, int i, int j) {
-        int temp = v[i];
-        v[i] = v[j];
-        v[j] = temp;
-    }
-}
-```
-
-A variável `menores` indica a primeira posição livre depois dos elementos menores ou iguais ao pivô já encontrados. -->
 
 ## Simulação da partição
 
@@ -160,19 +117,6 @@ A memória extra, além da pilha de chamadas, é pequena. A ordenação ocorre n
 - Não tratar caso base `inicio >= fim`.
 - Achar que quicksort sempre é `O(n log n)`.
 - Ignorar que a escolha do pivô influencia muito o desempenho.
-
-<!-- ## Exercícios de fixação
-
-1. Simule a partição de `{4, 9, 1, 7, 3}` com pivô `3`.
-2. Implemente `particionar` e teste isoladamente.
-3. Teste quicksort com array já ordenado, inverso e com repetidos.
-4. Explique por que o pivô não participa das chamadas recursivas.
-5. Compare quicksort e mergesort em memória extra.
-6. Explique um cenário em que esta escolha de pivô é ruim.
-
-## Exercício integrador
-
-Implemente quicksort contando quantas chamadas recursivas e quantas partições foram feitas. Teste com arrays aleatórios, ordenados e em ordem inversa. Escreva uma conclusão curta sobre o efeito da escolha do pivô. -->
 
 ## Checklist de aprendizagem
 
