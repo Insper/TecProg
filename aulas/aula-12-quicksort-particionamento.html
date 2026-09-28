@@ -487,6 +487,34 @@
               </li>
             
               <li class="ah-toc-item">
+                <a href="#simulacao-da-particao">Simulação da partição</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#quicksort-depois-da-particao">Quicksort depois da partição</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#por-que-o-pivo-fica-correto">Por que o pivô fica correto?</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#melhor-medio-e-pior-caso">Melhor, médio e pior caso</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#valores-repetidos">Valores repetidos</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analise-informal-de-custo">Análise informal de custo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#erros-comuns">Erros comuns</a>
+              </li>
+            
+              <li class="ah-toc-item">
                 <a href="#checklist-de-aprendizagem">Checklist de aprendizagem</a>
               </li>
             
@@ -721,10 +749,6 @@
 <li>comparar caso médio e pior caso;</li>
 <li>reconhecer cuidados com valores repetidos e escolha de pivô.</li>
 </ul>
-<!-- ## Pré-requisitos
-
-Você deve conhecer recursão, divisão e conquista, arrays e ordenação por mergesort. No quicksort, a combinação é diferente: em vez de intercalar depois, reorganizamos o array antes das chamadas recursivas. -->
-
 <h2 id="problema-motivador">Problema motivador<a class="headerlink" href="#problema-motivador" title="Permanent link">&para;</a></h2>
 <p>Queremos ordenar um array, mas sem usar vetor auxiliar grande como no mergesort. Uma ideia é escolher um elemento como pivô e reorganizar o array para que:</p>
 <ul>
@@ -756,125 +780,86 @@ Você deve conhecer recursão, divisão e conquista, arrays e ordenação por me
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    RETURN menores
 </code></pre></div>
 <p>Antes de cada iteração, <code>v[inicio..menores)</code> contém valores menores ou iguais ao pivô, e <code>v[menores..atual)</code> contém valores maiores. Esse é o invariante que explica a posição final do pivô.</p>
-<!-- ```java
-public class QuickSort {
-    public static void ordenar(int[] v) {
-        quicksort(v, 0, v.length - 1);
-    }
-
-    private static void quicksort(int[] v, int inicio, int fim) {
-        if (inicio >= fim) {
-            return;
-        }
-
-        int p = particionar(v, inicio, fim);
-        quicksort(v, inicio, p - 1);
-        quicksort(v, p + 1, fim);
-    }
-
-    private static int particionar(int[] v, int inicio, int fim) {
-        int pivo = v[fim];
-        int menores = inicio;
-
-        for (int atual = inicio; atual < fim; atual++) {
-            if (v[atual] <= pivo) {
-                trocar(v, menores, atual);
-                menores++;
-            }
-        }
-
-        trocar(v, menores, fim);
-        return menores;
-    }
-
-    private static void trocar(int[] v, int i, int j) {
-        int temp = v[i];
-        v[i] = v[j];
-        v[j] = temp;
-    }
-}
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>A variável `menores` indica a primeira posição livre depois dos elementos menores ou iguais ao pivô já encontrados. --&gt;
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>## Simulação da partição
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Para `v = {8, 3, 7, 2, 5}`, pivô `5`:
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>| atual | v[atual] | ação | array |
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>| ----: | -------: | ---- | ----- |
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>| 0 | 8 | não troca | `{8, 3, 7, 2, 5}` |
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>| 1 | 3 | troca com posição 0 | `{3, 8, 7, 2, 5}` |
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>| 2 | 7 | não troca | `{3, 8, 7, 2, 5}` |
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>| 3 | 2 | troca com posição 1 | `{3, 2, 7, 8, 5}` |
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>| fim | 5 | troca pivô com posição 2 | `{3, 2, 5, 8, 7}` |
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>O pivô `5` está na posição correta: nada à esquerda é maior que ele e nada à direita é menor ou igual a ele.
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>Você pode acompanhar a execução do algoritmo através do [visualizador de quick sort](https://coddy.tech/visualize/sorting/quick-sort)
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>## Quicksort depois da partição
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>Depois da partição, o pivô não precisa mais ser mexido. As chamadas recursivas ordenam apenas os lados:
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>```text
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>quicksort(esquerda)
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>pivo
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>quicksort(direita)
+<h2 id="simulacao-da-particao">Simulação da partição<a class="headerlink" href="#simulacao-da-particao" title="Permanent link">&para;</a></h2>
+<p>Para <code>v = {8, 3, 7, 2, 5}</code>, pivô <code>5</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">atual</th>
+<th style="text-align: right;">v[atual]</th>
+<th>ação</th>
+<th>array</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td>não troca</td>
+<td><code>{8, 3, 7, 2, 5}</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td>troca com posição 0</td>
+<td><code>{3, 8, 7, 2, 5}</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7</td>
+<td>não troca</td>
+<td><code>{3, 8, 7, 2, 5}</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td>troca com posição 1</td>
+<td><code>{3, 2, 7, 8, 5}</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">fim</td>
+<td style="text-align: right;">5</td>
+<td>troca pivô com posição 2</td>
+<td><code>{3, 2, 5, 8, 7}</code></td>
+</tr>
+</tbody>
+</table>
+<p>O pivô <code>5</code> está na posição correta: nada à esquerda é maior que ele e nada à direita é menor ou igual a ele.</p>
+<p>Você pode acompanhar a execução do algoritmo através do <a href="https://coddy.tech/visualize/sorting/quick-sort">visualizador de quick sort</a></p>
+<h2 id="quicksort-depois-da-particao">Quicksort depois da partição<a class="headerlink" href="#quicksort-depois-da-particao" title="Permanent link">&para;</a></h2>
+<p>Depois da partição, o pivô não precisa mais ser mexido. As chamadas recursivas ordenam apenas os lados:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>quicksort(esquerda)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pivo
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>quicksort(direita)
 </code></pre></div>
-
-Não há merge final. Essa é uma diferença importante em relação ao mergesort.
-
-## Por que o pivô fica correto?
-
-Durante a partição, mantemos duas regiões:
-
-- antes de `menores`: elementos menores ou iguais ao pivô;
-- entre `menores` e `atual`: elementos maiores que o pivô;
-- depois de `atual`: elementos ainda não examinados.
-
-Quando o laço termina, todos os elementos antes de `menores` são adequados para a esquerda, e todos entre `menores` e `fim - 1` são maiores que o pivô. Ao trocar o pivô com `menores`, ele entra entre as duas regiões.
-
-## Melhor, médio e pior caso
-
-Se o pivô divide o array em partes razoavelmente equilibradas, o comportamento se parece com outros algoritmos de divisão em metades: custo médio `O(n log n)`.
-
-Se o pivô é sempre o menor ou o maior elemento, uma chamada recebe quase todo o array e a outra recebe quase nada. Isso pode acontecer com esta versão em arrays já ordenados. Nesse caso, o pior caso é `O(n²)`.
-
-## Valores repetidos
-
-Valores repetidos podem gerar divisões ruins dependendo da estratégia de partição. A versão desta aula é simples e didática, mas não é a única. Existem partições em três partes, separando menores, iguais e maiores que o pivô, que lidam melhor com muitos repetidos.
-
-Para a disciplina, o objetivo principal é entender o papel do particionamento e sua relação com as chamadas recursivas.
-
-## Análise informal de custo
-
-Cada chamada de partição percorre o intervalo uma vez. Se as divisões são equilibradas, temos cerca de `log n` níveis, cada um com trabalho total linear. Custo médio: `O(n log n)`.
-
-No pior caso, as divisões são extremamente desequilibradas e o trabalho soma algo como `n + (n - 1) + (n - 2) + ...`. Custo: `O(n²)`.
-
-A memória extra, além da pilha de chamadas, é pequena. A ordenação ocorre no próprio array.
-
-## Erros comuns
-
-- Incluir o pivô no laço de varredura.
-- Retornar a posição errada do pivô.
-- Chamar recursivamente incluindo o pivô de novo.
-- Não tratar caso base `inicio >= fim`.
-- Achar que quicksort sempre é `O(n log n)`.
-- Ignorar que a escolha do pivô influencia muito o desempenho.
-
-<!-- ## Exercícios de fixação
-
-1. Simule a partição de `{4, 9, 1, 7, 3}` com pivô `3`.
-2. Implemente `particionar` e teste isoladamente.
-3. Teste quicksort com array já ordenado, inverso e com repetidos.
-4. Explique por que o pivô não participa das chamadas recursivas.
-5. Compare quicksort e mergesort em memória extra.
-6. Explique um cenário em que esta escolha de pivô é ruim.
-
-## Exercício integrador
-
-Implemente quicksort contando quantas chamadas recursivas e quantas partições foram feitas. Teste com arrays aleatórios, ordenados e em ordem inversa. Escreva uma conclusão curta sobre o efeito da escolha do pivô. -->
-
+<p>Não há merge final. Essa é uma diferença importante em relação ao mergesort.</p>
+<h2 id="por-que-o-pivo-fica-correto">Por que o pivô fica correto?<a class="headerlink" href="#por-que-o-pivo-fica-correto" title="Permanent link">&para;</a></h2>
+<p>Durante a partição, mantemos duas regiões:</p>
+<ul>
+<li>antes de <code>menores</code>: elementos menores ou iguais ao pivô;</li>
+<li>entre <code>menores</code> e <code>atual</code>: elementos maiores que o pivô;</li>
+<li>depois de <code>atual</code>: elementos ainda não examinados.</li>
+</ul>
+<p>Quando o laço termina, todos os elementos antes de <code>menores</code> são adequados para a esquerda, e todos entre <code>menores</code> e <code>fim - 1</code> são maiores que o pivô. Ao trocar o pivô com <code>menores</code>, ele entra entre as duas regiões.</p>
+<h2 id="melhor-medio-e-pior-caso">Melhor, médio e pior caso<a class="headerlink" href="#melhor-medio-e-pior-caso" title="Permanent link">&para;</a></h2>
+<p>Se o pivô divide o array em partes razoavelmente equilibradas, o comportamento se parece com outros algoritmos de divisão em metades: custo médio <code>O(n log n)</code>.</p>
+<p>Se o pivô é sempre o menor ou o maior elemento, uma chamada recebe quase todo o array e a outra recebe quase nada. Isso pode acontecer com esta versão em arrays já ordenados. Nesse caso, o pior caso é <code>O(n²)</code>.</p>
+<h2 id="valores-repetidos">Valores repetidos<a class="headerlink" href="#valores-repetidos" title="Permanent link">&para;</a></h2>
+<p>Valores repetidos podem gerar divisões ruins dependendo da estratégia de partição. A versão desta aula é simples e didática, mas não é a única. Existem partições em três partes, separando menores, iguais e maiores que o pivô, que lidam melhor com muitos repetidos.</p>
+<p>Para a disciplina, o objetivo principal é entender o papel do particionamento e sua relação com as chamadas recursivas.</p>
+<h2 id="analise-informal-de-custo">Análise informal de custo<a class="headerlink" href="#analise-informal-de-custo" title="Permanent link">&para;</a></h2>
+<p>Cada chamada de partição percorre o intervalo uma vez. Se as divisões são equilibradas, temos cerca de <code>log n</code> níveis, cada um com trabalho total linear. Custo médio: <code>O(n log n)</code>.</p>
+<p>No pior caso, as divisões são extremamente desequilibradas e o trabalho soma algo como <code>n + (n - 1) + (n - 2) + ...</code>. Custo: <code>O(n²)</code>.</p>
+<p>A memória extra, além da pilha de chamadas, é pequena. A ordenação ocorre no próprio array.</p>
+<h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Incluir o pivô no laço de varredura.</li>
+<li>Retornar a posição errada do pivô.</li>
+<li>Chamar recursivamente incluindo o pivô de novo.</li>
+<li>Não tratar caso base <code>inicio &gt;= fim</code>.</li>
+<li>Achar que quicksort sempre é <code>O(n log n)</code>.</li>
+<li>Ignorar que a escolha do pivô influencia muito o desempenho.</li>
+</ul>
 <h2 id="checklist-de-aprendizagem">Checklist de aprendizagem<a class="headerlink" href="#checklist-de-aprendizagem" title="Permanent link">&para;</a></h2>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sei explicar o objetivo da partição.</li>
