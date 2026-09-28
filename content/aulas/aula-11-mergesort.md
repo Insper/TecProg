@@ -79,39 +79,6 @@ chave = 5, j = 1
 {3, 8, 8, 2}  <- desloca 8 para abrir espaço
 {3, 5, 8, 2}  <- coloca a chave em j + 1
 ```
-<!-- 
-```java
-public class InsertionSort {
-    public static void ordenar(int[] v) {
-        for (int i = 1; i < v.length; i++) {
-            int chave = v[i];
-            int j = i - 1;
-
-            while (j >= 0 && v[j] > chave) {
-                v[j + 1] = v[j];
-                j--;
-            }
-
-            v[j + 1] = chave;
-        }
-    }
-
-    public static void imprimir(int[] v) {
-        for (int valor : v) {
-            System.out.print(valor + " ");
-        }
-        System.out.println();
-    }
-
-    public static void main(String[] args) {
-        int[] v = {8, 3, 5, 2};
-        ordenar(v);
-        imprimir(v); // 2 3 5 8
-    }
-}
-``` -->
-
-<!-- A variável `chave` guarda o valor que será inserido. O laço `while` desloca para a direita os elementos maiores que a chave. Quando encontramos a posição correta, colocamos a chave em `j + 1`. -->
 
 ## Simulação passo a passo
 
@@ -125,7 +92,7 @@ Para `{8, 3, 5, 2}`:
 
 O deslocamento é a operação que domina o custo no pior caso.
 
-Você pode acompanhar a execução do algoritmo através do [visualizador de insertion sort](https://www.hackerearth.com/practice/algorithms/sorting/insertion-sort/visualize/)
+Você pode acompanhar a execução do algoritmo através do [visualizador de insertion sort](https://opendsa-server.cs.vt.edu/OpenDSA/AV/Sorting/insertionsortAV.html)
 
 ## Melhor caso
 
@@ -173,10 +140,6 @@ O laço externo executa `n - 1` vezes. O laço interno pode executar poucas veze
 - Memória extra: `O(1)`, pois ordena no próprio array.
 
 O algoritmo é estável se usamos `v[j] > chave`, e não `v[j] >= chave`, porque elementos iguais não são invertidos.
-
-<!-- ## Pré-requisitos
-
-Você deve conhecer recursão, intervalos em arrays, divisão e conquista e insertion sort. Mergesort é o primeiro algoritmo de ordenação eficiente da sequência: ele troca deslocamentos quadráticos por divisões equilibradas e intercalações lineares. -->
 
 ## Problema motivador
 
@@ -232,59 +195,6 @@ MERGE(v, aux, inicio, meio, fim)
 
 Os três índices têm papéis fixos: `i` lê a metade esquerda, `j` lê a direita e `k` escreve no auxiliar. Nenhum deles precisa voltar durante uma intercalação.
 
-<!-- ```java
-public class MergeSort {
-    public static void ordenar(int[] v) {
-        int[] aux = new int[v.length];
-        ordenar(v, aux, 0, v.length);
-    }
-
-    private static void ordenar(int[] v, int[] aux, int inicio, int fim) {
-        if (fim - inicio <= 1) {
-            return;
-        }
-
-        int meio = inicio + (fim - inicio) / 2;
-        ordenar(v, aux, inicio, meio);
-        ordenar(v, aux, meio, fim);
-        merge(v, aux, inicio, meio, fim);
-    }
-
-    private static void merge(int[] v, int[] aux, int inicio, int meio, int fim) {
-        int i = inicio;
-        int j = meio;
-        int k = inicio;
-
-        while (i < meio && j < fim) {
-            if (v[i] <= v[j]) {
-                aux[k] = v[i];
-                i++;
-            } else {
-                aux[k] = v[j];
-                j++;
-            }
-            k++;
-        }
-
-        while (i < meio) {
-            aux[k] = v[i];
-            i++;
-            k++;
-        }
-
-        while (j < fim) {
-            aux[k] = v[j];
-            j++;
-            k++;
-        }
-
-        for (int p = inicio; p < fim; p++) {
-            v[p] = aux[p];
-        }
-    }
-}
-``` -->
-
 O vetor `aux` é criado uma vez e reutilizado. Isso evita criar vários arrays durante as chamadas.
 
 ## Simulação da intercalação
@@ -301,6 +211,8 @@ Considere `v = {2, 7, 9, 1, 5, 8}`, com `inicio = 0`, `meio = 3`, `fim = 6`.
 | 2 | 6 | direita acabou | 9 |
 
 Depois copiamos `aux` de volta para `v`.
+
+Você pode acompanhar a execução do algoritmo através do [visualizador de merge sort](https://opendsa-server.cs.vt.edu/embed/mergesortAV)
 
 ## Por que é estável?
 
@@ -333,19 +245,6 @@ O custo de memória extra é `O(n)`, por causa do vetor auxiliar. Além disso, e
 - Parar o merge quando uma metade acaba e perder o restante da outra.
 - Criar vetor auxiliar novo em toda chamada sem necessidade.
 - Usar `<` quando a estabilidade é desejada.
-
-<!-- ## Exercícios de fixação
-
-1. Simule o merge de `[3, 6, 10]` com `[1, 4, 8]`.
-2. Implemente apenas o método `merge` e teste com duas metades já ordenadas.
-3. Teste mergesort com array vazio, um elemento, repetidos e já ordenado.
-4. Explique por que `fim - inicio <= 1` é caso base.
-5. Explique por que mergesort não é in-place nesta versão.
-6. Compare insertion sort e mergesort para arrays grandes.
-
-## Exercício integrador
-
-Implemente uma versão de mergesort que conta quantas vezes o método `merge` é chamado e quantos elementos são copiados de volta para o array original. Teste com arrays de tamanho `4`, `8` e `16` e relacione os resultados com a ideia de níveis. -->
 
 ## Checklist de aprendizagem
 
