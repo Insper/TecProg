@@ -6,10 +6,12 @@ site_author: Insper
 
 extra_javascript:
   - js/tabs.js
+  - js/dfs-visualizer.js
 
 extra_css:
   - css/components.css
   - css/styles.css
+  - css/dfs-visualizer.css
   
 extra:
     PL_url_course: https://us.prairielearn.com/pl/course_instance/220855

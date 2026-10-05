@@ -117,6 +117,92 @@ S . # .
 
 O retorno `TRUE` sobe pela pilha de chamadas. Se nenhuma direção chegasse ao destino, todas retornariam `FALSE` e a chamada inicial também retornaria `FALSE`.
 
+<div id="dfs-visualizer" class="dfs-visualizer" data-dfs-visualizer>
+  <div class="dfs-visualizer__heading">
+    <h3>Visualizador passo a passo</h3>
+    <p>Edite a matriz e execute a busca para acompanhar cada chamada, retorno e mudança na pilha.</p>
+  </div>
+
+  <div class="dfs-visualizer__input">
+    <label class="dfs-visualizer__label" for="dfs-maze-input">Matriz do labirinto</label>
+    <textarea id="dfs-maze-input" class="dfs-visualizer__textarea" rows="3" spellcheck="false" aria-describedby="dfs-maze-help">S . # .
+# . # .
+# . . D</textarea>
+    <p id="dfs-maze-help" class="dfs-visualizer__help">Use S, D, # e .; os espaços são opcionais e todas as linhas devem ter o mesmo tamanho.</p>
+    <p class="dfs-visualizer__error" data-dfs-role="error" role="alert" hidden></p>
+  </div>
+
+  <div class="dfs-visualizer__controls" role="group" aria-label="Controles do visualizador">
+    <button type="button" class="button is-primary" data-dfs-action="execute">Executar</button>
+    <button type="button" class="button" data-dfs-action="previous">Anterior</button>
+    <button type="button" class="button" data-dfs-action="next">Próximo passo</button>
+    <button type="button" class="button" data-dfs-action="play">Reproduzir</button>
+    <button type="button" class="button" data-dfs-action="reset">Reiniciar</button>
+  </div>
+
+  <div class="dfs-visualizer__progress" aria-live="polite">
+    <div class="dfs-visualizer__progress-heading">
+      <span data-dfs-role="step-label">Antes do primeiro passo</span>
+      <span data-dfs-role="status">Pronto para executar.</span>
+    </div>
+    <div class="dfs-visualizer__progress-track" role="progressbar" aria-label="Progresso da execução" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+      <div class="dfs-visualizer__progress-bar" data-dfs-role="progress-bar"></div>
+    </div>
+  </div>
+
+  <div class="dfs-visualizer__workspace">
+    <section class="dfs-visualizer__panel" aria-labelledby="dfs-maze-heading">
+      <div class="dfs-visualizer__panel-heading">
+        <h4 id="dfs-maze-heading">Labirinto</h4>
+        <span class="dfs-visualizer__counter" data-dfs-role="visited-counter">0 visitadas</span>
+      </div>
+      <div class="dfs-visualizer__grid" data-dfs-role="grid" role="grid" aria-label="Estado atual do labirinto"></div>
+      <div class="dfs-visualizer__legend" aria-label="Legenda do labirinto">
+        <span><i class="dfs-visualizer__legend-swatch is-start">S</i> origem</span>
+        <span><i class="dfs-visualizer__legend-swatch is-destination">D</i> destino</span>
+        <span><i class="dfs-visualizer__legend-swatch is-visited"></i> visitada</span>
+        <span><i class="dfs-visualizer__legend-swatch is-current"></i> atual</span>
+        <span><i class="dfs-visualizer__legend-swatch is-path"></i> caminho</span>
+      </div>
+    </section>
+
+    <section class="dfs-visualizer__panel" aria-labelledby="dfs-stack-heading">
+      <div class="dfs-visualizer__panel-heading">
+        <h4 id="dfs-stack-heading">Pilha de chamadas</h4>
+        <span class="dfs-visualizer__counter" data-dfs-role="stack-counter">0 chamadas</span>
+      </div>
+      <div class="dfs-visualizer__stack" data-dfs-role="stack" role="list" aria-label="Pilha de chamadas atual"></div>
+      <p class="dfs-visualizer__empty" data-dfs-role="stack-empty">A pilha está vazia antes da execução.</p>
+    </section>
+  </div>
+
+  <div class="dfs-visualizer__details">
+    <section class="dfs-visualizer__panel" aria-labelledby="dfs-action-heading">
+      <h4 id="dfs-action-heading">O que acontece agora?</h4>
+      <p class="dfs-visualizer__action" data-dfs-role="action">Clique em “Próximo passo” para iniciar.</p>
+      <p class="dfs-visualizer__code-line" data-dfs-role="code-line">Nenhuma linha executada.</p>
+    </section>
+
+    <section class="dfs-visualizer__panel dfs-visualizer__code-panel" aria-labelledby="dfs-code-heading">
+      <h4 id="dfs-code-heading">Pseudocódigo em execução</h4>
+      <ol class="dfs-visualizer__code" aria-label="Pseudocódigo da busca DFS">
+        <li data-dfs-code-line="1">Se estiver fora da matriz, retorna FALSE</li>
+        <li data-dfs-code-line="2">Se for parede ou já visitada, retorna FALSE</li>
+        <li data-dfs-code-line="3">Se for o destino, retorna TRUE</li>
+        <li data-dfs-code-line="4">Marca a posição como visitada</li>
+        <li data-dfs-code-line="5">Tenta o vizinho de cima</li>
+        <li data-dfs-code-line="6">Tenta o vizinho de baixo</li>
+        <li data-dfs-code-line="7">Tenta o vizinho da esquerda</li>
+        <li data-dfs-code-line="8">Tenta o vizinho da direita</li>
+        <li data-dfs-code-line="9">Retorna FALSE</li>
+        <li data-dfs-code-line="10">Retorna TRUE</li>
+      </ol>
+    </section>
+  </div>
+
+  <p class="dfs-visualizer__result" data-dfs-role="result" aria-live="polite">Ainda não há resultado.</p>
+</div>
+
 ## Flood fill
 
 Flood fill substitui uma região inteira de uma cor por outra. A estrutura é a mesma da DFS: validar, modificar a posição atual e explorar os quatro vizinhos.
