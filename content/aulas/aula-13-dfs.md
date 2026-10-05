@@ -185,18 +185,20 @@ O retorno `TRUE` sobe pela pilha de chamadas. Se nenhuma direção chegasse ao d
 
     <section class="dfs-visualizer__panel dfs-visualizer__code-panel" aria-labelledby="dfs-code-heading">
       <h4 id="dfs-code-heading">Pseudocódigo em execução</h4>
-      <ol class="dfs-visualizer__code" aria-label="Pseudocódigo da busca DFS">
-        <li data-dfs-code-line="1">Se estiver fora da matriz, retorna FALSE</li>
-        <li data-dfs-code-line="2">Se for parede ou já visitada, retorna FALSE</li>
-        <li data-dfs-code-line="3">Se for o destino, retorna TRUE</li>
-        <li data-dfs-code-line="4">Marca a posição como visitada</li>
-        <li data-dfs-code-line="5">Tenta o vizinho de cima</li>
-        <li data-dfs-code-line="6">Tenta o vizinho de baixo</li>
-        <li data-dfs-code-line="7">Tenta o vizinho da esquerda</li>
-        <li data-dfs-code-line="8">Tenta o vizinho da direita</li>
-        <li data-dfs-code-line="9">Retorna FALSE</li>
-        <li data-dfs-code-line="10">Retorna TRUE</li>
-      </ol>
+      <div class="dfs-visualizer__code" role="list" aria-label="Pseudocódigo da busca DFS">
+        <div data-dfs-code-line="1" role="listitem"><span class="dfs-visualizer__line-number">1</span>Se estiver fora da matriz, THEN</div>
+        <div class="dfs-visualizer__code-nested" role="listitem"><span class="dfs-visualizer__line-number">↳</span>retorna FALSE</div>
+        <div data-dfs-code-line="2" role="listitem"><span class="dfs-visualizer__line-number">2</span>Se for parede ou já visitada, THEN</div>
+        <div class="dfs-visualizer__code-nested" role="listitem"><span class="dfs-visualizer__line-number">↳</span>retorna FALSE</div>
+        <div data-dfs-code-line="3" role="listitem"><span class="dfs-visualizer__line-number">3</span>Se for o destino, THEN</div>
+        <div class="dfs-visualizer__code-nested" data-dfs-code-line="3a" role="listitem"><span class="dfs-visualizer__line-number">↳</span>retorna TRUE</div>
+        <div data-dfs-code-line="4" role="listitem"><span class="dfs-visualizer__line-number">4</span>Marca a posição como visitada</div>
+        <div data-dfs-code-line="5" role="listitem"><span class="dfs-visualizer__line-number">5</span>Tenta o vizinho de cima</div>
+        <div data-dfs-code-line="6" role="listitem"><span class="dfs-visualizer__line-number">6</span>Tenta o vizinho de baixo</div>
+        <div data-dfs-code-line="7" role="listitem"><span class="dfs-visualizer__line-number">7</span>Tenta o vizinho da esquerda</div>
+        <div data-dfs-code-line="8" role="listitem"><span class="dfs-visualizer__line-number">8</span>Tenta o vizinho da direita</div>
+        <div data-dfs-code-line="9" role="listitem"><span class="dfs-visualizer__line-number">9</span>Depois de todas as tentativas, retorna FALSE</div>
+      </div>
     </section>
   </div>
 

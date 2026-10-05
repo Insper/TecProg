@@ -299,17 +299,29 @@
 
 .dfs-visualizer__code {
   margin: 0;
-  padding-left: 2.4rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.85rem;
 }
 
-.dfs-visualizer__code li {
+.dfs-visualizer__code [data-dfs-code-line],
+.dfs-visualizer__code-nested {
   padding: 0.2rem 0.35rem;
   border-radius: 0.2rem;
 }
 
-.dfs-visualizer__code li.is-active {
+.dfs-visualizer__line-number {
+  display: inline-block;
+  width: 2rem;
+  color: var(--dfs-muted);
+  user-select: none;
+}
+
+.dfs-visualizer__code-nested {
+  padding-left: 2.35rem;
+  color: var(--dfs-muted);
+}
+
+.dfs-visualizer__code [data-dfs-code-line].is-active {
   background: color-mix(in srgb, var(--dfs-warning) 40%, var(--dfs-surface));
   font-weight: 700;
 }

@@ -18,7 +18,7 @@
     7: "Tenta o vizinho da esquerda",
     8: "Tenta o vizinho da direita",
     9: "Retorna FALSE",
-    10: "Retorna TRUE",
+    "3a": "Retorna TRUE no ramo em que a posição é o destino",
   };
 
   function cellKey(row, column) {
@@ -205,7 +205,7 @@
             { solutionPathKeys: pathKeys, result: true }
           );
           frame.returnValue = true;
-          frame.returnLine = 10;
+          frame.returnLine = "3a";
           frame.returnReason = "a posição é o destino";
           frame.phase = "returning";
           continue;
@@ -254,7 +254,7 @@
           `existeCaminho${positionText(frame.row, frame.column)} retorna ${returnText}${
             frame.returnReason ? `: ${frame.returnReason}.` : "."
           }`,
-          frame.returnLine || (result ? 10 : 9),
+          frame.returnLine || (result ? "3a" : 9),
           { result }
         );
 
@@ -266,7 +266,7 @@
             result
               ? "Busca concluída: existe um caminho até D."
               : "Busca concluída: não existe um caminho até D.",
-            result ? 10 : 9,
+            result ? "3a" : 9,
             { result }
           );
           break;
@@ -275,7 +275,7 @@
         const parent = frames[frames.length - 1];
         if (result) {
           parent.returnValue = true;
-          parent.returnLine = 10;
+          parent.returnLine = "3a";
           parent.returnReason = "um vizinho retornou TRUE";
           parent.phase = "returning";
         } else {
@@ -648,4 +648,3 @@
     start();
   }
 })();
-
