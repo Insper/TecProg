@@ -1,4 +1,4 @@
-# Aula 14 — DFS em matrizes e exploração recursiva
+# Aula 13 — DFS em matrizes e exploração recursiva
 
 ## Objetivos de aprendizagem
 

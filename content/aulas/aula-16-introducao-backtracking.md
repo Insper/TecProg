@@ -1,4 +1,4 @@
-# Aula 17 — Introdução ao backtracking
+# Aula 16 — Introdução ao backtracking
 
 ## Objetivos de aprendizagem
 

@@ -1,4 +1,4 @@
-# Aula 16 — Introdução a grafos: representação, DFS e BFS
+# Aula 15 — Introdução a grafos: representação, DFS e BFS
 
 ## Objetivos de aprendizagem
 

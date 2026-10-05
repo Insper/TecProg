@@ -1,4 +1,4 @@
-# Aula 15 — BFS em matrizes e uso de filas
+# Aula 14 — BFS em matrizes e uso de filas
 
 ## Objetivos de aprendizagem
 
