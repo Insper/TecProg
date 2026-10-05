@@ -1,5 +1,5 @@
 ---
-title: "Exercícios — Aula 17 — Introdução ao backtracking"
+title: "Exercícios — Aula 16 — Introdução ao backtracking"
 subtitle: "Técnicas de Programação"
 author: "Marcio F. Stabile Jr."
 ...

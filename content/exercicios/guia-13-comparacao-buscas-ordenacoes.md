@@ -1,5 +1,5 @@
 ---
-title: "Exercícios — Aula 13 — Comparação de buscas e ordenações"
+title: "Exercícios — Comparação de buscas e ordenações"
 subtitle: "Técnicas de Programação"
 author: "Marcio F. Stabile Jr."
 ...

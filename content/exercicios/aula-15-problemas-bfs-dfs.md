@@ -1,5 +1,5 @@
 ---
-title: "Exercícios — Aula 16 — Introdução a grafos: representação, DFS e BFS"
+title: "Exercícios — Aula 15 — Introdução a grafos: representação, DFS e BFS"
 subtitle: "Técnicas de Programação"
 author: "Marcio F. Stabile Jr."
 ...

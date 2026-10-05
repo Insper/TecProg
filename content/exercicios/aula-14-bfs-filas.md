@@ -1,5 +1,5 @@
 ---
-title: "Exercícios — Aula 15 — BFS em matrizes e uso de filas"
+title: "Exercícios — Aula 14 — BFS em matrizes e uso de filas"
 subtitle: "Técnicas de Programação"
 author: "Marcio F. Stabile Jr."
 ...

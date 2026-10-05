@@ -1,5 +1,5 @@
 ---
-title: "Exercícios — Aula 19 — Backtracking com restrições"
+title: "Exercícios — Aula 17 — Backtracking com restrições"
 subtitle: "Técnicas de Programação"
 author: "Marcio F. Stabile Jr."
 ...

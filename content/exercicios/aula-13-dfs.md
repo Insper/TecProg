@@ -1,5 +1,5 @@
 ---
-title: "Exercícios — Aula 14 — DFS em matrizes e exploração recursiva"
+title: "Exercícios — Aula 13 — DFS em matrizes e exploração recursiva"
 subtitle: "Técnicas de Programação"
 author: "Marcio F. Stabile Jr."
 ...
