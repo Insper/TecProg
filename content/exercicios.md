@@ -28,6 +28,24 @@
 
 * [Number of Students Unable to Eat Lunch](https://leetcode.com/problems/number-of-students-unable-to-eat-lunch/description/)
 
+## Busca em Profundidade
+
+* [**Number of Islands**](https://leetcode.com/problems/number-of-islands/description/)
+
+## Busca em Largura
+
+* [**Minimum Genetic Mutation**](https://leetcode.com/problems/minimum-genetic-mutation/description/)
+* [Open the Lock](https://leetcode.com/problems/open-the-lock/description/)
+
+
+## Grafos
+
+* [**Clone Graph**](https://leetcode.com/problems/clone-graph/description/)
+
+## Backtracking
+
+* [**Word Search**](https://leetcode.com/problems/word-search/description/)
+
 <!-- [1]: https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/?utm_source=chatgpt.com "Find First and Last Position of Element in Sorted Array - LeetCode" -->
 
 
