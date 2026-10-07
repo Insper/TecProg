@@ -36,6 +36,7 @@
 
 * [**Minimum Genetic Mutation**](https://leetcode.com/problems/minimum-genetic-mutation/description/)
 * [Open the Lock](https://leetcode.com/problems/open-the-lock/description/)
+* [Snakes and Ladders](https://leetcode.com/problems/snakes-and-ladders/description/)
 
 
 ## Grafos
