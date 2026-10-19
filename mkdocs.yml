@@ -86,6 +86,7 @@ nav:
           - Material: aulas/aula-15-problemas-bfs-dfs.md
           - Lista de Exercícios: handouts/aula-15-problemas-bfs-dfs.pdf
       - Aula 16 — Introdução ao backtracking:
+          - Slides: aulas/backtracking_aula_interativa.pdf
           - Material: aulas/aula-16-introducao-backtracking.md
           - Lista de Exercícios: handouts/aula-16-introducao-backtracking.pdf
           - Exercícios de código: https://leetcode.com/problem-list/backtracking/
