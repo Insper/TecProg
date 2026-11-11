@@ -31,6 +31,7 @@
 ## Busca em Profundidade
 
 * [**Number of Islands**](https://leetcode.com/problems/number-of-islands/description/)
+* [**Shortest Bridge**](https://leetcode.com/problems/shortest-bridge/description/)
 
 ## Busca em Largura
 
@@ -46,6 +47,7 @@
 ## Backtracking
 
 * [**Word Search**](https://leetcode.com/problems/word-search/description/)
+* [**Additive Number**](https://leetcode.com/problems/additive-number/description/)
 
 <!-- [1]: https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/?utm_source=chatgpt.com "Find First and Last Position of Element in Sorted Array - LeetCode" -->
 
